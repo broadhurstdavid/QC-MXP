@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="/Users/davidbroadhurst/LocalData/QCMXP2024/mlapp/QCMXP.prj" location="/Users/davidbroadhurst/LocalData/QCMXP2024/mlapp" name="QCMXP" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration file="/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp/QCMXP.prj" location="/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp" name="QCMXP" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>QCMXP</param.appname>
     <param.icon>${PROJECT_ROOT}/QCMXP_resources/icon.icns</param.icon>
     <param.icons>
@@ -16,7 +16,7 @@
     <param.description>This application is free, but is built on top of the Matlab Runtime libraries (also free). This means installation can be slow as the runtime libraries must first be installed. It also takes while to launch (without a splash screen). So please be patient. Do not be alarmed by any Matlab procesess running in the background. This is completely normal. For help please visit: www.qcmxp.org
 
 Enjoy! - David.</param.description>
-    <param.screenshot />
+    <param.screenshot>${PROJECT_ROOT}/QCMXP_resources/default_icon_48.png</param.screenshot>
     <param.guid />
     <param.installpath.string>/QCMXP/</param.installpath.string>
     <param.installpath.combo>option.installpath.systemwideapp</param.installpath.combo>
@@ -26,11 +26,11 @@ Enjoy! - David.</param.description>
 
 If the environment variable DYLD_LIBRARY_PATH is undefined, set it to the following string:
 
-MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/bin/maci64
+MR/R2024a/runtime/maca64:MR/R2024a/sys/os/maca64:MR/R2024a/bin/maca64
 
 If it is defined, set it to the following:
 
-${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/bin/maci64</param.target.install.notes>
+${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maca64:MR/R2024a/sys/os/maca64:MR/R2024a/bin/maca64</param.target.install.notes>
     <param.intermediate>${PROJECT_ROOT}/QCMXP/for_testing</param.intermediate>
     <param.files.only>${PROJECT_ROOT}/QCMXP/for_redistribution_files_only</param.files.only>
     <param.output>${PROJECT_ROOT}/QCMXP/for_redistribution</param.output>
@@ -61,7 +61,6 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/
       <param.version />
       <param.email />
       <param.company />
-      <param.screenshot />
       <param.guid />
       <param.installpath.string />
       <param.installpath.combo />
@@ -143,10 +142,10 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/
       <file>${PROJECT_ROOT}/src/validatingDataPeakTables.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="QCMXP.app" optional="false">/Users/davidbroadhurst/LocalData/QCMXP2024/mlapp/QCMXP/for_testing/QCMXP.app</file>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="splash.png" optional="false">/Users/davidbroadhurst/LocalData/QCMXP2024/mlapp/QCMXP/for_testing/splash.png</file>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="run_QCMXP.sh" optional="false">/Users/davidbroadhurst/LocalData/QCMXP2024/mlapp/QCMXP/for_testing/run_QCMXP.sh</file>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="readme.txt" optional="true">/Users/davidbroadhurst/LocalData/QCMXP2024/mlapp/QCMXP/for_testing/readme.txt</file>
+      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="QCMXP.app" optional="false">/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp/QCMXP/for_testing/QCMXP.app</file>
+      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="splash.png" optional="false">/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp/QCMXP/for_testing/splash.png</file>
+      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="readme.txt" optional="true">/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp/QCMXP/for_testing/readme.txt</file>
+      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="run_QCMXP.sh" optional="false">/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp/QCMXP/for_testing/run_QCMXP.sh</file>
     </build-deliverables>
     <workflow />
     <matlab>
@@ -170,8 +169,8 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/
       <linux>false</linux>
       <solaris>false</solaris>
       <osver>14.4.1</osver>
-      <os32>false</os32>
-      <os64>true</os64>
+      <os32>true</os32>
+      <os64>false</os64>
       <arch>maci64</arch>
       <matlab>true</matlab>
     </platform>
