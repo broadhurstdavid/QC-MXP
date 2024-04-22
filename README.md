@@ -19,5 +19,7 @@ The backbone of QCRSC is a cubic spline function written by Carl de Boor (A Prac
 <br />
 <br />
 Inter-batch correction is simple. Once the Intra-batch bias has been subtracted (or divided), batches are simply concatinated such that the mean of the QC values in each batch are equalised across all batches - please refer to the figure below (taken from the [guidelines paper](https://link.springer.com/article/10.1007/s11306-018-1367-3)).
+<br />
+<br />
 ![TidyMet Data/Peak table format](res/interbatchcorrection.png)
 ## Config Explorer
