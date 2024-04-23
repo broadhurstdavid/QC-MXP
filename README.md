@@ -51,4 +51,6 @@ blah blah
 blah blah
 <br />
 <br />
+![Peak Explorer](res/plots.png)
+<br />
 
