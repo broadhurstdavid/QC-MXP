@@ -45,5 +45,10 @@ blah blah
 <br />
 <br />
 ![Peak Explorer](res/PeakExplorer.png)
-
+<br />
+<br />
+## Data Cleaning & Exploration
+blah blah
+<br />
+<br />
 
