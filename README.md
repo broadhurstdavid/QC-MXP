@@ -45,7 +45,7 @@ Once you have imported your own TidyMet\* data it is advisible, as a beginner, t
 blah blah blah
 <br />
 <br />
-<img src="res/configFile.png" width="400">
+<img src="res/configFile.png" width="300">
 ## Peak Explorer
 blah blah
 <br />
