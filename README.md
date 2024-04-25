@@ -27,7 +27,7 @@ Inter-batch correction is comparatively simple. Once the Intra-batch bias has be
 *Footnote: It is worth mentioning that I have experiemented with other available smoothing spline aglorithms and for some reason CSAPS is far superior for problems with low samples numbers.*
 <br />
 <br />
-![TidyMet Data/Peak table format](res/interbatchcorrection.png)
+<img src="res/interbatchcorrection.png" width="800">
 ## Config Explorer
 Before Importing any of your own data a great way to start is to push the *Config Explorer* button. This launches the Config Explorer window with some artificaly generated example data (see below). Pressing the red button labeled *Random Peak* randomly selects one of 20 peaks. The right hand side od the window (blue) shows the before/after control charts for that peak (peak area vs injection order). The left hand side of the window (green) provides an interface to the QCRSC configuration options. This is a highly interative sandbox to play in so that you can familarise yourself with the basic functionality. Hovering over buttons/boxes will trigger pop-up information windows to hep explain the funtions. The options will be discussed in more detail in the TUTORIAL VIDEO and a brief overview is provided in the tutorial pdf.
 <br />
