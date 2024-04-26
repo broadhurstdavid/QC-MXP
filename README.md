@@ -2,8 +2,11 @@
 
 # Repeat-injection-based quality control, batch correction, exploration, &amp; data cleaning.
 
-[1. Tidy Data](#tidy-data)
+[1. Introduction](#introduction)
+[2. Tidy Data](#tidy-data)
 
+
+## Introduction
 This standalone application is written specifically for the metabolomics community. It is a long overdue companion app to the publication ["Guidelines and considerations for the use of system suitability and quality control samples in mass spectrometry assays applied in untargeted clinical metabolomic studies" Metabolomics 14, 72 (2018)](https://link.springer.com/article/10.1007/s11306-018-1367-3). It can be used as an educational tool to explore the process of intra- and inter-batch correction based on repeat-injection reference samples (e.g. pooled quality control samples). However, it is designed primarly to be used as a practical tool for real world problems. It has been written as a standalone application (Mac OS, Windows 10, & Windows 11), rather than as a set of command line R or Python packages, because I wanted it to be user friendly, placing all of the cognative load on understanding the underlying concepts, providing process transparency, and creating a highly visual interactive exploration of the data (rather than placing the majority of the cognative load on programming skills and frustratingly installing package dependencies). I could have hosted this as a web app, but does anybody really wants to upload data to a 3rd party site?, and downloading & locally hosting a web app is beyond the interest of most people. As you can see from the screenshot there are many options, which may seem duanting. However, foundational knowledge is scafolded through interactive *Explorer* windows, and extensive beta testing has indicated that the learning curve is shallow. That said, it is worth noting that the process of batch correction, quality control, and data cleaning is non-trivial and requires some thought, education, and porject-specific investigation. It should not be reduced to blindly running a third-party "black-box" R-script with unquestioning acceptance of its effecitveness for your specific analytical workflow and precious data sets.
 
 ![Screenshot of QC-MXP](res/Screenshot.png)   
