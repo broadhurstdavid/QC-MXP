@@ -12,7 +12,7 @@
 8. [Correct the whole data set](#correct-the-whole-data-set)
 9. [Data Cleaning & Exploration](#data-cleaning--exploration)
 10. [TUTORIAL VIDEO](#tutorial-video)
-11. [Software Installation](#software-installation)
+11. [How to Download & Install QCMXP](#how-to-download--install-qcmxp)
 12. [Source Code](source-code)
 
 
@@ -82,7 +82,7 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 <br />
 ## TUTORIAL VIDEO
 **Coming Soon**
-## Software Installation
+## How to Download & Install QCMXP
 ## Source Code
 This
 
