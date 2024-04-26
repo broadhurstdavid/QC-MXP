@@ -2,8 +2,16 @@
 
 # Repeat-injection-based quality control, batch correction, exploration, &amp; data cleaning.
 
-[1. Introduction](#introduction)
-[2. Tidy Data](#tidy-data)
+1. [Introduction](#introduction)
+2. [Tidy Data](#tidy-data)
+3. [QCRSC - Quality Control Regularised Spline Correction](#qcrsc)
+4. [Config Explorer - learn how to optimise QCRSC](#config-explorer)
+5. [Operational Workflow](#operational-workflow)
+6. [Congfiguration file](#congfiguration-file)
+7. [Peak Explorer - interogate proposed correction of a given peak](#peak-explorer)
+8. [Correct the whole data set](#correct-the-whole-data-set)
+9. [Data Cleaning & Exploration](#data-cleaning-&-exploration)
+10. [TUTORIAL VIDEO](#tutorial-video)
 
 
 ## Introduction
@@ -38,8 +46,8 @@ Before importing any of your own data, a great way to undertand the underlying p
 <br />
 <br />
 ![Config Explorer](res/ConfigExplorer.png)
-## Workflow
-The figure below represents the basic workflow for running QC:MXP (mapped to the corresponsing location in the application window). 
+## Operational Workflow
+The figure below represents the operational workflow for running QC:MXP (mapped to the corresponsing location in the application window). 
 <br />
 <br />
 ![General Workflow](res/Workflow.png)
@@ -58,7 +66,7 @@ Before applying *QCRSC* to the complete data set it is worth opening *peakExplor
 ![Peak Explorer](res/PeakExplorer.png)
 <br />
 <br />
-## Runtime
+## Correct the whole data set
 After pressing the 'play' button on the QCRSC engine. The QCRSC algorithm will be applied to each peak (feature) in the data set. Upon completion a new corrected Data table has been created and the Peak table has been updated to include basic statistical measures (QCRSD, D-Ratio, Blank Ration, percent missing etc). It is advisable to save the corrected data at this point. 
 <br />
 <br />
@@ -70,5 +78,9 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 ![Peak Explorer](res/ScreenshotExploring.png)
 <br />
 <br />
+TUTORIAL VIDEO
+<br />
+<br />
+**Coming Soon**
 
 
