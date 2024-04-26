@@ -59,8 +59,11 @@ After pressing the 'play' button on the QCRSC engine. The QCRSC algorithm will b
 <br />
 <img src="res/QCRSCengine.png" width="400">
 ## Data Cleaning & Exploration
+Once the QCRSC engine has finished attention shifts to the data cleaning filters and visualisation tabs. Peaks (metabolite features) can be filtered (removed) by Number of missing values, RSD threshold, D-Ratio threshold, and Blank-Ratio threshold. Typical settings are: Missing < 20%, QC-RSD < 20%, D-Ratio < 40%, Blank-Ratio < 20%. The effects of the QCRSC correction + filtering are shown in muliple tabs. Interpretation of these plots are discussed in the TUTORIAL VIDEO. Once you are happy with the data cleaning process, save the resulting Data table and Peak table. 
 <br />
 <br />
 ![Peak Explorer](res/ScreenshotExploring.png)
 <br />
+<br />
+
 
