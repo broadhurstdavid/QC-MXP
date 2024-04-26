@@ -79,8 +79,6 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 <br />
 <br />
 ## TUTORIAL VIDEO
-<br />
-<br />
 **Coming Soon**
 
 
