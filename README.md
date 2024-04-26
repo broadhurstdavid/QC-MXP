@@ -47,14 +47,18 @@ When you are happy with all the configuration settings, close the window and you
 <br />
 <img src="res/configFile.png" width="300">
 ## Peak Explorer
-blah blah
+Before applying *QCRSC* to the complete data set it is worth opening *peakExplorer*. This window is similar to *configExplorer* in that you can investigate the effects of the configuration setting on individual metabolite features. However, now you can look at the effects of both the intra and inter-batch correction. 
 <br />
 <br />
 ![Peak Explorer](res/PeakExplorer.png)
 <br />
 <br />
 ## Data Cleaning & Exploration
-blah blah
+After pressing the 'play' button on the QCRSC engine. The QCRSC algorithm will be applied to each peak (feature) in the data set. Upon completion a new corrected Data table has been created and the Peak table has been updated to include basic statistical measures (QCRSD, D-Ratio, Blank Ration, percent missing etc). It is advisable to save the corrected data at this point. 
+<br />
+<br />
+![Peak Explorer](res/ScreenshotExploring.png)
+## Data Cleaning & Exploration
 <br />
 <br />
 ![Peak Explorer](res/ScreenshotExploring.png)
