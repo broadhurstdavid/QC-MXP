@@ -7,10 +7,10 @@
 3. [QCRSC - Quality Control Regularised Spline Correction](#qcrsc)
 4. [Config Explorer - learn how to optimise QCRSC](#config-explorer)
 5. [Operational Workflow](#operational-workflow)
-6. [Congfiguration file](#congfiguration-file)
+6. [Configuration file](#congfiguration-file)
 7. [Peak Explorer - interogate proposed correction of a given peak](#peak-explorer)
 8. [Correct the whole data set](#correct-the-whole-data-set)
-9. [Data Cleaning & Exploration](#data-cleaning-&-exploration)
+9. [Data Cleaning & Exploration](#data-cleaning--exploration)
 10. [TUTORIAL VIDEO](#tutorial-video)
 
 
@@ -78,7 +78,7 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 ![Peak Explorer](res/ScreenshotExploring.png)
 <br />
 <br />
-TUTORIAL VIDEO
+## TUTORIAL VIDEO
 <br />
 <br />
 **Coming Soon**
