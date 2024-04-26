@@ -53,11 +53,11 @@ Before applying *QCRSC* to the complete data set it is worth opening *peakExplor
 ![Peak Explorer](res/PeakExplorer.png)
 <br />
 <br />
-## Data Cleaning & Exploration
+## Runtime
 After pressing the 'play' button on the QCRSC engine. The QCRSC algorithm will be applied to each peak (feature) in the data set. Upon completion a new corrected Data table has been created and the Peak table has been updated to include basic statistical measures (QCRSD, D-Ratio, Blank Ration, percent missing etc). It is advisable to save the corrected data at this point. 
 <br />
 <br />
-![Peak Explorer](res/ScreenshotExploring.png)
+<img src="res/QCRSCengine.png" width="400">
 ## Data Cleaning & Exploration
 <br />
 <br />
