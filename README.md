@@ -69,7 +69,7 @@ Before applying *QCRSC* to the complete data set it is worth opening *peakExplor
 <br />
 <br />
 ## Correct the whole data set
-To run QCRSC on the whole data set press the 'play' button on the QCRSC engine. The QCRSC algorithm will be applied to each peak (feature) in the data set. Upon completion a new corrected Data table has been created and the Peak table has been updated to include basic statistical measures (QCRSD, D-Ratio, Blank Ration, percent missing etc). It is advisable to save the corrected data at this point. 
+To run QCRSC on the whole data set press the green 'play' button on the QCRSC engine. The QCRSC algorithm will be applied to each peak (feature) in the data set. Upon completion a new corrected Data table has been created and the Peak table has been updated to include basic statistical measures (QCRSD, D-Ratio, Blank Ration, percent missing etc). It is advisable to save the corrected data at this point. 
 <br />
 <br />
 <img src="res/QCRSCengine.png" width="400">
