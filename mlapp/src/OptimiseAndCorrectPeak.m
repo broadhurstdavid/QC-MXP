@@ -18,7 +18,7 @@ function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectPeak(config,t
 % config.ParallelProcess
 
 
-mpv = median(y(isQC),'omitnan');
+mpv = mean(y(isQC),'omitnan');
 z = nan(length(y),1);
 yspline = nan(length(y),1);
 ub = unique(batch);
@@ -76,7 +76,7 @@ for i = 1:numberOfBatches
             toutlieri = [];
         end
         switch config.IntraBatchMode
-            case 'Median'
+            case 'Mean'
                 gamma = NaN;epsilon = NaN;cvMse = 0;minVal = 0;
             case 'Linear'
                 avDist = median(tqci(2:end) - tqci(1:end-1));

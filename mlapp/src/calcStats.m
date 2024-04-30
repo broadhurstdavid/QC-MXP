@@ -48,9 +48,9 @@ end
 
 switch options.BlankRatioMethod
     case 'QC'
-        blankRatio = 100 * max(yB,[],'omitnan')/median(yQC,'omitnan');
+        blankRatio = 100 * max(yB,[],'omitnan')/mean(yQC,'omitnan');
     case 'Median'
-        blankRatio = 100 * max(yB,[],'omitnan')/median(y(~isBlank),'omitnan');
+        blankRatio = 100 * max(yB,[],'omitnan')/median(yS,'omitnan');
     case 'Percentile'
         if isempty(yB)
             blankRatio = 100 * (1 - sum(isnan(yS))/length(yS));            

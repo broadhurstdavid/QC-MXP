@@ -11,7 +11,7 @@ try
         p = 1/(1+epsilon*10^(gammaVal));
         yspline = csaps(tqc,yqc,p,t);
     else
-        yspline = median(yqc,'omitnan')*ones(length(t),1);
+        yspline = mean(yqc,'omitnan')*ones(length(t),1);
     end
 catch
     ME = MException('QCRSC:UnexpectedQCRSCerror',"QCRSC correction unexpectedly failed");
