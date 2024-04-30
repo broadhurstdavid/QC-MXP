@@ -9,8 +9,11 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
        options.LogTransform {mustBeNumericOrLogical} = true    
        options.Autoscale {mustBeNumericOrLogical} = true
        options.Paretoscale {mustBeNumericOrLogical} = false
+       options.k {mustBeInteger,mustBePositive} = 3
     end
     
+    k = options.k;
+
         if options.Autoscale && options.Paretoscale
                 ME = MException('PCApreprocessing:invalid option','Autoscale & Paretoscale cannot both be True');
                 throw(ME)
@@ -74,25 +77,21 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                 % replace missing QCs with KNN QC values or mean
                 ZZqc = ZZ(isQC,:);
                 try
-                    ZZqc = knnimpute(ZZqc,3);
-                catch
-                    try
-                        ZZqc=incrementalKNNimpute(ZZqc,3);
-                    catch
-                        mqc = mean(ZZqc,'omitnan');
-                        mqcX = repmat(mqc,height(ZZqc),1);
-                        temp = isnan(ZZqc);
-                        ZZqc(temp) = mqcX(temp);
-                        ZZ(isQC,:) = ZZqc;
-                    end
+                    ZZqc = knnimpute(ZZqc,k);
+                catch                
+                    mqc = mean(ZZqc,'omitnan');
+                    mqcX = repmat(mqc,height(ZZqc),1);
+                    temp = isnan(ZZqc);
+                    ZZqc(temp) = mqcX(temp);
+                    ZZ(isQC,:) = ZZqc;               
                 end
                 ZZ(isQC,:) = ZZqc;
                 % replace every other missing with KNN
                 try
-                    ZZ = knnimpute(ZZ,3);
+                    ZZ = knnimpute(ZZ,k);
                 catch
                     try
-                        ZZ=incrementalKNNimpute(ZZ,3);
+                        ZZ=incrementalKNNimpute(ZZ,k);
                     catch exception
                         throw(exception)
                     end
@@ -130,7 +129,7 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                 % replace missing QCs with KNN QC values or mean
                 ZZqc = ZZ(isQC,:);
                 try
-                    ZZqc = knnimpute(ZZqc',3)';
+                    ZZqc = knnimpute(ZZqc',k)';
                 catch
                     mqc = mean(ZZqc,'omitnan');
                     mqcX = repmat(mqc,height(ZZqc),1);
@@ -141,10 +140,10 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                 ZZ(isQC,:) = ZZqc;
                 % replace every other missing with KNN
                 try
-                    ZZ = knnimpute(ZZ',3)';
+                    ZZ = knnimpute(ZZ',k)';
                 catch
                     try
-                        ZZ=incrementalKNNimpute(ZZ',3)';
+                        ZZ=incrementalKNNimpute(ZZ',k)';
                     catch exception
                         throw(exception)
                     end

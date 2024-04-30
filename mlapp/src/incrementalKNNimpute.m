@@ -4,12 +4,14 @@ function [imputedX,count] = incrementalKNNimpute(X,k)
     count = width(Xsorted);
     num_missing = count;
     while num_missing > 0
-        count = count-1;
-        num_missing = sum(sum(isnan(Xsorted(:,1:count))));
-    end
-    for i = count+1:width(Xsorted)
-        XT = knnimpute(Xsorted(:,1:i),k);
-        Xsorted(:,1:i) = XT;
+        try 
+            XT = knnimpute(Xsorted(:,1:count),k);
+            Xsorted(:,1:count) = XT;
+            count = width(Xsorted);
+        catch
+            count = count-1;
+        end
+        num_missing = sum(sum(isnan(Xsorted)));
     end
     imputedX(:,idx) = Xsorted;
 end
