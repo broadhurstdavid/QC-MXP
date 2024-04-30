@@ -11,9 +11,10 @@
 7. [Peak Explorer - interrogate proposed correction of a given peak](#peak-explorer)
 8. [Correct the whole data set](#correct-the-whole-data-set)
 9. [Data Cleaning & Exploration](#data-cleaning--exploration)
-10. [TUTORIAL VIDEO](#tutorial-video)
-11. [How to Download & Install QCMXP](#how-to-download--install-qcmxp)
-12. [Source Code](source-code)
+10. [CHEAT SHEET](#cheat-sheet)
+11. [TUTORIAL VIDEO](#tutorial-video)
+12. [How to Download & Install QCMXP](#how-to-download--install-qcmxp)
+13. [Source Code](source-code)
 
 
 ## Introduction
@@ -82,6 +83,8 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 <br />
 ## TUTORIAL VIDEO
 **Coming Soon**
+## CHEAT SHEET
+There is a pdf explaining the QC-MXP & QCRSC options [here](/docs/CheatSheet.pdf).
 ## How to Download & Install QCMXP
 The binary installation files are found in the [dist](/dist) folder. Choose the one that matches your operating system (OSX Intel or Silicon, Windows 10 or Windows 11, & Matlab App). Download (unzip if OSX) and run. The helper app will guide you through installation.
 <br />
