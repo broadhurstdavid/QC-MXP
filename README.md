@@ -6,7 +6,7 @@
 <img src="res/QCMXPz.png" width="400" style="left"> <img src="res/textx10.png" width="300" style="left">
 <br />
 <br />
-This repository contains the binary installation files (Apple OSX & Microsoft Windows) and the Matlab source code for the metabolomics standalone application *QC:MXP* written by [Prof David Broadhurst](http://www.davidbroadhurst.net). You can cite this package as follows: 
+This repository contains the binary installation files (Apple OSX & Microsoft Windows) and the Matlab source code for the metabolomics standalone application *QC:MXP* written by [Professor David Broadhurst](http://www.davidbroadhurst.net). You can cite this package as follows: 
 >Broadhurst, D.I. (2023). *QC-MXP: Repeat Injection based Quality Control, Batch Correction, Exploration & Data Cleaning* (version 1.0) Zendono. <https://doi.org/10.5281/zenodo.11101542>. Retrieved from <https://github.com/broadhurstdavid/QC-MXP.>
 <br />
 
