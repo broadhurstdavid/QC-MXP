@@ -2,14 +2,15 @@
 [![Download](https://custom-icon-badges.demolab.com/badge/-Download-blue?style=for-the-badge&logo=download&logoColor=white "Download zip")](https://github.com/broadhurstdavid/QC-MXP/releases/latest)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101542.svg)](https://doi.org/10.5281/zenodo.11101542) [![Github All Releases](https://img.shields.io/github/downloads/broadhurstdavid/QC-MXP/total.svg)]()
-
-<br />
 <br />
 
-<img src="res/QCMXPz.png" width="400" style="left">
-
-# Repeat-injection-based quality control, batch correction, exploration, &amp; data cleaning.
-
+<img src="res/QCMXPz.png" width="400" style="left"> <img src="res/textx10.png" width="300" style="left">
+<br />
+<br />
+This repository contains the binary installation files (Apple OSX & Microsoft Windows) and the source code for the metabolomics standalone application *QC:MXP* written by Prof David Broadhurst, Edith Cowan University, Perth, Australia. You can cite this package as follows: 
+>Broadhurst, D.I. (2023). *QC-MXP: Repeat Injection based Quality Control, Batch Correction, Exploration & Data Cleaning* (version 1.0) Zendono. <https://doi.org/10.5281/zenodo.11101542>. Retrieved from <https://github.com/broadhurstdavid/QC-MXP.>
+<br />
+<br />
 
 1. [Introduction](#introduction)
 2. [Tidy Data](#tidy-data)
@@ -23,12 +24,6 @@
 10. [CHEAT SHEET](#cheat-sheet)
 11. [TUTORIAL VIDEO](#tutorial-video)
 13. [Source Code](source-code)
-
-## How to cite this software
-
-You can cite this package as follows: 
-> Broadhurst, D.I. (2023). Software package: QC:MXP (v1.0). Zendono. <https://doi.org/10.5281/zenodo.11101542>. Retrieved from <https://github.com/broadhurstdavid/QC-MXP>.
-
 
 ## Introduction
 This standalone application is written specifically for the metabolomics community. It is a long overdue companion app to the publication ["Guidelines and considerations for the use of system suitability and quality control samples in mass spectrometry assays applied in untargeted clinical metabolomic studies" Metabolomics 14, 72 (2018)](https://link.springer.com/article/10.1007/s11306-018-1367-3). It can be used as an educational tool to explore the process of intra- and inter-batch correction based on repeat-injection reference samples (e.g. pooled quality control samples); however, it is designed primarily to be used as a practical tool for real world problems. It has been written as a standalone application (Mac OS, Windows 10, & Windows 11) rather than as a set of command line R or Python packages, because I wanted it to be user friendly, placing all of the cognitive load on understanding the underlying concepts, providing process transparency, and creating a highly visual interactive exploration of the data (rather than placing the majority of the cognitive load on programming skills and frustratingly installing package dependencies). As you can see from the screenshot there are many options, which may seem daunting. However, foundational knowledge is scaffolded through interactive *Explorer* windows, and extensive beta testing has suggested that the learning curve is shallow. That said, it is worth noting that the process of batch correction, quality control, and data cleaning is non-trivial and requires some thought, education, and project-specific investigation.
