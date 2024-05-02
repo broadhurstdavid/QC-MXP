@@ -1,5 +1,7 @@
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101542.svg)](https://doi.org/10.5281/zenodo.11101542) [![Github All Releases](https://img.shields.io/github/downloads/broadhurstdavid/QC-MXP/total.svg)]() [![Download](https://custom-icon-badges.demolab.com/badge/-Download-blue?style=for-the-badge&logo=download&logoColor=white "Download")](https://github.com/DenverCoder1/readme-download-button-action/archive/1.0.2.zip)
+[![Download](https://custom-icon-badges.demolab.com/badge/-Download-blue?style=for-the-badge&logo=download&logoColor=white "Download zip")](https://github.com/broadhurstdavid/QC-MXP/releases/latest)
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101542.svg)](https://doi.org/10.5281/zenodo.11101542) [![Github All Releases](https://img.shields.io/github/downloads/broadhurstdavid/QC-MXP/total.svg)]()
 
 <br />
 <br />
@@ -97,7 +99,7 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 ## CHEAT SHEET
 There is a pdf explaining the QC-MXP & QCRSC options [here](/docs/CheatSheet.pdf).
 ## How to Download & Install QCMXP
-The binary installation files are found in [latest release](https://github.com/broadhurstdavid/QC-MXP/releases/latest) section of the repository. Choose the one that matches your operating system (OSX Intel or Silicon, Windows 10 or Windows 11, & Matlab App). Download (unzip if OSX) and run. The helper app will guide you through installation. Note: For OSX the application can be found in '/Applications/QCMXP/application' (unless you customised your install). Maybe pin the app to your Dock once opened.
+The binary installation files are found in the [latest release section of the repository](https://github.com/broadhurstdavid/QC-MXP/releases/latest). Choose the one that matches your operating system (OSX Intel or Silicon, Windows 10 or Windows 11, & Matlab App). Download (unzip if OSX) and run. The helper app will guide you through installation. Note: For OSX the application can be found in '/Applications/QCMXP/application' (unless you customised your install). Maybe pin the app to your Dock once opened.
 <br />
 <br />
 This application is free, but is built on top of the Matlab Runtime libraries (also free). This means installation can be slow as the runtime libraries must first be installed. It also takes while to launch (without a splash screen). This is particualrly true on the first time of running. So please be patient. Do not be alarmed by any Matlab procesess running in the background. This is completely normal. Any minor update to the software will not require updating the runtime libraries so will install very quickly.
