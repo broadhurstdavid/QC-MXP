@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1854172537" file="\\mac\home\Github\QC-MXP\mlapp\QCMXP.prj" location="\\mac\home\Github\QC-MXP\mlapp" name="QCMXP" preferred-package-location="C:\Users\davidbroadhurst\Documents\MATLAB\Z:\Github\QC-MXP\mlapp\QCMXP\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="1854172537" file="Y:\QC-MXP\mlapp\QCMXP.prj" location="Y:\QC-MXP\mlapp" name="QCMXP" preferred-package-location="C:\Users\dvdbrdhrst\Documents\Matlab\C:\Users\davidbroadhurst\Documents\MATLAB\Z:\Github\QC-MXP\mlapp\QCMXP\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>QCMXP</param.appname>
     <param.icon>${PROJECT_ROOT}\QCMXP_resources\icon.ico</param.icon>
     <param.icons>
@@ -133,9 +133,9 @@ Enjoy! - David.</param.description>
       <file>${PROJECT_ROOT}\TidyPeakTableView.mlapp</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="QCMXP.exe" optional="false">\\mac\home\Github\QC-MXP\mlapp\QCMXP\for_testing\QCMXP.exe</file>
-      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="splash.png" optional="false">\\mac\home\Github\QC-MXP\mlapp\QCMXP\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="readme.txt" optional="true">\\mac\home\Github\QC-MXP\mlapp\QCMXP\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="splash.png" optional="false">Y:\QC-MXP\mlapp\QCMXP\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="QCMXP.exe" optional="false">Y:\QC-MXP\mlapp\QCMXP\for_testing\QCMXP.exe</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="readme.txt" optional="true">Y:\QC-MXP\mlapp\QCMXP\for_testing\readme.txt</file>
     </build-deliverables>
     <workflow />
     <matlab>
