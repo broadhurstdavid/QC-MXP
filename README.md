@@ -1,3 +1,7 @@
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101542.svg)](https://doi.org/10.5281/zenodo.11101542)
+<br />
+<br />
 <img src="res/QCMXPz.png" width="400" style="left">
 
 # Repeat-injection-based quality control, batch correction, exploration, &amp; data cleaning.
