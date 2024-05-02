@@ -22,6 +22,7 @@ This repository contains the binary installation files (Apple OSX & Microsoft Wi
 9. [Data Cleaning & Exploration](#data-cleaning--exploration)
 10. [CHEAT SHEET](#cheat-sheet)
 11. [TUTORIAL VIDEO](#tutorial-video)
+12. [How to Download & Install QCMXP](how-to-download--install-qcmxp)
 13. [Source Code](source-code)
 
 ## Introduction
