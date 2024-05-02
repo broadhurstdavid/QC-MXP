@@ -1,5 +1,6 @@
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101542.svg)](https://doi.org/10.5281/zenodo.11101542)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101542.svg)](https://doi.org/10.5281/zenodo.11101542) [![Github All Releases](https://img.shields.io/github/downloads/broadhurstdavid.github.io/QC-MXP/total.svg)]()
+
 <br />
 <br />
 
