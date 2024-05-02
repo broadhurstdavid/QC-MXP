@@ -21,9 +21,8 @@ This repository contains the binary installation files (Apple OSX & Microsoft Wi
 8. [Correct the whole data set](#correct-the-whole-data-set)
 9. [Data Cleaning & Exploration](#data-cleaning--exploration)
 10. [CHEAT SHEET](#cheat-sheet)
-11. [TUTORIAL VIDEO](#tutorial-video)
-12. [How to Download & Install QCMXP](how-to-download--install-qcmxp)
-13. [Source Code](source-code)
+11. [How to Download & Install QCMXP](how-to-download--install-qcmxp)
+12. [Source Code](source-code)
 
 ## Introduction
 This standalone application is written specifically for the metabolomics community. It is a long overdue companion app to the publication ["Guidelines and considerations for the use of system suitability and quality control samples in mass spectrometry assays applied in untargeted clinical metabolomic studies" Metabolomics 14, 72 (2018)](https://link.springer.com/article/10.1007/s11306-018-1367-3). It can be used as an educational tool to explore the process of intra- and inter-batch correction based on repeat-injection reference samples (e.g. pooled quality control samples); however, it is designed primarily to be used as a practical tool for real world problems. It has been written as a standalone application (Mac OS, Windows 10, & Windows 11) rather than as a set of command line R or Python packages, because I wanted it to be user friendly, placing all of the cognitive load on understanding the underlying concepts, providing process transparency, and creating a highly visual interactive exploration of the data (rather than placing the majority of the cognitive load on programming skills and frustratingly installing package dependencies). As you can see from the screenshot there are many options, which may seem daunting. However, foundational knowledge is scaffolded through interactive *Explorer* windows, and extensive beta testing has suggested that the learning curve is shallow. That said, it is worth noting that the process of batch correction, quality control, and data cleaning is non-trivial and requires some thought, education, and project-specific investigation.
