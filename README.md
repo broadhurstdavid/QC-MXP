@@ -3,8 +3,6 @@
 
 [![Download](https://custom-icon-badges.demolab.com/badge/-Download-blue?style=for-the-badge&logo=download&logoColor=white "Download zip")](https://github.com/broadhurstdavid/QC-MXP/releases/latest)
 
-<br />
-
 <img src="res/QCMXPz.png" width="400" style="left"> <img src="res/textx10.png" width="300" style="left">
 <br />
 <br />
