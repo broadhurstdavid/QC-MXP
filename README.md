@@ -1,5 +1,5 @@
 
-[![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101542.svg)](https://doi.org/10.5281/zenodo.11101542) [![Github All Releases](https://img.shields.io/github/downloads/broadhurstdavid/QC-MXP/total.svg)]() [![X Follow](https://img.shields.io/twitter/follow/QC:MXP)](https://twitter.com/QC_MXP)  
+[![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) ![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101542.svg)](https://doi.org/10.5281/zenodo.11101542) [![Github All Releases](https://img.shields.io/github/downloads/broadhurstdavid/QC-MXP/total.svg)]() [![X Follow](https://img.shields.io/twitter/follow/QC:MXP)](https://twitter.com/QC_MXP)
 
 [![Download](https://custom-icon-badges.demolab.com/badge/-Download-blue?style=for-the-badge&logo=download&logoColor=white "Download zip")](https://github.com/broadhurstdavid/QC-MXP/releases/latest) 
 
