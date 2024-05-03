@@ -3,7 +3,7 @@
 
 [![Download](https://custom-icon-badges.demolab.com/badge/-Download-blue?style=for-the-badge&logo=download&logoColor=white "Download zip")](https://github.com/broadhurstdavid/QC-MXP/releases/latest) 
 
-<img src="res/QCMXPz.png" width="400" style="left"> <img src="res/textx10.png" width="300" style="left">
+<img src="res/QCMXPz.png" width="400" style="left">   <img src="res/textx10.png" width="300" style="left">
 <br />
 <br />
 This [GitHub repository](https://github.com/broadhurstdavid/QC-MXP) contains the binary installation files (Apple OSX & Microsoft Windows) and the Matlab source code for the metabolomics standalone application *QC:MXP* written by [Professor David Broadhurst](http://www.davidbroadhurst.net). You can cite this package as follows: 
