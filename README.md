@@ -1,6 +1,7 @@
 
 [![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) ![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101542.svg)](https://doi.org/10.5281/zenodo.11101542)  
-[![X Follow](https://img.shields.io/twitter/follow/QC:MXP)](https://twitter.com/QC_MXP) [![Mastodon Follow](https://img.shields.io/mastodon/follow/109510570221530343)](https://mastodon.social/@davidbroadhurst)
+[![Email Badge](https://img.shields.io/badge/Gmail-Contact_Me-green?style=flat-square&logo=gmail&logoColor=FFFFFF&labelColor=red&color=grey)](mailto:dvdbrdhrst@gmail.com)
+ [![X Follow](https://img.shields.io/twitter/follow/QC:MXP)](https://twitter.com/QC_MXP) [![Mastodon Follow](https://img.shields.io/mastodon/follow/109510570221530343)](https://mastodon.social/@davidbroadhurst)
 
  
 
