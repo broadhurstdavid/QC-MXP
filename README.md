@@ -1,9 +1,13 @@
 
-[![HOME](https://badgen.net/badge/github:/QC-MXP/red?icon=twitter])](https://github.com/broadhurstdavid/QC-MXP/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101542.svg)](https://doi.org/10.5281/zenodo.11101542) [![Github All Releases](https://img.shields.io/github/downloads/broadhurstdavid/QC-MXP/total.svg)]()
+[![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) ![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101542.svg)](https://doi.org/10.5281/zenodo.11101542) ![GitHub last commit](https://img.shields.io/github/last-commit/broadhurstdavid/QC-MXP)
 
+[![Email Badge](https://img.shields.io/badge/Gmail-Contact_Me-green?style=flat-square&logo=gmail&logoColor=FFFFFF&labelColor=red&color=grey)](mailto:dvdbrdhrst@gmail.com)
+ [![X Follow](https://img.shields.io/twitter/follow/QC:MXP)](https://twitter.com/QC_MXP) 
+ 
+
+<img src="res/QCMXPz.png" width="400" style="left">   <img src="res/textx10.png" width="300" style="left">
+<br />
 [![Download](https://custom-icon-badges.demolab.com/badge/-Download-blue?style=for-the-badge&logo=download&logoColor=white "Download zip")](https://github.com/broadhurstdavid/QC-MXP/releases/latest)
-
-<img src="res/QCMXPz.png" width="400" style="left"> <img src="res/textx10.png" width="300" style="left">
 <br />
 <br />
 This [GitHub repository](https://github.com/broadhurstdavid/QC-MXP) contains the binary installation files (Apple OSX & Microsoft Windows) and the Matlab source code for the metabolomics standalone application *QC:MXP* written by [Professor David Broadhurst](http://www.davidbroadhurst.net). You can cite this package as follows: 
@@ -97,5 +101,5 @@ The binary installation files are found in the [latest release section of the re
 <br />
 This application is free, but is built on top of the Matlab Runtime libraries (also free). This means installation can be slow as the runtime libraries must first be installed. It also takes while to launch (without a splash screen). This is particualrly true on the first time of running. So please be patient. Do not be alarmed by any Matlab procesess running in the background. This is completely normal. Any minor update to the software will not require updating the runtime libraries so will install very quickly.
 ## Source Code
-This software is writting using *Matlab App Designer* all the Matlab source code can be found in the [mlapp](/mlapp) directory. It is probably not the best documented code. The core QCRSC code is 'QCRSC.m' & 'optimiseCSAPS.m' (and of course [csaps.m](https://www.mathworks.com/help/curvefit/csaps.html)) & maybe 'OutlierFilter.m' for the outlier detection algorithms (primarily based on Matlab [polyfit](https://www.mathworks.com/help/matlab/ref/polyfit.html) functions). The only other thing of note is the preprocessing & missing value imputation for the PCA plot ('PCApreprocessing.m'). KNN imputation is either based on the Matlab function [knnimpute](https://www.mathworks.com/help/bioinfo/ref/knnimpute.html) or an incremental KNN algorithm written by me, but inspired by [Ki-Yeol Kim et al.](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-5-160). Everything else is window dressing :-).
+This software was developed using the *Matlab App Designer*. All the Matlab source code can be found in the [mlapp](/mlapp) directory. It is probably not the best documented code. The core QCRSC code is 'QCRSC.m' & 'optimiseCSAPS.m' (and of course [csaps.m](https://www.mathworks.com/help/curvefit/csaps.html)) & maybe 'OutlierFilter.m' for the outlier detection algorithms (primarily based on Matlab [polyfit](https://www.mathworks.com/help/matlab/ref/polyfit.html) functions). The only other thing of note is the preprocessing & missing value imputation for the PCA plot ('PCApreprocessing.m'). KNN imputation is either based on the Matlab function [knnimpute](https://www.mathworks.com/help/bioinfo/ref/knnimpute.html) or an incremental KNN algorithm written by me, but inspired by [Ki-Yeol Kim et al.](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-5-160). Everything else is window dressing :-).
 
