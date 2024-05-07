@@ -94,7 +94,7 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 ## TUTORIAL VIDEO
 **Coming Soon**
 ## CHEAT SHEET
-There is a pdf explaining the QC-MXP & QCRSC options [here](/docs/CheatSheet.pdf).
+There is a pdf explaining the QC-MXP & QCRSC options [here](https://github.com/broadhurstdavid/QC-MXP/blob/main/docs/CheatSheet.pdf).
 ## How to Download & Install QCMXP
 The binary installation files are found in the [latest release section of the repository](https://github.com/broadhurstdavid/QC-MXP/releases/latest). Choose the one that matches your operating system (Apple Intel or Apple Silicon, Windows 10, Windows 11, or Matlab App). Download (unzip if Apple) and run. The helper app will guide you through installation. Note: For Apple users, once installed, application can be found in '/Applications/QCMXP/application' (unless you customized your install). Maybe pin the app to your Dock once opened.
 <br />
