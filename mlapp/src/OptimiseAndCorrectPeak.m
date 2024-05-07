@@ -1,4 +1,4 @@
-function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectPeak(config,t,y,batch,isQC)
+function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectPeak(config,t,y,batch,isQC,isBlank)
 
 % config.LogTransform
 % config.RemoveZeros
@@ -19,6 +19,7 @@ function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectPeak(config,t
 
 
 mpv = mean(y(isQC),'omitnan');
+
 z = nan(length(y),1);
 yspline = nan(length(y),1);
 ub = unique(batch);
@@ -109,7 +110,7 @@ for i = 1:numberOfBatches
     catch
         z(idx) = yi;
     end
-          
+    z(isBlank) = y(isBlank);   
 end
 
 

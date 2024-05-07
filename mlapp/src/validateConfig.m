@@ -76,9 +76,9 @@ if isa(baseConfig.QCRSCgammaRange,'char')
 end
 
 try
-    mustBeMember(baseConfig.IntraBatchMode,{'Median','Linear','Spline'});
+    mustBeMember(baseConfig.IntraBatchMode,{'Mean','Linear','Spline'});
 catch
-    baseException = MException('QCRSC:UnexpectedIntraBatchMode',"IntraBatchMode value must be one of the following: 'Median','Linear','Spline'");
+    baseException = MException('QCRSC:UnexpectedIntraBatchMode',"IntraBatchMode value must be one of the following: 'Mean','Linear','Spline'");
     throw(baseException)
 end  
 
