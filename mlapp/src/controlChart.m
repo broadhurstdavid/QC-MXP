@@ -45,14 +45,27 @@ function controlChart(axishandle,Data,option)
             ttoutlier = t(Data.Outlier);
             batches = unique(Data.Batch);
             batchNumTotal = numel(batches);
-            if batchNumTotal < 3
-                dot_size = 9;
-            elseif batchNumTotal < 5
-                dot_size = 7;
-            elseif batchNumTotal < 10
-                dot_size = 6;
+
+            if ismac
+                if batchNumTotal < 3
+                    dot_size = 9;
+                elseif batchNumTotal < 5
+                    dot_size = 7;
+                elseif batchNumTotal < 10
+                    dot_size = 6;
+                else
+                    dot_size = 5;
+                end
             else
-                dot_size = 5;
+                if batchNumTotal < 3
+                    dot_size = 6;
+                elseif batchNumTotal < 5
+                    dot_size = 5;
+                elseif batchNumTotal < 10
+                    dot_size = 4;
+                else
+                    dot_size = 3;
+                end
             end
             
             temp = y(Data.Blank);

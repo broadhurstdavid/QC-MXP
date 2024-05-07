@@ -16,8 +16,12 @@
     end
     
     cla(axishandle,'reset');
-    grey = [0.7,0.7,0.7];         
-    sz = 20;
+    grey = [0.7,0.7,0.7];
+    if ismac
+        sz = 20;
+    else
+        sz = 18;
+    end
     ecol = [0.9,0.9,0.9];
     cmapx = options.cmap;
     %      {'blue','red','orange','purple'};
@@ -188,9 +192,9 @@
                 
                 switch options.label
                     case 'SampleType'
-                        c(i) = plot(axishandle,x0,y0,'x','markersize',6,'color',hash(grps{i})); 
+                        c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',hash(grps{i})); 
                     otherwise
-                        c(i) = plot(axishandle,x0,y0,'x','markersize',6,'color',cmapx(i,:)); 
+                        c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',cmapx(i,:)); 
                 end
                     c(i).UserData = {grps{i},'mean'};
                     c(i).DisplayName = grps{i};
