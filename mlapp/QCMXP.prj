@@ -1,12 +1,12 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="560052607" file="/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP.prj" location="/Users/davidbroadhurst/Github/QC-MXP/mlapp" name="QCMXP" preferred-package-location="/Users/davidbroadhurst/Documents/MATLAB/C:\Users\davidbroadhurst\Github\QC-MXP\mlapp\QCMXP\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="560052607" file="Z:\QC-MXP\mlapp\QCMXP.prj" location="Z:\QC-MXP\mlapp" name="QCMXP" preferred-package-location="C:\Users\davidbroadhurst\Documents\MATLAB\C:\Users\davidbroadhurst\Github\QC-MXP\mlapp\QCMXP\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>QCMXP</param.appname>
-    <param.icon>${PROJECT_ROOT}/QCMXP_resources/icon.icns</param.icon>
+    <param.icon>${PROJECT_ROOT}\QCMXP_resources\icon.ico</param.icon>
     <param.icons>
-      <file>${PROJECT_ROOT}/QCMXP_resources/icon_48.png</file>
-      <file>${PROJECT_ROOT}/QCMXP_resources/icon_32.png</file>
-      <file>${PROJECT_ROOT}/QCMXP_resources/icon_24.png</file>
-      <file>${PROJECT_ROOT}/QCMXP_resources/icon_16.png</file>
+      <file>${PROJECT_ROOT}\QCMXP_resources\icon_48.png</file>
+      <file>${PROJECT_ROOT}\QCMXP_resources\icon_32.png</file>
+      <file>${PROJECT_ROOT}\QCMXP_resources\icon_24.png</file>
+      <file>${PROJECT_ROOT}\QCMXP_resources\icon_16.png</file>
     </param.icons>
     <param.version>1.0.2</param.version>
     <param.authnamewatermark>David Broadhurst</param.authnamewatermark>
@@ -16,25 +16,17 @@
     <param.description>This application is free, but is built on top of the Matlab Runtime libraries (also free). This means installation can be slow as the runtime libraries must first be installed. It also takes while to launch (without a splash screen). So please be patient. Do not be alarmed by any Matlab procesess running in the background. This is completely normal. For help please visit: www.qcmxp.org
 
 Enjoy! - David.</param.description>
-    <param.screenshot>${PROJECT_ROOT}/res/QCRSCsplash.png</param.screenshot>
+    <param.screenshot>${PROJECT_ROOT}\res\QCRSCsplash.png</param.screenshot>
     <param.guid />
-    <param.installpath.string>/QCMXP/</param.installpath.string>
-    <param.installpath.combo>option.installpath.systemwideapp</param.installpath.combo>
+    <param.installpath.string>\QCMXP\</param.installpath.string>
+    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
     <param.logo />
     <param.install.notes />
-    <param.target.install.notes>In the following directions, replace MR/R2024a by the directory on the target machine where MATLAB is installed, or MR by the directory where the MATLAB Runtime is installed.
-
-If the environment variable DYLD_LIBRARY_PATH is undefined, set it to the following string:
-
-MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/bin/maci64
-
-If it is defined, set it to the following:
-
-${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/bin/maci64</param.target.install.notes>
-    <param.intermediate>${PROJECT_ROOT}/QCMXP/for_testing</param.intermediate>
-    <param.files.only>${PROJECT_ROOT}/QCMXP/for_redistribution_files_only</param.files.only>
-    <param.output>${PROJECT_ROOT}/QCMXP/for_redistribution</param.output>
-    <param.logdir>${PROJECT_ROOT}/QCMXP</param.logdir>
+    <param.target.install.notes />
+    <param.intermediate>${PROJECT_ROOT}\QCMXP\for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}\QCMXP\for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}\QCMXP\for_redistribution</param.output>
+    <param.logdir>${PROJECT_ROOT}\QCMXP</param.logdir>
     <param.enable.clean.build>false</param.enable.clean.build>
     <param.user.defined.mcr.options />
     <param.target.type>subtarget.standalone</param.target.type>
@@ -45,7 +37,7 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/
     <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
     <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
     <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
-    <param.windows.command.prompt>false</param.windows.command.prompt>
+    <param.windows.command.prompt>true</param.windows.command.prompt>
     <param.create.log>false</param.create.log>
     <param.log.file />
     <param.native.matlab>false</param.native.matlab>
@@ -65,6 +57,7 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/
       <param.installpath.combo />
       <param.logo />
       <param.install.notes />
+      <param.target.install.notes />
       <param.intermediate />
       <param.files.only />
       <param.output />
@@ -87,66 +80,65 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/
       <param.example />
     </unset>
     <fileset.main>
-      <file>${PROJECT_ROOT}/QCmXP.mlapp</file>
+      <file>${PROJECT_ROOT}\QCmXP.mlapp</file>
     </fileset.main>
     <fileset.resources />
     <fileset.package />
     <fileset.depfun>
-      <file>${PROJECT_ROOT}/BatchStatsTable.mlapp</file>
-      <file>${PROJECT_ROOT}/ImportDataPeakFile.mlapp</file>
-      <file>${PROJECT_ROOT}/QCRSCconfigExplorer.mlapp</file>
-      <file>${PROJECT_ROOT}/QCRSCpeakExplorer.mlapp</file>
-      <file>${PROJECT_ROOT}/ScatterView.mlapp</file>
-      <file>${PROJECT_ROOT}/TidyPeakTableView.mlapp</file>
-      <file>${PROJECT_ROOT}/res/CEpopX.png</file>
-      <file>${PROJECT_ROOT}/res/PEpopX.png</file>
-      <file>${PROJECT_ROOT}/res/QCMXPz.png</file>
-      <file>${PROJECT_ROOT}/res/TidyMetqcx.png</file>
-      <file>${PROJECT_ROOT}/res/bypass2.png</file>
-      <file>${PROJECT_ROOT}/res/ceX.png</file>
-      <file>${PROJECT_ROOT}/res/drinkme.png</file>
-      <file>${PROJECT_ROOT}/res/eject2.png</file>
-      <file>${PROJECT_ROOT}/res/fullscreen.png</file>
-      <file>${PROJECT_ROOT}/res/icon_512x512@2x.png</file>
-      <file>${PROJECT_ROOT}/res/pause2.png</file>
-      <file>${PROJECT_ROOT}/res/peX2.png</file>
-      <file>${PROJECT_ROOT}/res/play2.png</file>
-      <file>${PROJECT_ROOT}/res/resetx.png</file>
-      <file>${PROJECT_ROOT}/res/textx10.png</file>
-      <file>${PROJECT_ROOT}/src/BatchCalcStats.m</file>
-      <file>${PROJECT_ROOT}/src/BatchCalcStatsTable.m</file>
-      <file>${PROJECT_ROOT}/src/LowerThanBlankAsNaN.m</file>
-      <file>${PROJECT_ROOT}/src/OptimiseAndCorrectPeak.m</file>
-      <file>${PROJECT_ROOT}/src/OptimiseAndCorrectPeakX.m</file>
-      <file>${PROJECT_ROOT}/src/OutlierFilter.m</file>
-      <file>${PROJECT_ROOT}/src/PCApreprocessing.m</file>
-      <file>${PROJECT_ROOT}/src/QCRSC.m</file>
-      <file>${PROJECT_ROOT}/src/QCRSCplotdistribution.m</file>
-      <file>${PROJECT_ROOT}/src/calcStats.m</file>
-      <file>${PROJECT_ROOT}/src/ci95_ellipse2018.m</file>
-      <file>${PROJECT_ROOT}/src/controlChart.m</file>
-      <file>${PROJECT_ROOT}/src/generateMetabExamplesNew.m</file>
-      <file>${PROJECT_ROOT}/src/humaniseLogTickLabel.m</file>
-      <file>${PROJECT_ROOT}/src/incrementalKNNimpute.m</file>
-      <file>${PROJECT_ROOT}/src/mapRcolors.m</file>
-      <file>${PROJECT_ROOT}/src/optimiseCSAPS.m</file>
-      <file>${PROJECT_ROOT}/src/plotPCAXX.m</file>
-      <file>${PROJECT_ROOT}/src/preprocessDataForExport.m</file>
-      <file>${PROJECT_ROOT}/src/qcrscPCA.m</file>
-      <file>${PROJECT_ROOT}/src/readDataCSVapp.m</file>
-      <file>${PROJECT_ROOT}/src/readDataXLapp.m</file>
-      <file>${PROJECT_ROOT}/src/validateConfig.m</file>
-      <file>${PROJECT_ROOT}/src/validatingDataPeakTables.m</file>
+      <file>${PROJECT_ROOT}\BatchStatsTable.mlapp</file>
+      <file>${PROJECT_ROOT}\ImportDataPeakFile.mlapp</file>
+      <file>${PROJECT_ROOT}\QCRSCconfigExplorer.mlapp</file>
+      <file>${PROJECT_ROOT}\QCRSCpeakExplorer.mlapp</file>
+      <file>${PROJECT_ROOT}\res\bypass2.png</file>
+      <file>${PROJECT_ROOT}\res\CEpopX.png</file>
+      <file>${PROJECT_ROOT}\res\ceX.png</file>
+      <file>${PROJECT_ROOT}\res\drinkme.png</file>
+      <file>${PROJECT_ROOT}\res\eject2.png</file>
+      <file>${PROJECT_ROOT}\res\fullscreen.png</file>
+      <file>${PROJECT_ROOT}\res\icon_512x512@2x.png</file>
+      <file>${PROJECT_ROOT}\res\pause2.png</file>
+      <file>${PROJECT_ROOT}\res\PEpopX.png</file>
+      <file>${PROJECT_ROOT}\res\peX2.png</file>
+      <file>${PROJECT_ROOT}\res\play2.png</file>
+      <file>${PROJECT_ROOT}\res\QCMXPz.png</file>
+      <file>${PROJECT_ROOT}\res\resetx.png</file>
+      <file>${PROJECT_ROOT}\res\textx10.png</file>
+      <file>${PROJECT_ROOT}\res\TidyMetqcx.png</file>
+      <file>${PROJECT_ROOT}\ScatterView.mlapp</file>
+      <file>${PROJECT_ROOT}\src\BatchCalcStats.m</file>
+      <file>${PROJECT_ROOT}\src\BatchCalcStatsTable.m</file>
+      <file>${PROJECT_ROOT}\src\calcStats.m</file>
+      <file>${PROJECT_ROOT}\src\ci95_ellipse2018.m</file>
+      <file>${PROJECT_ROOT}\src\controlChart.m</file>
+      <file>${PROJECT_ROOT}\src\generateMetabExamplesNew.m</file>
+      <file>${PROJECT_ROOT}\src\humaniseLogTickLabel.m</file>
+      <file>${PROJECT_ROOT}\src\incrementalKNNimpute.m</file>
+      <file>${PROJECT_ROOT}\src\LowerThanBlankAsNaN.m</file>
+      <file>${PROJECT_ROOT}\src\mapRcolors.m</file>
+      <file>${PROJECT_ROOT}\src\OptimiseAndCorrectPeak.m</file>
+      <file>${PROJECT_ROOT}\src\OptimiseAndCorrectPeakX.m</file>
+      <file>${PROJECT_ROOT}\src\optimiseCSAPS.m</file>
+      <file>${PROJECT_ROOT}\src\OutlierFilter.m</file>
+      <file>${PROJECT_ROOT}\src\PCApreprocessing.m</file>
+      <file>${PROJECT_ROOT}\src\plotPCAXX.m</file>
+      <file>${PROJECT_ROOT}\src\preprocessDataForExport.m</file>
+      <file>${PROJECT_ROOT}\src\QCRSC.m</file>
+      <file>${PROJECT_ROOT}\src\qcrscPCA.m</file>
+      <file>${PROJECT_ROOT}\src\QCRSCplotdistribution.m</file>
+      <file>${PROJECT_ROOT}\src\readDataCSVapp.m</file>
+      <file>${PROJECT_ROOT}\src\readDataXLapp.m</file>
+      <file>${PROJECT_ROOT}\src\validateConfig.m</file>
+      <file>${PROJECT_ROOT}\src\validatingDataPeakTables.m</file>
+      <file>${PROJECT_ROOT}\TidyPeakTableView.mlapp</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="run_QCMXP.sh" optional="false">/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP/for_testing/run_QCMXP.sh</file>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="QCMXP.app" optional="false">/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP/for_testing/QCMXP.app</file>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="readme.txt" optional="true">/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP/for_testing/readme.txt</file>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="splash.png" optional="false">/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP/for_testing/splash.png</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="QCMXP.exe" optional="false">Z:\QC-MXP\mlapp\QCMXP\for_testing\QCMXP.exe</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="readme.txt" optional="true">Z:\QC-MXP\mlapp\QCMXP\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="splash.png" optional="false">Z:\QC-MXP\mlapp\QCMXP\for_testing\splash.png</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>/Applications/MATLAB_R2024a.app</root>
+      <root>C:\Program Files\MATLAB\R2024a</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
       </toolboxes>
@@ -157,18 +149,18 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/
       </toolbox>
     </matlab>
     <platform>
-      <unix>true</unix>
-      <mac>true</mac>
-      <windows>false</windows>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
       <win2k>false</win2k>
       <winxp>false</winxp>
       <vista>false</vista>
       <linux>false</linux>
       <solaris>false</solaris>
-      <osver>14.4.1</osver>
+      <osver>10.0</osver>
       <os32>false</os32>
       <os64>true</os64>
-      <arch>maci64</arch>
+      <arch>win64</arch>
       <matlab>true</matlab>
     </platform>
   </configuration>
