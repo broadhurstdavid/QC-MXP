@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="2461152820" file="Z:\QC-MXP\mlapp\QCMXP.prj" location="Z:\QC-MXP\mlapp" name="QCMXP" preferred-package-location="C:\Users\dvdbrdhrst\GitHub\QC-MXP\mlapp\QCMXP\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="2489161621" file="Z:\QC-MXP\mlapp\QCMXP.prj" location="Z:\QC-MXP\mlapp" name="QCMXP" preferred-package-location="Z:\QC-MXP\mlapp\QCMXP\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>QCMXP</param.appname>
     <param.icon>${PROJECT_ROOT}\QCMXP_resources\icon.ico</param.icon>
     <param.icons>
