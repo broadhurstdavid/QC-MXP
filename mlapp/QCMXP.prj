@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1110548376" file="\\mac\home\Github\QC-MXP\mlapp\QCMXP.prj" location="\\mac\home\Github\QC-MXP\mlapp" name="QCMXP" preferred-package-location="\\mac\home\Github\QC-MXP\mlapp\QCMXP\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="2461152820" file="Z:\QC-MXP\mlapp\QCMXP.prj" location="Z:\QC-MXP\mlapp" name="QCMXP" preferred-package-location="C:\Users\dvdbrdhrst\GitHub\QC-MXP\mlapp\QCMXP\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>QCMXP</param.appname>
     <param.icon>${PROJECT_ROOT}\QCMXP_resources\icon.ico</param.icon>
     <param.icons>
@@ -16,7 +16,7 @@
     <param.description>This application is free, but is built on top of the Matlab Runtime libraries (also free). This means installation can be slow as the runtime libraries must first be installed. It also takes while to launch (without a splash screen). So please be patient. Do not be alarmed by any Matlab procesess running in the background. This is completely normal. For help please visit: www.qcmxp.org
 
 Enjoy! - David.</param.description>
-    <param.screenshot>${PROJECT_ROOT}\res\QCRSCsplash.png</param.screenshot>
+    <param.screenshot>${PROJECT_ROOT}\res\splash.png</param.screenshot>
     <param.guid />
     <param.installpath.string>\QCMXP\</param.installpath.string>
     <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
@@ -132,9 +132,9 @@ Enjoy! - David.</param.description>
       <file>${PROJECT_ROOT}\TidyPeakTableView.mlapp</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="QCMXP.exe" optional="false">\\mac\home\Github\QC-MXP\mlapp\QCMXP\for_testing\QCMXP.exe</file>
-      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="splash.png" optional="false">\\mac\home\Github\QC-MXP\mlapp\QCMXP\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="readme.txt" optional="true">\\mac\home\Github\QC-MXP\mlapp\QCMXP\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="QCMXP.exe" optional="false">Z:\QC-MXP\mlapp\QCMXP\for_testing\QCMXP.exe</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="readme.txt" optional="true">Z:\QC-MXP\mlapp\QCMXP\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="splash.png" optional="false">Z:\QC-MXP\mlapp\QCMXP\for_testing\splash.png</file>
     </build-deliverables>
     <workflow />
     <matlab>
