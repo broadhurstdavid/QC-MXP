@@ -110,7 +110,8 @@ for i = 1:numberOfBatches
     catch
         z(idx) = yi;
     end
-    z(isBlank) = y(isBlank);   
+    %next line stops the blank from being corrected - disabled
+    %z(isBlank) = y(isBlank);   
 end
 
 
