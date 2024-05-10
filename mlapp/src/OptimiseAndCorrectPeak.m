@@ -80,9 +80,10 @@ for i = 1:numberOfBatches
             case 'Mean'
                 gamma = NaN;epsilon = NaN;cvMse = 0;minVal = 0;
             case 'Linear'
-                avDist = median(tqci(2:end) - tqci(1:end-1));
-                epsilon = avDist^3/16;
-                gamma = 11;cvMse = 0;minVal = 0;
+                %avDist = median(tqci(2:end) - tqci(1:end-1));
+                %epsilon = avDist^3/16;
+                %gamma = 11;cvMse = 0;minVal = 0;
+                gamma = 1000;epsilon = NaN;cvMse = 0;minVal = 0;
             otherwise
                 [gamma,epsilon,cvMse,minVal] = optimiseCSAPS(tqci,yqci,config.QCRSCgammaRange,config.QCRSCcvMethod,config.QCRSCmcReps);               
         end
@@ -106,7 +107,7 @@ for i = 1:numberOfBatches
     missing = isnan(yi);
     qci(missing) = false;
     try
-        [z(idx),yspline(idx)] = QCRSC(ti,yi,qci,mpv,epsilonVal(i),gammaVal(i),toutliers,config.CorrectionType,config.OutlierPostHoc);
+        [z(idx),yspline(idx)] = QCRSC2(ti,yi,qci,mpv,epsilonVal(i),gammaVal(i),toutliers,config.CorrectionType,config.OutlierPostHoc);
     catch
         z(idx) = yi;
     end
