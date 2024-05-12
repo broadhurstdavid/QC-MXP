@@ -3,8 +3,7 @@ function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectPeakX(config,
     if strcmp(config.InterBatchMode,'Reference')
         tempConfig = config;
         tempConfig.OutlierMethod = 'none';
-        tempConfig.OutlierScope = 'Local';
          tempConfig.IntraBatchMode = 'Mean';
-        z = OptimiseAndCorrectPeak(tempConfig,t,z,batch,isREF);
+        z = OptimiseAndCorrectPeak(tempConfig,t,z,batch,isREF,isBlank);
     end
 end

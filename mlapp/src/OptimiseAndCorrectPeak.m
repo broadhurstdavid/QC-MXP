@@ -42,14 +42,14 @@ yqc = y(isQC);
 tqc = t(isQC);
 batchqc = batch(isQC);
 
-if ismember(config.OutlierScope,{'Global','Global&Local'})
-    %[~,~,toutliers] = OutlierFilter(tqc,yqc,config.OutlierMethod,0.99,lowonly=true);
-    [~,~,toutliers] = OutlierFilter(tqc,yqc,config.OutlierMethod,config.OutlierCI);
-    found = ismember(tqc,toutliers);
-    tqc(found) = [];
-    yqc(found) = [];
-    batchqc(found) = [];
-end
+% if ismember(config.OutlierScope,{'Global','Global&Local'})
+%     %[~,~,toutliers] = OutlierFilter(tqc,yqc,config.OutlierMethod,0.99,lowonly=true);
+%     [~,~,toutliers] = OutlierFilter(tqc,yqc,config.OutlierMethod,config.OutlierCI);
+%     found = ismember(tqc,toutliers);
+%     tqc(found) = [];
+%     yqc(found) = [];
+%     batchqc(found) = [];
+% end
 
 
 
@@ -71,11 +71,11 @@ for i = 1:numberOfBatches
 %     tqci = ti(qci);
 %     yqci = yi(qci);
     try
-        if ismember(config.OutlierScope,{'Local','Global&Local'})
-            [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,config.OutlierMethod,config.OutlierCI);
-        else
-            toutlieri = [];
-        end
+        %if ismember(config.OutlierScope,{'Local','Global&Local'})
+        [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,config.OutlierMethod,config.OutlierCI);
+        % else
+        %     toutlieri = [];
+        % end
         switch config.IntraBatchMode
             case 'Mean'
                 gamma = NaN;epsilon = NaN;cvMse = 0;minVal = 0;

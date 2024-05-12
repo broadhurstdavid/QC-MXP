@@ -3,7 +3,6 @@ function baseConfig = validateConfig(baseConfig)
 defaultFieldnames = [
     {'LogTransform'     }
     {'RemoveZeros'      }
-    {'OutlierScope'     }
     {'OutlierMethod'    }
     {'OutlierCI'        }
     {'OutlierPostHoc'   }
@@ -39,12 +38,12 @@ catch
     throw(baseException)
 end
 
-try
-    mustBeMember(baseConfig.OutlierScope,{'Local','Global','Global&Local'});
-catch
-    baseException = MException('QCRSC:UnexpectedOutlierScope',"Config Error: OutlierScope value must be one of the following: 'Local','Global','Global&Local'");
-    throw(baseException)
-end
+% try
+%     mustBeMember(baseConfig.OutlierScope,{'Local','Global','Global&Local'});
+% catch
+%     baseException = MException('QCRSC:UnexpectedOutlierScope',"Config Error: OutlierScope value must be one of the following: 'Local','Global','Global&Local'");
+%     throw(baseException)
+% end
 
 try
     mustBeMember(baseConfig.OutlierMethod,{'None','Percentile','Linear','Quadratic','Cubic'});

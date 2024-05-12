@@ -86,6 +86,24 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                     ZZ(isQC,:) = ZZqc;               
                 end
                 ZZ(isQC,:) = ZZqc;
+
+                % replace missing Blanks with KNN QC values or mean
+
+                ZZblank = ZZ(isBlank,:);
+                try
+                    ZZblank = knnimpute(ZZblank,k);
+                catch                
+                    mblank = mean(ZZblank,'omitnan');
+                    if isnan(mblank)
+                        mblank = min10Val;
+                    end
+                    mblankX = repmat(mblank,height(ZZblank),1);
+                    temp = isnan(ZZblank);
+                    ZZblank(temp) = mblankX(temp);
+                    ZZ(isblank,:) = ZZblank;               
+                end
+                ZZ(isBlank,:) = ZZblank;
+
                 % replace every other missing with KNN
                 try
                     ZZ = knnimpute(ZZ,k);
@@ -96,6 +114,7 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                         throw(exception)
                     end
                 end
+
             %%%%%%%%%%%%%%%% 'KNNrow' %%%%%%%%%%%%%%%%%%%%%%%%%%
             case 'KNNrow'
                 if options.Fold
@@ -138,6 +157,24 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                     ZZ(isQC,:) = ZZqc;
                 end
                 ZZ(isQC,:) = ZZqc;
+
+                % replace missing Blanks with KNN blank values or mean
+
+                ZZblank = ZZ(isBlank,:);
+                try
+                    ZZblank = knnimpute(ZZblank',k)';
+                catch                
+                    mblank = mean(ZZblank,'omitnan');
+                    if isnan(mblank)
+                        mblank = min10Val;
+                    end
+                    mblankX = repmat(mblank,height(ZZblank),1);
+                    temp = isnan(ZZblank);
+                    ZZblank(temp) = mblankX(temp);
+                    ZZ(isblank,:) = ZZblank;               
+                end
+                ZZ(isBlank,:) = ZZblank;
+
                 % replace every other missing with KNN
                 try
                     ZZ = knnimpute(ZZ',k)';

@@ -5,10 +5,15 @@ yqc = y(qc);
 found = ismember(tqc,toutlier);
 tqc(found) = [];
 yqc(found) = [];
+myqc = 1;
 
 try
     if isnan(gammaVal)
-        yspline = mean(yqc,'omitnan')*ones(length(t),1);
+        myqc = mean(yqc,'omitnan');
+        if isnan(myqc)
+            myqc = mpv;
+        end
+        yspline = myqc*ones(length(t),1);
     elseif gammaVal == 1000
         mdl = fit(tqc,yqc,'poly1','Robust','Bisquare');
         yspline = feval(mdl,t);
@@ -17,15 +22,15 @@ try
         yspline = csaps(tqc,yqc,p,t);
     end
 catch
-    ME = MException('QCRSC:UnexpectedQCRSCerror',"QCRSC correction unexpectedly failed");
-    throw(ME);
+    % if everything fails then don't correct at all.
+    yspline = mpv*ones(length(t),1);
 end
 
 switch CorrectionType
     case 'Subtract'
-        z = (y-yspline)+mpv;
+            z = (y-yspline)+mpv;
     case 'Divide'
-        z = (y./yspline).*mpv;
+            z = (y./yspline).*mpv;
     otherwise
         ME = MException('QCRSC:UnexpectedQCRSCoperator',"QCRSC Operator '%s' does not exist",CorrectionType);
         throw(ME);
