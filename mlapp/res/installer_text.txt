@@ -1,0 +1,5 @@
+This application is free, but is built on top of the Matlab Runtime libraries (also free). This means installation can be slow as the runtime libraries must first be installed. It also takes while to launch (without a splash screen). So please be patient. Do not be alarmed by any Matlab procesess running in the background. This is completely normal. For help please visit: www.qcmxp.org
+
+IMPORTANT: For Apple users installing this version as an update to a previous version, you must delete the QCMXP folder (within the Applications folder) before installation. This OSX installer will not overwrite folders with the same name (a Matlab quirk).
+
+Enjoy! - David.
