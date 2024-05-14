@@ -35,9 +35,16 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
             ZZ(ZZ == 0) = NaN;
         end 
 
-        % replace missing Blanks with 10% of lowest value
+        % replace missing Blanks with mean 
         ZZblank = ZZ(isBlank,:);
-        min10Val = min(ZZ,[],1,'omitnan')*0.1;
+        meanBlank = mean(ZZblank,1,"omitmissing");
+        meanBlankX = repmat(meanBlank,height(ZZblank),1);
+        temp = isnan(ZZblank);
+        ZZblank(temp) = meanBlankX(temp);
+        
+        % or 10% of lowest value
+
+        min10Val = min(ZZ,[],1)*0.1;
         msampleX = repmat(min10Val,height(ZZblank),1);
         temp = isnan(ZZblank);
         ZZblank(temp) = msampleX(temp);
@@ -48,7 +55,7 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
             case 'KNNcol'
                 if options.Fold
                     ZZqc = ZZ(isQC,:);
-                    meanQC = mean(ZZqc,"omitmissing");
+                    meanQC = mean(ZZqc,1,"omitmissing");
                     ZZ(ZZ == 0) = NaN;
                     ZZ = ZZ./meanQC;
                     ZZ = log2(ZZ);
@@ -79,30 +86,13 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                 try
                     ZZqc = knnimpute(ZZqc,k);
                 catch                
-                    mqc = mean(ZZqc,'omitnan');
+                    mqc = mean(ZZqc,1,'omitnan');
                     mqcX = repmat(mqc,height(ZZqc),1);
                     temp = isnan(ZZqc);
                     ZZqc(temp) = mqcX(temp);
                     ZZ(isQC,:) = ZZqc;               
                 end
                 ZZ(isQC,:) = ZZqc;
-
-                % replace missing Blanks with KNN QC values or mean
-
-                ZZblank = ZZ(isBlank,:);
-                try
-                    ZZblank = knnimpute(ZZblank,k);
-                catch                
-                    mblank = mean(ZZblank,'omitnan');
-                    if isnan(mblank)
-                        mblank = min10Val;
-                    end
-                    mblankX = repmat(mblank,height(ZZblank),1);
-                    temp = isnan(ZZblank);
-                    ZZblank(temp) = mblankX(temp);
-                    ZZ(isblank,:) = ZZblank;               
-                end
-                ZZ(isBlank,:) = ZZblank;
 
                 % replace every other missing with KNN
                 try
@@ -119,7 +109,7 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
             case 'KNNrow'
                 if options.Fold
                     ZZqc = ZZ(isQC,:);
-                    meanQC = mean(ZZqc,"omitmissing");
+                    meanQC = mean(ZZqc,1,"omitmissing");
                     ZZ(ZZ == 0) = NaN;
                     ZZ = ZZ./meanQC;
                     ZZ = log2(ZZ);
@@ -150,30 +140,13 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                 try
                     ZZqc = knnimpute(ZZqc',k)';
                 catch
-                    mqc = mean(ZZqc,'omitnan');
+                    mqc = mean(ZZqc,1,'omitnan');
                     mqcX = repmat(mqc,height(ZZqc),1);
                     temp = isnan(ZZqc);
                     ZZqc(temp) = mqcX(temp);
                     ZZ(isQC,:) = ZZqc;
                 end
                 ZZ(isQC,:) = ZZqc;
-
-                % replace missing Blanks with KNN blank values or mean
-
-                ZZblank = ZZ(isBlank,:);
-                try
-                    ZZblank = knnimpute(ZZblank',k)';
-                catch                
-                    mblank = mean(ZZblank,'omitnan');
-                    if isnan(mblank)
-                        mblank = min10Val;
-                    end
-                    mblankX = repmat(mblank,height(ZZblank),1);
-                    temp = isnan(ZZblank);
-                    ZZblank(temp) = mblankX(temp);
-                    ZZ(isblank,:) = ZZblank;               
-                end
-                ZZ(isBlank,:) = ZZblank;
 
                 % replace every other missing with KNN
                 try
@@ -189,7 +162,7 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
             otherwise
                 % replace missing QCs with mean QC value
                 ZZqc = ZZ(isQC,:);
-                mqc = mean(ZZqc,'omitnan');
+                mqc = mean(ZZqc,1,'omitnan');
                 mqcX = repmat(mqc,height(ZZqc),1);
                 temp = isnan(ZZqc);
                 ZZqc(temp) = mqcX(temp);
@@ -201,7 +174,7 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                 %
                 if options.Fold
                     ZZqc = ZZ(isQC,:);
-                    meanQC = mean(ZZqc,"omitmissing");
+                    meanQC = mean(ZZqc,1,"omitmissing");
                     ZZ(ZZ == 0) = NaN;
                     ZZ = ZZ./meanQC;
                     ZZ = log2(ZZ);
