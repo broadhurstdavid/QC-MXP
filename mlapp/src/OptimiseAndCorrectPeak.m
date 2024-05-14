@@ -77,6 +77,8 @@ for i = 1:numberOfBatches
         %     toutlieri = [];
         % end
         switch config.IntraBatchMode
+            case 'Sample'
+                gamma = 10000;epsilon = NaN;cvMse = 0;minVal = 0;
             case 'Mean'
                 gamma = NaN;epsilon = NaN;cvMse = 0;minVal = 0;
             case 'Linear'
@@ -107,7 +109,7 @@ for i = 1:numberOfBatches
     missing = isnan(yi);
     qci(missing) = false;
     try
-        [z(idx),yspline(idx)] = QCRSC2(ti,yi,qci,mpv,epsilonVal(i),gammaVal(i),toutliers,config.CorrectionType,config.OutlierPostHoc);
+        [z(idx),yspline(idx)] = QCRSC3(ti,yi,qci,mpv,epsilonVal(i),gammaVal(i),toutliers,config.CorrectionType,config.OutlierPostHoc);
     catch
         z(idx) = yi;
     end
