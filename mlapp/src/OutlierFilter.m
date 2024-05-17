@@ -8,6 +8,10 @@ arguments
        options.lowonly (1,:) logical = false
     end
 
+missingY = isnan(y);
+t(missingY) = [];
+y(missingY) = [];
+
 try
     switch polyfunc
         case 'none'

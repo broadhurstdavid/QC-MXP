@@ -1,13 +1,18 @@
-function [z,yspline] = QCRSC3(t,y,qc,mpv,epsilon,gammaVal,toutlier,CorrectionType,OutlierPostHoc)
+function [z,yspline] = QCRSC3(t,y,isQC,isSample,mpv,epsilon,gammaVal,toutlier,CorrectionType,OutlierPostHoc)
 
-tqc = t(qc);
-yqc = y(qc);
-ts = t(~qc);
-ys = y(~qc);
+tqc = t(isQC);
+yqc = y(isQC);
+ts = t(isSample);
+ys = y(isSample);
 found = ismember(tqc,toutlier);
 tqc(found) = [];
 yqc(found) = [];
-myqc = 1;
+missingQC = isnan(yqc);
+tqc(missingQC) = [];
+yqc(missingQC) = [];
+missingSample = isnan(ys);
+ts(missingSample) = [];
+ys(missingSample) = [];
 
 try
     if isnan(gammaVal)
@@ -17,10 +22,18 @@ try
         end
         yspline = myqc*ones(length(t),1);
     elseif gammaVal == 1000
-        mdl = fit(tqc,yqc,'poly1','Robust','Bisquare');
+        try
+            mdl = fit(tqc,yqc,'poly1','Robust','Bisquare');
+        catch
+            mdl = fit(tqc,yqc);
+        end
         yspline = feval(mdl,t);
     elseif gammaVal == 10000
-        mdl = fit(ts,ys,'poly1','Robust','Bisquare');
+        try
+            mdl = fit(ts,ys,'poly1','Robust','Bisquare');
+        catch
+            mdl = fit(ts,ys,'poly1');
+        end
         yspline = feval(mdl,t);
     else
         p = 1/(1+epsilon*10^(gammaVal));

@@ -76,11 +76,16 @@ DataTable.Blank = ismember(DataTable.SampleType,'Blank');
 DataTable.Reference = ismember(DataTable.SampleType,'Reference');
 DataTable.Sample = ~DataTable.QC & ~DataTable.Blank & ~DataTable.Reference;
 
-numQCs = sum(DataTable.QC);
+maxNumQCperBatch = checkNumberInBatch(DataTable,'QC');
 
-if numQCs <= length(unique(DataTable.Batch))*3
-    baseException = MException('QCRSC:DataTableError','There has to be 3 or more QCs per batch for this data to be valid for QC assessment!');
-    throw(baseException)
+if maxNumQCperBatch <= 3
+    res = uiconfirm(options.fighandle,{'There has to be 3 or more QCs per batch for this data to be valid for QC assessment.';'You can perform Sample correction but the interactive explorer will be disabled.';'Do you wish to proceed?'},'Confirm Action','Options',{'Yes','No'});
+            if strcmp(res,'No')
+                baseException = MException('QCRSC:DataTableError','There has to be 3 or more QCs per batch for this data to be valid for QC assessment!');
+                throw(baseException)
+            end 
+    %baseException = MException('QCRSC:DataTableError','There has to be 3 or more QCs per batch for this data to be valid for QC assessment!');
+    %throw(baseException)
 end
 
 
