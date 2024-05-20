@@ -1,4 +1,4 @@
-function [rsdQC,dRatio,rsdREF,blankRatio,rsdSample] = calcStats(y,isQC,isBlank,isReference,options)
+function [rsdQC,rsdSAMPLE,dRatio,rsdREF,blankRatio] = calcStats(y,isQC,isBlank,isReference,options)
 
 arguments
     y
@@ -6,47 +6,45 @@ arguments
     isBlank {mustBeNumericOrLogical}
     isReference {mustBeNumericOrLogical}
     options.Logged {mustBeNumericOrLogical} = true
-    options.Parametric {mustBeNumericOrLogical} = true
     options.BlankRatioMethod {mustBeMember(options.BlankRatioMethod,{'QC','Median','Percentile'})} = 'QC'
     options.RelativeLOD {mustBeGreaterThanOrEqual(options.RelativeLOD,1)} = 1.5;
 end
 
-
 % NOTE 'Logged' indicates whether the data has already been log transformed
-% and thus we reverse that transformation before calculating RSD as is
-% standard practice.
-
-%yQCx = y(isQC);
-%ySx = y(~isQC & ~isReference & ~isBlank);
-
-
-
-if options.Logged
-    y = power(10,y);
-end
-
-
+% and thus we reverse that to calculate the statistics.
 
 yQC = y(isQC);
 yS = y(~isQC & ~isReference & ~isBlank);
 yR = y(isReference);
 yB = y(isBlank);
 
-
-
-if options.Parametric
-    rsdQC = 100 * std(yQC,'omitnan')./mean(yQC,'omitnan');
-    rsdREF = 100 * std(yR,'omitnan')./mean(yR,'omitnan');
-    rsdSample = 100 * std(yS,'omitnan')./mean(yS,'omitnan');
-    dRatio = 100*rsdQC./rsdSample;
-else
-    rsdQC = 100 * 1.4826 * mad(yQC,1)./median(yQC,'omitnan');
-    rsdREF = 100 * 1.4826 * mad(yR,1)./median(yR,'omitnan');
-    rsdSample = 100 * 1.4826 * mad(yS,1)./median(yS,'omitnan');
-    dRatio = 100*rsdQC./rsdSample;
+if options.Logged
+    yB = power(10,yB);
+    yQC = power(10,yQC);
+    yS = power(10,yS);
+    yR = power(10,yR);
 end
 
-switch options.BlankRatioMethod
+if options.Logged
+    [cv,upperbound,lowerbound] = CVconfidenceInterval(yQC,0.05,true);
+    rsdQC.mean = 100*cv; rsdQC.lower = 100*lowerbound; rsdQC.upper = 100*upperbound;
+    [cv,upperbound,lowerbound] = CVconfidenceInterval(yR,0.05,true);
+    rsdREF.mean = 100*cv; rsdREF.lower = 100*lowerbound; rsdREF.upper = 100*upperbound;
+    [cv,upperbound,lowerbound] = CVconfidenceInterval(yS,0.05,true);
+    rsdSAMPLE.mean = 100*cv; rsdSAMPLE.lower = 100*lowerbound; rsdSAMPLE.upper = 100*upperbound;
+    dRatio = 100*rsdQC.mean/rsdSAMPLE.mean;
+else
+    [cv,upperbound,lowerbound] = CVconfidenceInterval(yQC,0.05,false);
+    rsdQC.mean = 100*cv; rsdQC.lower = 100*lowerbound; rsdQC.upper = 100*upperbound;
+    [cv,upperbound,lowerbound] = CVconfidenceInterval(yR,0.05,false);
+    rsdREF.mean = 100*cv; rsdREF.lower = 100*lowerbound; rsdREF.upper = 100*upperbound;
+    [cv,upperbound,lowerbound] = CVconfidenceInterval(yS,0.05,false);
+    rsdSAMPLE.mean = 100*cv; rsdSAMPLE.lower = 100*lowerbound; rsdSAMPLE.upper = 100*upperbound;
+    dRatio = 100*rsdQC.mean/rsdSAMPLE.mean;
+end
+
+
+switch options.BlankRatioMethod  
     case 'QC'
         blankRatio = 100 * max(yB,[],'omitnan')/mean(yQC,'omitnan');
     case 'Median'
@@ -68,19 +66,24 @@ if isempty(blankRatio)
     blankRatio = NaN;
 end
 
-if sum(~isnan(yR)) < 2
-    rsdREF = NaN;
+if sum(~isnan(yR)) < 3
+    rsdREF.mean = NaN;
+    rsdREF.lower = NaN;
+    rsdREF.upper = NaN;
 end
 
-if sum(~isnan(yQC)) < 2
-    rsdQC = NaN;
+if sum(~isnan(yQC)) < 3
+    rsdQC.mean = NaN;
+    rsdQC.lower = NaN;
+    rsdQC.upper = NaN;
     dRatio = NaN;
     
 end
 
-if sum(~isnan(yS)) < 2
-    dRatio = NaN;
-    rsdSample = NaN;
+if sum(~isnan(yS)) < 3
+    rsdSAMPLE.mean = NaN;
+    rsdSAMPLE.lower = NaN;
+    rsdSAMPLE.upper = NaN;
 end
 
 end

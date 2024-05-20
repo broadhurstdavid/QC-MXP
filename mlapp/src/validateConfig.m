@@ -14,7 +14,6 @@ defaultFieldnames = [
     {'CorrectionType'   }
     {'BlankRatioMethod' }
     {'RelativeLOD'      }
-    {'StatsParametric'  }
     {'ParallelProcess'  }];
 
 baseFieldnames = fieldnames(baseConfig);
@@ -127,13 +126,6 @@ try
     validateattributes(baseConfig.RelativeLOD, {'double'},{'scalar','nonnegative'})
 catch
     baseException = MException('QCRSC:UnexpectedRelativeLOD',"RelativeLOD value must be a nonnegtive number");
-    throw(baseException)
-end 
-
-try
-    validateattributes(baseConfig.StatsParametric, {'logical'},{'scalar'})
-catch
-    baseException = MException('QCRSC:UnexpectedStatsParametric',"StatsParametric value must must be logical (true/false)");
     throw(baseException)
 end 
 
