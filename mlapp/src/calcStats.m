@@ -1,4 +1,4 @@
-function [rsdQC,rsdSAMPLE,dRatio,rsdREF,blankRatio] = calcStats(y,isQC,isBlank,isReference,options)
+function [rsdQC,rsdQClower,rsdQCupper,rsdSAMPLE,rsdSAMPLElower,rsdSAMPLEupper,rsdREF,rsdREFlower,rsdREFupper,dRatio,blankRatio] = calcStats(y,isQC,isBlank,isReference,options)
 
 arguments
     y
@@ -27,20 +27,20 @@ end
 
 if options.Logged
     [cv,upperbound,lowerbound] = CVconfidenceInterval(yQC,0.05,true);
-    rsdQC.mean = 100*cv; rsdQC.lower = 100*lowerbound; rsdQC.upper = 100*upperbound;
+    rsdQC = 100*cv; rsdQClower = 100*lowerbound; rsdQCupper = 100*upperbound;
     [cv,upperbound,lowerbound] = CVconfidenceInterval(yR,0.05,true);
-    rsdREF.mean = 100*cv; rsdREF.lower = 100*lowerbound; rsdREF.upper = 100*upperbound;
+    rsdREF = 100*cv; rsdREFlower = 100*lowerbound; rsdREFupper = 100*upperbound;
     [cv,upperbound,lowerbound] = CVconfidenceInterval(yS,0.05,true);
-    rsdSAMPLE.mean = 100*cv; rsdSAMPLE.lower = 100*lowerbound; rsdSAMPLE.upper = 100*upperbound;
-    dRatio = 100*rsdQC.mean/rsdSAMPLE.mean;
+    rsdSAMPLE = 100*cv; rsdSAMPLElower = 100*lowerbound; rsdSAMPLEupper = 100*upperbound;
+    dRatio = 100*rsdQC/rsdSAMPLE;
 else
     [cv,upperbound,lowerbound] = CVconfidenceInterval(yQC,0.05,false);
-    rsdQC.mean = 100*cv; rsdQC.lower = 100*lowerbound; rsdQC.upper = 100*upperbound;
+    rsdQC = 100*cv; rsdQClower = 100*lowerbound; rsdQCupper = 100*upperbound;
     [cv,upperbound,lowerbound] = CVconfidenceInterval(yR,0.05,false);
-    rsdREF.mean = 100*cv; rsdREF.lower = 100*lowerbound; rsdREF.upper = 100*upperbound;
+    rsdREF = 100*cv; rsdREFlower = 100*lowerbound; rsdREFupper = 100*upperbound;
     [cv,upperbound,lowerbound] = CVconfidenceInterval(yS,0.05,false);
-    rsdSAMPLE.mean = 100*cv; rsdSAMPLE.lower = 100*lowerbound; rsdSAMPLE.upper = 100*upperbound;
-    dRatio = 100*rsdQC.mean/rsdSAMPLE.mean;
+    rsdSAMPLE = 100*cv; rsdSAMPLElower = 100*lowerbound; rsdSAMPLEupper = 100*upperbound;
+    dRatio = 100*rsdQC/rsdSAMPLE;
 end
 
 
@@ -67,23 +67,23 @@ if isempty(blankRatio)
 end
 
 if sum(~isnan(yR)) < 3
-    rsdREF.mean = NaN;
-    rsdREF.lower = NaN;
-    rsdREF.upper = NaN;
+    rsdREF = NaN;
+    rsdREFlower = NaN;
+    rsdREFupper = NaN;
 end
 
 if sum(~isnan(yQC)) < 3
-    rsdQC.mean = NaN;
-    rsdQC.lower = NaN;
-    rsdQC.upper = NaN;
+    rsdQC = NaN;
+    rsdQClower = NaN;
+    rsdQCupper = NaN;
     dRatio = NaN;
     
 end
 
 if sum(~isnan(yS)) < 3
-    rsdSAMPLE.mean = NaN;
-    rsdSAMPLE.lower = NaN;
-    rsdSAMPLE.upper = NaN;
+    rsdSAMPLE = NaN;
+    rsdSAMPLElower = NaN;
+    rsdSAMPLEupper = NaN;
 end
 
 end

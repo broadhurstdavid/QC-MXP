@@ -12,6 +12,5 @@
   "CorrectionType": "Subtract",
   "BlankRatioMethod": "Median",
   "RelativeLOD": 1.2,
-  "StatsParametric": true,
   "ParallelProcess": true
 }
