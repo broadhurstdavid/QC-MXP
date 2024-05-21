@@ -1,9 +1,10 @@
-function [Stats] = BatchCalcStats(y,batch,isQC,isBlank,isReference,options)
+function [Stats] = BatchCalcStats(y,batch,isQC,isSample,isBlank,isReference,options)
 
 arguments
     y
     batch
     isQC {mustBeNumericOrLogical}
+    isSample {mustBeNumericOrLogical}
     isBlank {mustBeNumericOrLogical}
     isReference {mustBeNumericOrLogical}
     options.Logged {mustBeNumericOrLogical} = true
@@ -15,10 +16,11 @@ batchNumTotal = unique(batch);
 for i = 1:length(batchNumTotal)
     yi = y(batch == i);
     isQCi = isQC(batch == i);
+    isSamplei = isSample(batch == i);
     isBlanki = isBlank(batch == i);
     isReferencei = isReference(batch == i);
     S(i).This = ['Batch ',num2str(i)];
-    [S(i).rsdQC,S(i).rsdQClower,S(i).rsdQCupper,S(i).rsdSAMPLE,S(i).rsdSAMPLElower,S(i).rsdSAMPLEupper,S(i).rsdREF,S(i).rsdREFlower,S(i).rsdREFupper,S(i).dRatio,S(i).blankRatio] = calcStats(yi,isQCi,isBlanki,isReferencei,Logged=options.Logged,BlankRatioMethod=options.BlankRatioMethod);
+    [S(i).rsdQC,S(i).rsdQClower,S(i).rsdQCupper,S(i).rsdSAMPLE,S(i).rsdSAMPLElower,S(i).rsdSAMPLEupper,S(i).rsdREF,S(i).rsdREFlower,S(i).rsdREFupper,S(i).dRatio,S(i).blankRatio] = calcStats(yi,isQCi,isSamplei,isBlanki,isReferencei,Logged=options.Logged,BlankRatioMethod=options.BlankRatioMethod);
 end
 
 warning('off')

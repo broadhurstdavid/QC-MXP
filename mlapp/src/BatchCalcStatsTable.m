@@ -6,6 +6,7 @@ end
 
 X = Data{:,Peak.UID};
 isQC = logical(Data.QC);
+isSample = logical(Data.Sample);
 isBlank = logical(Data.Blank);
 isReference = logical(Data.Reference);
 
@@ -19,9 +20,11 @@ if baseConfig.LogTransform
 end
 
 for i = 1:width(X)
-    [S(i).qcRSD,S(i).dRatio,S(i).refRSD,S(i).blankRatio,S(i).sampleRSD] = calcStats(X(:,i),isQC,isBlank,isReference,Logged=baseConfig.LogTransform,Parametric=baseConfig.StatsParametric,BlankRatioMethod=baseConfig.BlankRatioMethod);
+    [S(i).qcRSD,S(i).qcRSDlower95CI,S(i).qcRSDupper95CI,S(i).sampleRSD,S(i).sampleRSDlower95CI,S(i).sampleRSDupper95CI,S(i).refRSD,S(i).refRSDlower95CI,S(i).refRSDupper95CI,S(i).dRatio,S(i).blankRatio] = calcStats(X(:,i),isQC,isSample,isBlank,isReference,Logged=baseConfig.LogTransform,BlankRatioMethod=baseConfig.BlankRatioMethod);
 end
 
 Stats = struct2table(S);
+%Stats = movevars(Stats,'sampleMissing','Before',1);
+%Stats = movevars(Stats,'qcMissing','Before',1);
 
 end
