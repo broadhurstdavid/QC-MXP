@@ -1,5 +1,5 @@
 
-[![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) [![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/releases/latest) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11185244.svg)](https://doi.org/10.5281/zenodo.11185244) ![GitHub last commit](https://img.shields.io/github/last-commit/broadhurstdavid/QC-MXP)
+[![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) [![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/releases/latest) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11185244.svg)](https://doi.org/10.5281/zenodo.11185244) [![GitHub last commit](https://img.shields.io/github/last-commit/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/)
 
 [![Email Badge](https://img.shields.io/badge/Gmail-Contact_Me-green?style=flat-square&logo=gmail&logoColor=FFFFFF&labelColor=red&color=grey)](mailto:dvdbrdhrst@gmail.com)
  [![X Follow](https://img.shields.io/twitter/follow/QC:MXP)](https://twitter.com/QC_MXP) 
