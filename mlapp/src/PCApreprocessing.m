@@ -52,24 +52,25 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                 if options.LogTransform
                     ZZ(ZZ == 0) = NaN;
                     ZZ = log10(ZZ);
-                    if options.Autoscale
-                        if options.batchScale
-                            ZZ = batchScale(ZZ,isSample,batchnum,'autoscale');
-                        else
-                            Z0 = ZZ(isSample,:);
-                            [~,cent,scle] = normalize(Z0,1,'zscore');
-                            ZZ = (ZZ-cent)./scle;
-                        end
-                    elseif options.Paretoscale
-                        if options.batchScale
-                            ZZ = batchScale(ZZ,isSample,batchnum,'pareto');
-                        else
-                            Z0 = ZZ(isSample,:);
-                            [~,cent,scle] = normalize(Z0,1,'zscore');
-                            ZZ = (ZZ-cent)./sqrt(scle);
-                        end
+                end
+                if options.Autoscale
+                    if options.batchScale
+                        ZZ = batchScale(ZZ,isSample,batchnum,'autoscale');
+                    else
+                        Z0 = ZZ(isSample,:);
+                        [~,cent,scle] = normalize(Z0,1,'zscore');
+                        ZZ = (ZZ-cent)./scle;
                     end
-                end           
+                elseif options.Paretoscale
+                    if options.batchScale
+                        ZZ = batchScale(ZZ,isSample,batchnum,'pareto');
+                    else
+                        Z0 = ZZ(isSample,:);
+                        [~,cent,scle] = normalize(Z0,1,'zscore');
+                        ZZ = (ZZ-cent)./sqrt(scle);
+                    end
+                end
+                           
                 % replace missing QCs with KNN QC values or mean
                 ZZqc = ZZ(isQC,:);
                 try
@@ -99,24 +100,24 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                 if options.LogTransform
                     ZZ(ZZ == 0) = NaN;
                     ZZ = log10(ZZ);
-                    if options.Autoscale
-                        if options.batchScale
-                            ZZ = batchScale(ZZ,isSample,batchnum,'autoscale');
-                        else
-                            Z0 = ZZ(isSample,:);
-                            [~,cent,scle] = normalize(Z0,1,'zscore');
-                            ZZ = (ZZ-cent)./scle;
-                        end
-                    elseif options.Paretoscale
-                        if options.batchScale
-                            ZZ = batchScale(ZZ,isSample,batchnum,'pareto');
-                        else
-                            Z0 = ZZ(isSample,:);
-                            [~,cent,scle] = normalize(Z0,1,'zscore');
-                            ZZ = (ZZ-cent)./sqrt(scle);
-                        end
-                    end
                 end
+                if options.Autoscale
+                    if options.batchScale
+                        ZZ = batchScale(ZZ,isSample,batchnum,'autoscale');
+                    else
+                        Z0 = ZZ(isSample,:);
+                        [~,cent,scle] = normalize(Z0,1,'zscore');
+                        ZZ = (ZZ-cent)./scle;
+                    end
+                elseif options.Paretoscale
+                    if options.batchScale
+                        ZZ = batchScale(ZZ,isSample,batchnum,'pareto');
+                    else
+                        Z0 = ZZ(isSample,:);
+                        [~,cent,scle] = normalize(Z0,1,'zscore');
+                        ZZ = (ZZ-cent)./sqrt(scle);
+                    end
+                end              
                 % replace missing QCs with KNN QC values or mean
                 ZZqc = ZZ(isQC,:);
                 try
@@ -157,23 +158,23 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                 if options.LogTransform
                     ZZ(ZZ == 0) = NaN;
                     ZZ = log10(ZZ);
-                    if options.Autoscale
-                        if options.batchScale
-                            ZZ = batchScale(ZZ,isSample,batchnum,'autoscale');
-                        else
-                            Z0 = ZZ(isSample,:);
-                            [~,cent,scle] = normalize(Z0,1,'zscore');
-                            ZZ = (ZZ-cent)./scle;
-                        end
-                    elseif options.Paretoscale
-                        if options.batchScale
-                            ZZ = batchScale(ZZ,isSample,batchnum,'pareto');
-                        else
-                            Z0 = ZZ(isSample,:);
-                            [~,cent,scle] = normalize(Z0,1,'zscore');
-                            ZZ = (ZZ-cent)./sqrt(scle);
-                        end
-                    end  
-                end                         
+                end
+                if options.Autoscale
+                    if options.batchScale
+                        ZZ = batchScale(ZZ,isSample,batchnum,'autoscale');
+                    else
+                        Z0 = ZZ(isSample,:);
+                        [~,cent,scle] = normalize(Z0,1,'zscore');
+                        ZZ = (ZZ-cent)./scle;
+                    end
+                elseif options.Paretoscale
+                    if options.batchScale
+                        ZZ = batchScale(ZZ,isSample,batchnum,'pareto');
+                    else
+                        Z0 = ZZ(isSample,:);
+                        [~,cent,scle] = normalize(Z0,1,'zscore');
+                        ZZ = (ZZ-cent)./sqrt(scle);
+                    end
+                end                           
         end
 end
