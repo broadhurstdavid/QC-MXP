@@ -137,6 +137,14 @@
                     switch options.label
                         case 'SampleType'
                             if options.plotCIA
+                                a1(i) = plot(axishandle,xp(,yp,'-.','linewidth',1,'color',hash(grps{i}));                  
+                                a1(i).UserData = {grps{i},'QC'};
+                                a1(i).DisplayName = grps{i};
+                                a1label = repmat(grps(i),length(xp));
+                                a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a2label);
+                                a1(i).DataTipTemplate.DataTipRows(2) = [];
+                            end
+                            if options.plotCIB
                                 a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',hash(grps{i}));                  
                                 a2(i).UserData = {grps{i},'Sample'};
                                 a2(i).DisplayName = grps{i};
