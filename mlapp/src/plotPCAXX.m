@@ -8,7 +8,8 @@
        options.yaxis {mustBeInteger,mustBePositive} = 2
        options.label {mustBeA(options.label,{'char','string'})} = 'SampleType'
        options.plotDataPoints {mustBeNumericOrLogical} = true
-       options.plotCIs {mustBeNumericOrLogical} = true
+       options.plotMeanCI {mustBeNumericOrLogical} = true
+       options.plotPopCI {mustBeNumericOrLogical} = true
        options.IncludeQCs {mustBeNumericOrLogical} = false
        options.IncludeBlanks {mustBeNumericOrLogical} = false
        options.IncludeRefs {mustBeNumericOrLogical} = false
@@ -126,7 +127,7 @@
             end
         end
         
-        if options.plotCIs
+        if options.plotMeanCI || options.plotPopCI
             for i = 1:length(grps)
                 temp = ismember(Y,grps(i));
                 if sum(temp) == 0, continue; end
@@ -142,41 +143,62 @@
                             a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a2label);
                             a2(i).DataTipTemplate.DataTipRows(2) = [];
                         case 'BatchQC'
-                            tempQC = temp & Data.QC;
-                            tempSample = temp & Data.Sample;
-                            [xp1,yp1] = ci95_ellipse2018(SS(tempQC,:),'pop');
-                            a1(i) = plot(axishandle,xp1,yp1,':','linewidth',1,'color',cmapx(i,:));                  
-                            a1(i).UserData = {grps{i},'QC'};
-                            a1(i).DisplayName = grps{i};
-                            a1label = repmat(grps(i),length(xp1));     
-                            a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('Batch',a1label);
-                            a1(i).DataTipTemplate.DataTipRows(2) = [];
-                                                    
-                            [xp,yp] = ci95_ellipse2018(SS(tempSample,:),'pop');
-                            a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',cmapx(i,:));                  
-                            a2(i).UserData = {grps{i},'Sample'};
-                            a2(i).DisplayName = grps{i};
-                            a2label = repmat(grps(i),length(xp));
-                            a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('Batch',a2label);
-                            a2(i).DataTipTemplate.DataTipRows(2) = [];
+                            if options.plotMeanCI
+                                tempQC = temp & Data.QC;                        
+                                [xp1,yp1] = ci95_ellipse2018(SS(tempQC,:),'pop');
+                                a1(i) = plot(axishandle,xp1,yp1,':','linewidth',1,'color',cmapx(i,:));                  
+                                a1(i).UserData = {grps{i},'QC'};
+                                a1(i).DisplayName = grps{i};
+                                a1label = repmat(grps(i),length(xp1));     
+                                a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('Batch',a1label);
+                                a1(i).DataTipTemplate.DataTipRows(2) = [];
+                            end
+                            if options.plotPopCI 
+                                tempSample = temp & Data.Sample;                    
+                                [xp,yp] = ci95_ellipse2018(SS(tempSample,:),'pop');
+                                a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',cmapx(i,:));                  
+                                a2(i).UserData = {grps{i},'Sample'};
+                                a2(i).DisplayName = grps{i};
+                                a2label = repmat(grps(i),length(xp));
+                                a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('Batch',a2label);
+                                a2(i).DataTipTemplate.DataTipRows(2) = [];
+                            end
                         otherwise
                             if any(strcmp(grps(i),{'QC','Blank','Reference'}))
-                                a1(i) = plot(axishandle,xm,ym,':','linewidth',1,'color',hash(grps{i}));
-                                a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',hash(grps{i}));
+                                if options.plotMeanCI
+                                    a1(i) = plot(axishandle,xm,ym,':','linewidth',1,'color',hash(grps{i})); 
+                                    a1label = repmat(grps(i),length(xm));     
+                                    a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a1label);
+                                    a1(i).DataTipTemplate.DataTipRows(2) = [];                      
+                                    a1(i).UserData = {grps{i},'CI mean'};
+                                    a1(i).DisplayName = grps{i};
+                                end
+                                if options.plotPopCI
+                                    a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',hash(grps{i})); 
+                                    a2(i).UserData = {grps{i},'CI pop'};
+                                    a2(i).DisplayName = grps{i};
+                                    a2label = repmat(grps(i),length(xp));
+                                    a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a2label);
+                                    a2(i).DataTipTemplate.DataTipRows(2) = [];
+                                end
                             else
-                                a1(i) = plot(axishandle,xm,ym,':','linewidth',1,'color',cmapx(i,:));
-                                a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',cmapx(i,:));
-                            end
-                            a1label = repmat(grps(i),length(xm));     
-                            a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a1label);
-                            a1(i).DataTipTemplate.DataTipRows(2) = [];                      
-                            a1(i).UserData = {grps{i},'CI mean'};
-                            a1(i).DisplayName = grps{i};
-                            a2(i).UserData = {grps{i},'CI pop'};
-                            a2(i).DisplayName = grps{i};
-                            a2label = repmat(grps(i),length(xp));
-                            a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a2label);
-                            a2(i).DataTipTemplate.DataTipRows(2) = [];
+                                if options.plotMeanCI
+                                    a1(i) = plot(axishandle,xm,ym,':','linewidth',1,'color',cmapx(i,:)); 
+                                    a1label = repmat(grps(i),length(xm));     
+                                    a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a1label);
+                                    a1(i).DataTipTemplate.DataTipRows(2) = [];                      
+                                    a1(i).UserData = {grps{i},'CI mean'};
+                                    a1(i).DisplayName = grps{i};
+                                end
+                                if options.plotPopCI
+                                    a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',cmapx(i,:));                                     
+                                    a2(i).UserData = {grps{i},'CI pop'};
+                                    a2(i).DisplayName = grps{i};
+                                    a2label = repmat(grps(i),length(xp));
+                                    a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a2label);
+                                    a2(i).DataTipTemplate.DataTipRows(2) = [];
+                                end
+                            end                          
                     end                   
                     
                 end
