@@ -167,7 +167,7 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maca64:MR/R2024a/sys/os/maca64:MR/R2024a/
       <vista>false</vista>
       <linux>false</linux>
       <solaris>false</solaris>
-      <osver>14.4.1</osver>
+      <osver>14.5</osver>
       <os32>true</os32>
       <os64>false</os64>
       <arch>maci64</arch>
