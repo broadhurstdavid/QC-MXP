@@ -64,12 +64,12 @@ else
         legendlabel{i} = ['B',num2str(ubatch(i))];
         colName = [options.label,'B',num2str(ubatch(i))];
         pdfAll = fitdist(log10(statsTable{:,colName}),'Kernel','width',smoothValue);
-        yAll = pdf(pdfAll,[-1:0.1:3]);
+        yAll = pdf(pdfAll,[-1:0.01:3]);
         pdfClean = fitdist(log10(statsTableClean{:,colName}),'Kernel','width',smoothValue);
-        yClean = pdf(pdfClean,[-1:0.1:3]);
-        plotAll(i) = plot(axishandle,[-1:0.1:3],yAll,'Color',[0.7,0.7,0.7],'LineStyle',':', 'LineWidth',1.5,'Marker','none', 'MarkerSize',6);
+        yClean = pdf(pdfClean,[-1:0.01:3]);
+        plotAll(i) = plot(axishandle,[-1:0.01:3],yAll,'Color',[0.7,0.7,0.7],'LineStyle',':', 'LineWidth',1.5,'Marker','none', 'MarkerSize',6);
         hold(axishandle,"on");
-        plotClean(i) = plot(axishandle,[-1:0.1:3],yClean,'Color',cmap(i,:),'LineStyle','-', 'LineWidth',1.5,'Marker','none', 'MarkerSize',6);      
+        plotClean(i) = plot(axishandle,[-1:0.01:3],yClean,'Color',cmap(i,:),'LineStyle','-', 'LineWidth',1.5,'Marker','none', 'MarkerSize',6);      
         maxval = max([maxval,max(yAll),max(yClean)]);
         tt(i,:) = prctile(statsTableClean{:,colName},[25,50,75]);
         
