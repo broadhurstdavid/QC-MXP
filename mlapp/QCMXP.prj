@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="283832352" file="/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp/QCMXP.prj" location="/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp" name="QCMXP" preferred-package-location="/Users/dvdbrdhrst/Documents/Matlab/Z:\QC-MXP\mlapp\QCMXP\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="283832352" file="/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP.prj" location="/Users/davidbroadhurst/Github/QC-MXP/mlapp" name="QCMXP" preferred-package-location="/Users/dvdbrdhrst/Documents/Matlab/Z:\QC-MXP\mlapp\QCMXP\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>QCMXP</param.appname>
     <param.icon>${PROJECT_ROOT}/QCMXP_resources/icon.icns</param.icon>
     <param.icons>
@@ -8,7 +8,7 @@
       <file>${PROJECT_ROOT}/QCMXP_resources/icon_24.png</file>
       <file>${PROJECT_ROOT}/QCMXP_resources/icon_16.png</file>
     </param.icons>
-    <param.version>1.1.0</param.version>
+    <param.version>1.2</param.version>
     <param.authnamewatermark>David Broadhurst</param.authnamewatermark>
     <param.email />
     <param.company />
@@ -28,11 +28,11 @@ Enjoy! - David.</param.description>
 
 If the environment variable DYLD_LIBRARY_PATH is undefined, set it to the following string:
 
-MR/R2024a/runtime/maca64:MR/R2024a/sys/os/maca64:MR/R2024a/bin/maca64
+MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/bin/maci64
 
 If it is defined, set it to the following:
 
-${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maca64:MR/R2024a/sys/os/maca64:MR/R2024a/bin/maca64</param.target.install.notes>
+${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maci64:MR/R2024a/sys/os/maci64:MR/R2024a/bin/maci64</param.target.install.notes>
     <param.intermediate>${PROJECT_ROOT}/QCMXP/for_testing</param.intermediate>
     <param.files.only>${PROJECT_ROOT}/QCMXP/for_redistribution_files_only</param.files.only>
     <param.output>${PROJECT_ROOT}/QCMXP/for_redistribution</param.output>
@@ -94,9 +94,9 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maca64:MR/R2024a/sys/os/maca64:MR/R2024a/
     <fileset.resources />
     <fileset.package />
     <fileset.depfun>
+      <file>/Users/davidbroadhurst/Downloads/QCRSCconfigExplorer.mlapp</file>
       <file>${PROJECT_ROOT}/BatchStatsTable.mlapp</file>
       <file>${PROJECT_ROOT}/ImportDataPeakFile.mlapp</file>
-      <file>${PROJECT_ROOT}/QCRSCconfigExplorer.mlapp</file>
       <file>${PROJECT_ROOT}/QCRSCpeakExplorer.mlapp</file>
       <file>${PROJECT_ROOT}/ScatterView.mlapp</file>
       <file>${PROJECT_ROOT}/TidyPeakTableView.mlapp</file>
@@ -117,14 +117,18 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maca64:MR/R2024a/sys/os/maca64:MR/R2024a/
       <file>${PROJECT_ROOT}/res/textx10.png</file>
       <file>${PROJECT_ROOT}/src/BatchCalcStats.m</file>
       <file>${PROJECT_ROOT}/src/BatchCalcStatsTable.m</file>
+      <file>${PROJECT_ROOT}/src/CVconfidenceInterval.m</file>
       <file>${PROJECT_ROOT}/src/LowerThanBlankAsNaN.m</file>
       <file>${PROJECT_ROOT}/src/OptimiseAndCorrectPeak.m</file>
       <file>${PROJECT_ROOT}/src/OptimiseAndCorrectPeakX.m</file>
       <file>${PROJECT_ROOT}/src/OutlierFilter.m</file>
       <file>${PROJECT_ROOT}/src/PCApreprocessing.m</file>
       <file>${PROJECT_ROOT}/src/QCRSC2.m</file>
+      <file>${PROJECT_ROOT}/src/QCRSC3.m</file>
       <file>${PROJECT_ROOT}/src/QCRSCplotdistribution.m</file>
+      <file>${PROJECT_ROOT}/src/batchScale.m</file>
       <file>${PROJECT_ROOT}/src/calcStats.m</file>
+      <file>${PROJECT_ROOT}/src/checkNumberInBatch.m</file>
       <file>${PROJECT_ROOT}/src/ci95_ellipse2018.m</file>
       <file>${PROJECT_ROOT}/src/controlChart.m</file>
       <file>${PROJECT_ROOT}/src/generateMetabExamplesNew.m</file>
@@ -141,10 +145,10 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maca64:MR/R2024a/sys/os/maca64:MR/R2024a/
       <file>${PROJECT_ROOT}/src/validatingDataPeakTables.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="QCMXP.app" optional="false">/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp/QCMXP/for_testing/QCMXP.app</file>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="splash.png" optional="false">/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp/QCMXP/for_testing/splash.png</file>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="readme.txt" optional="true">/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp/QCMXP/for_testing/readme.txt</file>
-      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="run_QCMXP.sh" optional="false">/Users/dvdbrdhrst/GitHub/QC-MXP/mlapp/QCMXP/for_testing/run_QCMXP.sh</file>
+      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="run_QCMXP.sh" optional="false">/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP/for_testing/run_QCMXP.sh</file>
+      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="QCMXP.app" optional="false">/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP/for_testing/QCMXP.app</file>
+      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="readme.txt" optional="true">/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP/for_testing/readme.txt</file>
+      <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="splash.png" optional="false">/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP/for_testing/splash.png</file>
     </build-deliverables>
     <workflow />
     <matlab>
@@ -167,9 +171,9 @@ ${DYLD_LIBRARY_PATH}:MR/R2024a/runtime/maca64:MR/R2024a/sys/os/maca64:MR/R2024a/
       <vista>false</vista>
       <linux>false</linux>
       <solaris>false</solaris>
-      <osver>14.4.1</osver>
-      <os32>true</os32>
-      <os64>false</os64>
+      <osver>14.5</osver>
+      <os32>false</os32>
+      <os64>true</os64>
       <arch>maci64</arch>
       <matlab>true</matlab>
     </platform>
