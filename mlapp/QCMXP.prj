@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3559487353" file="\\mac\home\Github\QC-MXP\mlapp\QCMXP.prj" location="\\mac\home\Github\QC-MXP\mlapp" name="QCMXP" preferred-package-location="C:\Users\davidbroadhurst\Github\QC-MXP\mlapp\QCMXP\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="3559487353" file="Z:\QC-MXP\mlapp\QCMXP.prj" location="Z:\QC-MXP\mlapp" name="QCMXP" preferred-package-location="C:\Users\dvdbrdhrst\Documents\Matlab\C:\Users\davidbroadhurst\Github\QC-MXP\mlapp\QCMXP\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>QCMXP</param.appname>
     <param.icon>${PROJECT_ROOT}\QCMXP_resources\icon.ico</param.icon>
     <param.icons>
@@ -18,7 +18,7 @@
 IMPORTANT: For Apple users installing this version as an update to a previous version, you must delete the QCMXP folder (within the Applications folder) before installation. This OSX installer will not overwrite folders with the same name (a Matlab quirk).
 
 Enjoy! - David.</param.description>
-    <param.screenshot>\\Mac\Home\Github\QC-MXP\res\Picture 1.png</param.screenshot>
+    <param.screenshot>Z:\QC-MXP\res\Picture 1.png</param.screenshot>
     <param.guid />
     <param.installpath.string>\QCMXP\</param.installpath.string>
     <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
@@ -137,9 +137,9 @@ Enjoy! - David.</param.description>
       <file>${PROJECT_ROOT}\TidyPeakTableView.mlapp</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="QCMXP.exe" optional="false">\\mac\home\Github\QC-MXP\mlapp\QCMXP\for_testing\QCMXP.exe</file>
-      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="splash.png" optional="false">\\mac\home\Github\QC-MXP\mlapp\QCMXP\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="readme.txt" optional="true">\\mac\home\Github\QC-MXP\mlapp\QCMXP\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="QCMXP.exe" optional="false">Z:\QC-MXP\mlapp\QCMXP\for_testing\QCMXP.exe</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="readme.txt" optional="true">Z:\QC-MXP\mlapp\QCMXP\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\QCMXP\for_testing" name="splash.png" optional="false">Z:\QC-MXP\mlapp\QCMXP\for_testing\splash.png</file>
     </build-deliverables>
     <workflow />
     <matlab>
