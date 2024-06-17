@@ -59,7 +59,7 @@ switch options.BlankRatioMethod
         else
             bb = max(yB,[],'omitnan')*options.RelativeLOD;
             if isnan(bb)
-                blankRatio = NaN;
+                blankRatio = 100 * sum(isnan(yS))/length(yS);
             else
                 cc = yS(~isnan(yS)) > bb;
                 blankRatio = 100 * (1 - sum(cc)/length(yS));
