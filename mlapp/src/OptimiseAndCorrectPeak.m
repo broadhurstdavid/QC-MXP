@@ -1,8 +1,7 @@
-function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectPeak(config,t,y,batch,isQC,isBlank)
+function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectPeak(config,t,y,batch,isQC,isSample,isBlank)
 
 % config.LogTransform
 % config.RemoveZeros
-% config.OutlierScope
 % config.OutlierMethod
 % config.OutlierCI
 % config.OutlierPostHoc
@@ -17,8 +16,11 @@ function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectPeak(config,t
 % config.StatsParametric
 % config.ParallelProcess
 
-
-mpv = mean(y(isQC),'omitnan');
+if strcmp(config.IntraBatchMode,'Sample')
+    mpv = median(y(isSample),'omitnan');
+else
+    mpv = mean(y(isQC),'omitnan');
+end
 
 z = nan(length(y),1);
 yspline = nan(length(y),1);
@@ -42,41 +44,17 @@ yqc = y(isQC);
 tqc = t(isQC);
 batchqc = batch(isQC);
 
-% if ismember(config.OutlierScope,{'Global','Global&Local'})
-%     %[~,~,toutliers] = OutlierFilter(tqc,yqc,config.OutlierMethod,0.99,lowonly=true);
-%     [~,~,toutliers] = OutlierFilter(tqc,yqc,config.OutlierMethod,config.OutlierCI);
-%     found = ismember(tqc,toutliers);
-%     tqc(found) = [];
-%     yqc(found) = [];
-%     batchqc(found) = [];
-% end
-
-
-
 for i = 1:numberOfBatches
       
     idx = batchqc == ub(i);
     tqci = tqc(idx);
     yqci = yqc(idx);
 
-
-%     idx = batch==ub(i);
-%     ti = t(idx);
-%     yi = y(idx);
-%     qci = isQC(idx);
-%     
-%     missing = isnan(yi);
-%     qci(missing) = false;
-%     
-%     tqci = ti(qci);
-%     yqci = yi(qci);
-    try
-        %if ismember(config.OutlierScope,{'Local','Global&Local'})
+    try        
         [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,config.OutlierMethod,config.OutlierCI);
-        % else
-        %     toutlieri = [];
-        % end
         switch config.IntraBatchMode
+            case 'Sample'
+                gamma = 10000;epsilon = NaN;cvMse = 0;minVal = 0;
             case 'Mean'
                 gamma = NaN;epsilon = NaN;cvMse = 0;minVal = 0;
             case 'Linear'
@@ -103,11 +81,10 @@ for i = 1:numberOfBatches
     idx = batch==ub(i);
     ti = t(idx);
     yi = y(idx);
-    qci = isQC(idx);
-    missing = isnan(yi);
-    qci(missing) = false;
+    isQCi = isQC(idx);
+    isSamplei = isSample(idx);
     try
-        [z(idx),yspline(idx)] = QCRSC2(ti,yi,qci,mpv,epsilonVal(i),gammaVal(i),toutliers,config.CorrectionType,config.OutlierPostHoc);
+        [z(idx),yspline(idx)] = QCRSC3(ti,yi,isQCi,isSamplei,mpv,epsilonVal(i),gammaVal(i),toutliers,config.CorrectionType,config.OutlierPostHoc);
     catch
         z(idx) = yi;
     end

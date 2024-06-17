@@ -14,7 +14,6 @@ defaultFieldnames = [
     {'CorrectionType'   }
     {'BlankRatioMethod' }
     {'RelativeLOD'      }
-    {'StatsParametric'  }
     {'ParallelProcess'  }];
 
 baseFieldnames = fieldnames(baseConfig);
@@ -75,16 +74,16 @@ if isa(baseConfig.QCRSCgammaRange,'char')
 end
 
 try
-    mustBeMember(baseConfig.IntraBatchMode,{'Mean','Linear','Spline'});
+    mustBeMember(baseConfig.IntraBatchMode,{'Sample','Mean','Linear','Spline'});
 catch
-    baseException = MException('QCRSC:UnexpectedIntraBatchMode',"IntraBatchMode value must be one of the following: 'Mean','Linear','Spline'");
+    baseException = MException('QCRSC:UnexpectedIntraBatchMode',"IntraBatchMode value must be one of the following: 'Sample','Mean','Linear','Spline'");
     throw(baseException)
 end  
 
 try
-    mustBeMember(baseConfig.InterBatchMode,{'QC','Reference'});
+    mustBeMember(baseConfig.InterBatchMode,{'QC','Reference','Sample'});
 catch
-    baseException = MException('QCRSC:UnexpectedInterBatchMode',"InterBatchMode value must be one of the following: 'QC','Reference'");
+    baseException = MException('QCRSC:UnexpectedInterBatchMode',"InterBatchMode value must be one of the following: 'Sample','QC','Reference'");
     throw(baseException)
 end  
 
@@ -127,13 +126,6 @@ try
     validateattributes(baseConfig.RelativeLOD, {'double'},{'scalar','nonnegative'})
 catch
     baseException = MException('QCRSC:UnexpectedRelativeLOD',"RelativeLOD value must be a nonnegtive number");
-    throw(baseException)
-end 
-
-try
-    validateattributes(baseConfig.StatsParametric, {'logical'},{'scalar'})
-catch
-    baseException = MException('QCRSC:UnexpectedStatsParametric',"StatsParametric value must must be logical (true/false)");
     throw(baseException)
 end 
 

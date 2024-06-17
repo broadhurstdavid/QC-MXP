@@ -8,6 +8,7 @@ function controlChart(axishandle,Data,option)
                 option.title = ''
                 option.islog = true;
                 option.RelativeLOD = 1.5
+                option.IntraBatchMode = 'QC'
             end
             
             isbatch = false;
@@ -36,7 +37,11 @@ function controlChart(axishandle,Data,option)
                 spline = Data.Yspline;
             else
                 y = Data.Z;
-                mpv = median(Data.Y(Data.QC));
+                if strcmp(option.IntraBatchMode,'Sample')
+                    mpv = median(Data.Y(Data.Sample),'omitnan');
+                else
+                    mpv = mean(Data.Y(Data.QC),'omitnan');
+                end
                 spline = repmat(mpv,numel(y),1);
             end
             
