@@ -1,5 +1,5 @@
 
-[![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) [![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/releases/latest) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11939494.svg)](https://doi.org/10.5281/zenodo.11939494) [![GitHub last commit](https://img.shields.io/github/last-commit/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/)
+[![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) [![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/releases/latest) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12185001.svg)](https://doi.org/10.5281/zenodo.12185001) [![GitHub last commit](https://img.shields.io/github/last-commit/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/)
 
 [![Email Badge](https://img.shields.io/badge/Gmail-Contact_Me-green?style=flat-square&logo=gmail&logoColor=FFFFFF&labelColor=red&color=grey)](mailto:dvdbrdhrst@gmail.com)
  [![X Follow](https://img.shields.io/twitter/follow/QC:MXP)](https://twitter.com/QC_MXP) 
@@ -10,7 +10,7 @@
 <br />
 <br />
 This [GitHub repository](https://github.com/broadhurstdavid/QC-MXP) contains the binary installation files (Apple OSX & Microsoft Windows) and the Matlab source code for the metabolomics standalone application *QC:MXP* written by [Professor David Broadhurst](http://www.davidbroadhurst.net). You can cite this package as follows: 
->Broadhurst, D.I. (2024). *QC:MXP Repeat Injection based Quality Control, Batch Correction, Exploration & Data Cleaning* (version 1.2-beta) Zendono. <https://doi.org/10.5281/zenodo.11939494>. Retrieved from <https://github.com/broadhurstdavid/QC-MXP.>
+>Broadhurst, D.I. (2024). *QC:MXP Repeat Injection based Quality Control, Batch Correction, Exploration & Data Cleaning* (version 1.2.1-beta) Zendono. <https://doi.org/10.5281/zenodo.12185001>. Retrieved from <https://github.com/broadhurstdavid/QC-MXP.>
 <br />
 
 1. [Introduction](#introduction)
