@@ -37,7 +37,7 @@ function [RES] = qcrscPCA(Data,Peak,options)
         else
             MPQ95 = cumMPQ(found);
         end
-
+        RES.X = ZZ;
         RES.Score = Score;
         RES.coeff = coeff;
         RES.latent = latent;
