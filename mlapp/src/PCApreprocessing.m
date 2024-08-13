@@ -71,18 +71,15 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                     end
                 end
                            
-                % replace missing QCs with KNN QC values or mean
-                ZZqc = ZZ(isQC,:);
-                try
-                    ZZqc = knnimpute(ZZqc,k);
-                catch                
-                    mqc = mean(ZZqc,1,'omitnan');
-                    mqcX = repmat(mqc,height(ZZqc),1);
-                    temp = isnan(ZZqc);
-                    ZZqc(temp) = mqcX(temp);
-                    ZZ(isQC,:) = ZZqc;               
-                end
-                ZZ(isQC,:) = ZZqc;
+                % replace missing QCs with mean
+                ZZqc = ZZ(isQC,:);                        
+                mqc = mean(ZZqc,1,'omitnan');
+                mqcX = repmat(mqc,height(ZZqc),1);
+                temp = isnan(ZZqc);
+                ZZqc(temp) = mqcX(temp);
+                ZZ(isQC,:) = ZZqc;               
+                
+                
 
                 % replace every other missing with KNN
                 try
