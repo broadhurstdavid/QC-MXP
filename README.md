@@ -12,6 +12,7 @@
 This [GitHub repository](https://github.com/broadhurstdavid/QC-MXP) contains the binary installation files (Apple OSX & Microsoft Windows) and the Matlab source code for the metabolomics standalone application *QC:MXP* written by [Professor David Broadhurst](http://www.davidbroadhurst.net). You can cite this package as follows: 
 >Broadhurst, D.I. (2024). *QC:MXP Repeat Injection based Quality Control, Batch Correction, Exploration & Data Cleaning* (version 1) Zendono. <https://zenodo.org/doi/10.5281/zenodo.11101541>. Retrieved from <https://github.com/broadhurstdavid/QC-MXP.>
 <br />
+QC:MXP is FREE and you do not need to have Matlab preinstalled to use it. It is built on top of the free Matlab Runtime library, which is automatically installed.<br /><br />
 
 1. [Introduction](#introduction)
 2. [Tidy Data](#tidy-data)
