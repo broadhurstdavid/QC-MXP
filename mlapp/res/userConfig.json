@@ -1,0 +1,16 @@
+{
+  "LogTransform": true,
+  "RemoveZeros": true,
+  "OutlierMethod": "Quadratic",
+  "OutlierCI": 0.95,
+  "OutlierPostHoc": "NaN",
+  "IntraBatchMode": "Spline",
+  "InterBatchMode": "QC",
+  "QCRSCgammaRange": "1:0.5:4",
+  "QCRSCcvMethod": "5-Fold",
+  "QCRSCmcReps": 10,
+  "CorrectionType": "Subtract",
+  "BlankRatioMethod": "Median",
+  "RelativeLOD": 1.2,
+  "ParallelProcess": true
+}

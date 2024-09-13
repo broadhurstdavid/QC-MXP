@@ -8,8 +8,8 @@ function [RES] = qcrscPCA(Data,Peak,options)
        options.LogTransform {mustBeNumericOrLogical} = true    
        options.Autoscale {mustBeNumericOrLogical} = true
        options.Paretoscale {mustBeNumericOrLogical} = false
-       options.k {mustBeInteger,mustBePositive} = 3
        options.batchScale {mustBeNumericOrLogical} = false
+       options.k {mustBeInteger,mustBePositive} = 3      
     end
         [ZZ] = PCApreprocessing(Data,Peak,RemoveZeros=options.RemoveZeros,ImputationType=options.ImputationType,LogTransform=options.LogTransform,Autoscale=options.Autoscale,Paretoscale=options.Paretoscale,k=options.k,batchScale=options.batchScale);
 
