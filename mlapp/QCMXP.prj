@@ -1,7 +1,7 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="2081934656" file="/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP.prj" location="/Users/davidbroadhurst/Github/QC-MXP/mlapp" name="QCMXP" preferred-package-location="/Users/davidbroadhurst/Documents/MATLAB/C:\Users\dbroadhu\Documents\MATLAB\mac\home\Github\QC-MXP\mlapp\QCMXP\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="497710897" file="/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP.prj" location="/Users/davidbroadhurst/Github/QC-MXP/mlapp" name="QCMXP" preferred-package-location="/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP/for_redistribution" preferred-package-type="package.type.app" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>QCMXP</param.appname>
-    <param.icon>${PROJECT_ROOT}/QCMXP_resources/icon.ico</param.icon>
+    <param.icon>${PROJECT_ROOT}/QCMXP_resources/icon.icns</param.icon>
     <param.icons>
       <file>${PROJECT_ROOT}/QCMXP_resources/icon_48.png</file>
       <file>${PROJECT_ROOT}/QCMXP_resources/icon_32.png</file>
@@ -24,7 +24,15 @@ Enjoy! - David.</param.description>
     <param.installpath.combo>option.installpath.systemwideapp</param.installpath.combo>
     <param.logo />
     <param.install.notes />
-    <param.target.install.notes />
+    <param.target.install.notes>In the following directions, replace MR/R2024b by the directory on the target machine where MATLAB is installed, or MR by the directory where the MATLAB Runtime is installed.
+
+If the environment variable DYLD_LIBRARY_PATH is undefined, set it to the following string:
+
+MR/R2024b/runtime/maci64:MR/R2024b/sys/os/maci64:MR/R2024b/bin/maci64
+
+If it is defined, set it to the following:
+
+${DYLD_LIBRARY_PATH}:MR/R2024b/runtime/maci64:MR/R2024b/sys/os/maci64:MR/R2024b/bin/maci64</param.target.install.notes>
     <param.intermediate>${PROJECT_ROOT}/QCMXP/for_testing</param.intermediate>
     <param.files.only>${PROJECT_ROOT}/QCMXP/for_redistribution_files_only</param.files.only>
     <param.output>${PROJECT_ROOT}/QCMXP/for_redistribution</param.output>
@@ -59,7 +67,6 @@ Enjoy! - David.</param.description>
       <param.installpath.combo />
       <param.logo />
       <param.install.notes />
-      <param.target.install.notes />
       <param.intermediate />
       <param.files.only />
       <param.output />
@@ -93,49 +100,49 @@ Enjoy! - David.</param.description>
       <file>${PROJECT_ROOT}/QCRSCpeakExplorer.mlapp</file>
       <file>${PROJECT_ROOT}/ScatterView.mlapp</file>
       <file>${PROJECT_ROOT}/TidyPeakTableView.mlapp</file>
-      <file>${PROJECT_ROOT}/res/CEpopX.png</file>
-      <file>${PROJECT_ROOT}/res/PEpopX.png</file>
-      <file>${PROJECT_ROOT}/res/QCMXPz.png</file>
-      <file>${PROJECT_ROOT}/res/TidyMetqcx.png</file>
-      <file>${PROJECT_ROOT}/res/bypass2.png</file>
-      <file>${PROJECT_ROOT}/res/ceX.png</file>
-      <file>${PROJECT_ROOT}/res/drinkme.png</file>
-      <file>${PROJECT_ROOT}/res/eject2.png</file>
-      <file>${PROJECT_ROOT}/res/fullscreen.png</file>
-      <file>${PROJECT_ROOT}/res/icon_512x512@2x.png</file>
-      <file>${PROJECT_ROOT}/res/pause2.png</file>
-      <file>${PROJECT_ROOT}/res/peX2.png</file>
-      <file>${PROJECT_ROOT}/res/play2.png</file>
-      <file>${PROJECT_ROOT}/res/resetx.png</file>
-      <file>${PROJECT_ROOT}/res/textx10.png</file>
-      <file>${PROJECT_ROOT}/res/userConfig.json</file>
-      <file>${PROJECT_ROOT}/src/BatchCalcStats.m</file>
-      <file>${PROJECT_ROOT}/src/BatchCalcStatsTable.m</file>
-      <file>${PROJECT_ROOT}/src/CVconfidenceInterval.m</file>
-      <file>${PROJECT_ROOT}/src/LowerThanBlankAsNaN.m</file>
-      <file>${PROJECT_ROOT}/src/OptimiseAndCorrectPeak.m</file>
-      <file>${PROJECT_ROOT}/src/OptimiseAndCorrectPeakX.m</file>
-      <file>${PROJECT_ROOT}/src/OutlierFilter.m</file>
-      <file>${PROJECT_ROOT}/src/PCApreprocessing.m</file>
-      <file>${PROJECT_ROOT}/src/QCRSC3.m</file>
-      <file>${PROJECT_ROOT}/src/QCRSCplotdistribution.m</file>
-      <file>${PROJECT_ROOT}/src/batchScale.m</file>
-      <file>${PROJECT_ROOT}/src/calcStats.m</file>
-      <file>${PROJECT_ROOT}/src/checkNumberInBatch.m</file>
-      <file>${PROJECT_ROOT}/src/ci95_ellipse2018.m</file>
-      <file>${PROJECT_ROOT}/src/controlChart.m</file>
-      <file>${PROJECT_ROOT}/src/generateMetabExamplesNew.m</file>
-      <file>${PROJECT_ROOT}/src/humaniseLogTickLabel.m</file>
-      <file>${PROJECT_ROOT}/src/incrementalKNNimpute.m</file>
-      <file>${PROJECT_ROOT}/src/mapRcolors.m</file>
-      <file>${PROJECT_ROOT}/src/optimiseCSAPS.m</file>
-      <file>${PROJECT_ROOT}/src/plotPCAXX.m</file>
-      <file>${PROJECT_ROOT}/src/preprocessDataForExport.m</file>
-      <file>${PROJECT_ROOT}/src/qcrscPCA.m</file>
-      <file>${PROJECT_ROOT}/src/readDataCSVapp.m</file>
-      <file>${PROJECT_ROOT}/src/readDataXLapp.m</file>
-      <file>${PROJECT_ROOT}/src/validateConfig.m</file>
-      <file>${PROJECT_ROOT}/src/validatingDataPeakTables.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/CEpopX.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/PEpopX.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/QCMXPz.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/TidyMetqcx.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/bypass2.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/ceX.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/drinkme.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/eject2.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/fullscreen.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/icon_512x512@2x.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/pause2.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/peX2.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/play2.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/resetx.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/textx10.png</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/res/userConfig.json</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/BatchCalcStats.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/BatchCalcStatsTable.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/CVconfidenceInterval.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/LowerThanBlankAsNaN.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/OptimiseAndCorrectPeak.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/OptimiseAndCorrectPeakX.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/OutlierFilter.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/PCApreprocessing.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/QCRSC3.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/QCRSCplotdistribution.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/batchScale.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/calcStats.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/checkNumberInBatch.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/ci95_ellipse2018.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/controlChart.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/generateMetabExamplesNew.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/humaniseLogTickLabel.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/incrementalKNNimpute.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/mapRcolors.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/optimiseCSAPS.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/plotPCAXX.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/preprocessDataForExport.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/qcrscPCA.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/readDataCSVapp.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/readDataXLapp.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/validateConfig.m</file>
+      <file>/Users/davidbroadhurst/QC-MXP/mlapp/src/validatingDataPeakTables.m</file>
     </fileset.depfun>
     <build-deliverables>
       <file location="${PROJECT_ROOT}/QCMXP/for_testing" name="run_QCMXP.sh" optional="false">/Users/davidbroadhurst/Github/QC-MXP/mlapp/QCMXP/for_testing/run_QCMXP.sh</file>
@@ -145,7 +152,7 @@ Enjoy! - David.</param.description>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>/Applications/MATLAB_R2024a.app</root>
+      <root>/Applications/MATLAB_R2024b.app</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
       </toolboxes>
