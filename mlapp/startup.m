@@ -8,8 +8,10 @@
 %   Copyright 1984-2000 The MathWorks, Inc. 
 %   $Revision: 1.4 $  $Date: 2000/06/01 16:19:26 $
 
-addpath('./src','-begin');
-disp("'/src' added to PATH")
-addpath('./res','-begin');
-disp("'/res' added to PATH")
+if ~isdeployed
+    addpath('./src','-begin');
+    disp("'/src' added to PATH")
+    addpath('./res','-begin');
+    disp("'/res' added to PATH")
+end
 
