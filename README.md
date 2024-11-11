@@ -1,7 +1,12 @@
 
 [![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) [![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/releases/latest)  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101541.svg)](https://doi.org/10.5281/zenodo.11101541) [![GitHub last commit](https://img.shields.io/github/last-commit/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/)
 
-[![Email Badge](https://img.shields.io/badge/Gmail-Contact_Me-green?style=flat-square&logo=gmail&logoColor=FFFFFF&labelColor=red&color=grey)](mailto:dvdbrdhrst@gmail.com)
+[![General badge](https://img.shields.io/badge/Bluesky-0285FF?logo=bluesky&logoColor=fff&style=for-the-badge)](https://bsky.app/profile/davidbroadhurst.bsky.social)
+[![Email Badge](https://img.shields.io/badge/Gmail-Contact_Me-green?style=flat-square&logo=gmail&logoColor=FFFFFF&labelColor=red&color=grey)](mailto:dvdbrdhrst@gmail.com) 
+
+
+
+
 
 <img src="res/QCMXPz.png" width="400" style="left">   <img src="res/textx10.png" width="300" style="left">
 <br />
