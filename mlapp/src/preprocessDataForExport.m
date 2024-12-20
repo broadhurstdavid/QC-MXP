@@ -1,8 +1,8 @@
-function [DataX] = preprocessDataForExport(Data,Peak,options)
+function [DataX] = preprocessDataForExport(Data,Feature,options)
 
     arguments
        Data {mustBeA(Data,'table')}
-       Peak {mustBeA(Peak,'table')}
+       Feature {mustBeA(Feature,'table')}
        options.RemoveZeros {mustBeNumericOrLogical} = true
        options.ImputationType {mustBeMember(options.ImputationType,{'KNNcol','KNNrow','blank20'})} = 'KNNcol'
        options.LogTransform {mustBeNumericOrLogical} = true    
@@ -11,8 +11,8 @@ function [DataX] = preprocessDataForExport(Data,Peak,options)
        options.batchScale {mustBeNumericOrLogical} = false
        options.k {mustBeInteger,mustBePositive} = 3
     end        
-       [ZZ] = PCApreprocessing(Data,Peak,RemoveZeros=options.RemoveZeros,ImputationType=options.ImputationType,LogTransform=options.LogTransform,Autoscale=options.Autoscale,Paretoscale=options.Paretoscale,batchScale=options.batchScale,k=options.k);
+       [ZZ] = PCApreprocessing(Data,Feature,RemoveZeros=options.RemoveZeros,ImputationType=options.ImputationType,LogTransform=options.LogTransform,Autoscale=options.Autoscale,Paretoscale=options.Paretoscale,batchScale=options.batchScale,k=options.k);
        DataX = Data;
-       DataX{:,Peak.UID} = ZZ;
+       DataX{:,Feature.UID} = ZZ;
 
 end

@@ -2,7 +2,7 @@ function HIDDENplotImperialRSD(app)
             
             cla(app.UIAxesImperialRSD,'reset');
             
-            bin = (1:height(app.PlotPeakTable))';
+            bin = (1:height(app.PlotFeatureTable))';
             if ismac
                 ms = 9;
             else
@@ -18,23 +18,23 @@ function HIDDENplotImperialRSD(app)
 
 
             if strcmp(app.SortbySwitch.Value,'sample')
-                [ss,index] = sortrows(app.PlotPeakTable.sampleRSD);
-                qq = app.PlotPeakTable.qcRSD(index);
+                [ss,index] = sortrows(app.PlotFeatureTable.sampleRSD);
+                qq = app.PlotFeatureTable.qcRSD(index);
             else
-                [qq,index] = sortrows(app.PlotPeakTable.qcRSD);
-                ss = app.PlotPeakTable.sampleRSD(index);
+                [qq,index] = sortrows(app.PlotFeatureTable.qcRSD);
+                ss = app.PlotFeatureTable.sampleRSD(index);
             end
-            dd = app.PlotPeakTable.dRatio(index);
-            rr = app.PlotPeakTable.refRSD(index);
-            bb = app.PlotPeakTable.blankRatio(index);
-            id = app.PlotPeakTable.UID(index);
+            dd = app.PlotFeatureTable.dRatio(index);
+            rr = app.PlotFeatureTable.refRSD(index);
+            bb = app.PlotFeatureTable.blankRatio(index);
+            id = app.PlotFeatureTable.UID(index);
             
             customLabel = app.CustomLabelDropDownA1.Value;
             if strcmp(customLabel,'None')
                 customflag = false;
             else
                 customflag = true;
-                cc = app.PlotPeakTable.(customLabel);
+                cc = app.PlotFeatureTable.(customLabel);
             end
 
             customLabel2 = app.CustomLabelDropDownA2.Value;
@@ -43,10 +43,10 @@ function HIDDENplotImperialRSD(app)
                 app.CustomLabelDropDownA2.Value = 'None';
             else
                 customflag2 = true;
-                cc2 = app.PlotPeakTable.(customLabel2);
+                cc2 = app.PlotFeatureTable.(customLabel2);
             end
 
-            in = app.PlotPeakTable.cleanPeaks(index);
+            in = app.PlotFeatureTable.cleanPeaks(index);
             
             ll = [];
             lt = {};
@@ -265,7 +265,7 @@ function HIDDENplotImperialRSD(app)
 
             end
             xlabel(app.UIAxesImperialRSD,'%RSD');
-            ylabel(app.UIAxesImperialRSD,'Cumulative Number of Peaks');
+            ylabel(app.UIAxesImperialRSD,'Cumulative Number of Features');
             legend(app.UIAxesImperialRSD,ll,lt,'location','southeast');
             
             app.UIAxesImperialRSD.Box = 'on';

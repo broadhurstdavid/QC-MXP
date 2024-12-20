@@ -51,10 +51,10 @@ if strcmp(options.plotType,'histogram')
     for i = 1:NumOfBatches
         if NumOfBatches ==1, blabel = repmat({'All'},length(center),1); else blabel = ones(length(center),1)*ubatch(i); end       
         plotAll(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,temp);
-        plotAll(i).DataTipTemplate.DataTipRows(2).Label = '#Peaks';
+        plotAll(i).DataTipTemplate.DataTipRows(2).Label = '#Features';
         plotAll(i).DataTipTemplate.DataTipRows(3) = dataTipTextRow('Batch#',blabel);
         plotClean(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,temp);
-        plotClean(i).DataTipTemplate.DataTipRows(2).Label = '#Peaks';
+        plotClean(i).DataTipTemplate.DataTipRows(2).Label = '#Features';
         plotClean(i).DataTipTemplate.DataTipRows(3) = dataTipTextRow('Batch#',blabel);
     end
     
@@ -118,7 +118,7 @@ axishandle.MinorGridAlpha = 0.2;
 xlabel(axishandle,['% ',options.label,' (log scale)']);
 
 if strcmp(options.plotType,'histogram') 
-    ylabel(axishandle,'Peaks Count');                 
+    ylabel(axishandle,'Feature Count');                 
 else
     axishandle.YTickLabel = [];
     ylabel(axishandle,'Relative Probability Density');

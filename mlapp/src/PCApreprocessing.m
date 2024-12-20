@@ -1,8 +1,8 @@
-function [ZZ] = PCApreprocessing(Data,Peak,options)
+function [ZZ] = PCApreprocessing(Data,Feature,options)
 
     arguments
        Data {mustBeA(Data,'table')}
-       Peak {mustBeA(Peak,'table')}
+       Feature {mustBeA(Feature,'table')}
        options.RemoveZeros {mustBeNumericOrLogical} = true
        options.ImputationType {mustBeMember(options.ImputationType,{'KNNcol','KNNrow','blank20'})} = 'KNNcol'
        options.LogTransform {mustBeNumericOrLogical} = true    
@@ -20,9 +20,9 @@ function [ZZ] = PCApreprocessing(Data,Peak,options)
                 throw(ME)
         end
             
-        cleanPeaks = logical(Peak.cleanPeaks);
-        PeakClean = Peak(cleanPeaks,:);            
-        ZZ = Data{:,PeakClean.UID};
+        cleanPeaks = logical(Feature.cleanPeaks);
+        FeatureClean = Feature(cleanPeaks,:);            
+        ZZ = Data{:,FeatureClean.UID};
         isQC = logical(Data.QC);
         isSample = logical(Data.Sample);
         isBlank = logical(Data.Blank);

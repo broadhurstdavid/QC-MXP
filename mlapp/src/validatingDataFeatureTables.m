@@ -1,23 +1,23 @@
-function [DataTable,PeakTable] = validatingDataPeakTables(DataTable,PeakTable,options)
+function [DataTable,FeatureDictionary] = validatingDataFeatureTables(DataTable,FeatureDictionary,options)
 
     arguments
        DataTable
-       PeakTable
+       FeatureDictionary
        options.fighandle = uifigure;
        options.ColumnWarningFlag = true;
     end
 
-peakHeader = PeakTable.Properties.VariableNames;
+peakHeader = FeatureDictionary.Properties.VariableNames;
 
 if ~all(ismember({'UID','Name'},peakHeader))
-    ME = MException('TidyData:PeakTableError','PeakTable must contain columns ''UID'' & ''Name''');
+    ME = MException('TidyData:FeatureDictionaryError','FeatureDictionary must contain columns ''UID'' & ''Name''');
     throw(ME);
 end
 
-peakList = PeakTable.UID;
+peakList = FeatureDictionary.UID;
 peaks = unique(peakList);
 if numel(peaks) ~= numel(peakList)
-    ME = MException('TidyData:PeakTableError','All UIDs in the PeakSheet must be unique.');
+    ME = MException('TidyData:FeatureDictionaryError','All UIDs in the PeakSheet must be unique.');
     throw(ME);
 end
 

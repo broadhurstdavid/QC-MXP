@@ -165,9 +165,9 @@ function controlChart(axishandle,Data,option)
             
             xlabel(axishandle, 'Injection order')
             if option.islog
-                ylabel(axishandle, 'log_{10}(Peak Value)')
+                ylabel(axishandle, 'log_{10}(Feature Value)')
             else
-                ylabel(axishandle, 'Peak Value')
+                ylabel(axishandle, 'Feature Value')
             end
   
             hold(axishandle,'off');

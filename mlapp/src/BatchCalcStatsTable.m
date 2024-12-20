@@ -1,10 +1,10 @@
-function [Stats] = BatchCalcStatsTable(Data,Peak,batch,baseConfig)
+function [Stats] = BatchCalcStatsTable(Data,Feature,batch,baseConfig)
 
 if batch ~= -1
     Data = Data(Data.Batch==batch,:);   
 end
 
-X = Data{:,Peak.UID};
+X = Data{:,Feature.UID};
 isQC = logical(Data.QC);
 isSample = logical(Data.Sample);
 isBlank = logical(Data.Blank);
