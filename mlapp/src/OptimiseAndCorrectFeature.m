@@ -16,10 +16,27 @@ function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeature(confi
 % config.StatsParametric
 % config.ParallelProcess
 
+switch config.QCRSCcvMethod
+    case '3-Fold', QCRSCcvMethod = 3;
+    case '5-Fold', QCRSCcvMethod = 5;
+    case '7-Fold', QCRSCcvMethod = 7;
+    case 'Leaveout', QCRSCcvMethod = -1;
+    otherwise, error('This CrossValidation method does not exist'); 
+end
+
+switch config.OutlierDetectionMethod
+    case 'None', OutlierMethod = 'none';
+    case 'Percentile', OutlierMethod = 'prctile';
+    case 'Linear', OutlierMethod = 'poly1';                    
+    case 'Quadratic', OutlierMethod = 'poly2';                    
+    case 'Cubic', OutlierMethod = 'poly3';                    
+    otherwise, error('This OutlierDetectionMethod does not exist');                    
+end
+
 if strcmp(config.IntraBatchMode,'Sample')
     mpv = median(y(isSample),'omitnan');
 else
-    mpv = mean(y(isQC),'omitnan');
+    mpv = median(y(isQC),'omitnan');
 end
 
 z = nan(length(y),1);
@@ -51,7 +68,7 @@ for i = 1:numberOfBatches
     yqci = yqc(idx);
 
     try        
-        [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,config.OutlierMethod,config.OutlierCI);
+        [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,OutlierMethod,config.OutlierCI);
         switch config.IntraBatchMode
             case 'Sample'
                 gamma = 10000;epsilon = NaN;cvMse = 0;minVal = 0;
@@ -63,7 +80,7 @@ for i = 1:numberOfBatches
                 %gamma = 11;cvMse = 0;minVal = 0;
                 gamma = 1000;epsilon = NaN;cvMse = 0;minVal = 0;
             otherwise
-                [gamma,epsilon,cvMse,minVal] = optimiseCSAPS(tqci,yqci,config.QCRSCgammaRange,config.QCRSCcvMethod,config.QCRSCmcReps);               
+                [gamma,epsilon,cvMse,minVal] = optimiseCSAPS(tqci,yqci,config.QCRSCgammaRange,QCRSCcvMethod,config.QCRSCmcReps);               
         end
    catch
        gamma = NaN;epsilon = NaN;cvMse = NaN;minVal = NaN;toutlieri = [];
