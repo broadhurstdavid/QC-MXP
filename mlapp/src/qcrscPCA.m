@@ -4,14 +4,13 @@ function [RES] = qcrscPCA(Data,Feature,options)
        Data {mustBeA(Data,'table')}
        Feature {mustBeA(Feature,'table')}
        options.RemoveZeros {mustBeNumericOrLogical} = true
-       options.ImputationType {mustBeMember(options.ImputationType,{'KNNcol','KNNrow','blank20'})} = 'KNNcol'
-       options.LogTransform {mustBeNumericOrLogical} = true    
-       options.Autoscale {mustBeNumericOrLogical} = true
-       options.Paretoscale {mustBeNumericOrLogical} = false
+       options.ImputationType {mustBeMember(options.ImputationType,{'KNNcolumn','KNNrow','blank20'})} = 'KNNcol'
+       options.LogTransform {mustBeNumericOrLogical} = true 
+       options.ScaleMethod {mustBeMember(options.ScaleMethod,{'MeanCenter','Autoscale','Paretoscale'})} = 'Autoscale'
        options.batchScale {mustBeNumericOrLogical} = false
        options.k {mustBeInteger,mustBePositive} = 3      
     end
-        [ZZ] = PCApreprocessing(Data,Feature,RemoveZeros=options.RemoveZeros,ImputationType=options.ImputationType,LogTransform=options.LogTransform,Autoscale=options.Autoscale,Paretoscale=options.Paretoscale,k=options.k,batchScale=options.batchScale);
+        [ZZ] = PCApreprocessing(Data,Feature,RemoveZeros=options.RemoveZeros,ImputationType=options.ImputationType,LogTransform=options.LogTransform,ScaleMethod=options.ScaleMethod,k=options.k,batchScale=options.batchScale);
 
         warning off
 

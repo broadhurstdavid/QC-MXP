@@ -14,7 +14,8 @@ for i = 1:length(uniqueBatch)
             [~,cent,scle] = normalize(Z0,1,'zscore');
             ZZout(in,:) = (ZZsub-cent)./sqrt(scle);
         otherwise
-            error('no such scale type');
+            [~,cent,scle] = normalize(Z0,1,'center');
+            ZZout(in,:) = (ZZsub-cent)./sqrt(scle);
     end
 end
 

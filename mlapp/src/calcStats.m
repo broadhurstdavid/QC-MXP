@@ -8,7 +8,7 @@ arguments
     isReference {mustBeNumericOrLogical}
     options.Logged {mustBeNumericOrLogical} = true
     options.BlankRatioMethod {mustBeMember(options.BlankRatioMethod,{'QC','Median','Percentile'})} = 'QC'
-    options.RelativeLOD {mustBeGreaterThanOrEqual(options.RelativeLOD,1)} = 1.5;
+    options.RelativeLOQ {mustBeGreaterThanOrEqual(options.RelativeLOQ,1)} = 1.5;
 end
 
 % NOTE 'Logged' indicates whether the data has already been log transformed
@@ -57,7 +57,7 @@ switch options.BlankRatioMethod
         if isempty(yB)
             blankRatio = [];            
         else
-            bb = max(yB,[],'omitnan')*options.RelativeLOD;
+            bb = max(yB,[],'omitnan')*options.RelativeLOQ;
             if isnan(bb)
                 blankRatio = NaN;
             else

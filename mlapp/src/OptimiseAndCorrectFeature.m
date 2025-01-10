@@ -1,19 +1,17 @@
 function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeature(config,t,y,batch,isQC,isSample,isBlank)
 
-% config.LogTransform
+% config.LogTransformedCorrection
 % config.RemoveZeros
-% config.OutlierMethod
-% config.OutlierCI
-% config.OutlierPostHoc
-% config.IntraBatchMode
-% config.InterBatchMode
+% config.OutlierDetectionMethod
+% config.OutlierDetectionCI
+% config.OutlierReplacementStrategy
+% config.WithinBatchCorrectionMode
+% config.BetweenBatchCorrectionMode
 % config.QCRSCgammaRange
 % config.QCRSCcvMethod
 % config.QCRSCmcReps
-% config.CorrectionType
 % config.BlankRatioMethod
-% config.RelativeLOD
-% config.StatsParametric
+% config.RelativeLOQ
 % config.ParallelProcess
 
 switch config.QCRSCcvMethod
@@ -33,10 +31,16 @@ switch config.OutlierDetectionMethod
     otherwise, error('This OutlierDetectionMethod does not exist');                    
 end
 
-if strcmp(config.IntraBatchMode,'Sample')
+if strcmp(config.WithinBatchCorrectionMode,'Sample')
     mpv = median(y(isSample),'omitnan');
 else
     mpv = median(y(isQC),'omitnan');
+end
+
+if config.LogTransformedCorrection
+    CorrectionType = 'Subtract';
+else
+    CorrectionType = 'Divide';
 end
 
 z = nan(length(y),1);
@@ -61,6 +65,8 @@ yqc = y(isQC);
 tqc = t(isQC);
 batchqc = batch(isQC);
 
+gammaRange = str2num(config.QCRSCgammaRange);
+
 for i = 1:numberOfBatches
       
     idx = batchqc == ub(i);
@@ -68,8 +74,8 @@ for i = 1:numberOfBatches
     yqci = yqc(idx);
 
     try        
-        [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,OutlierMethod,config.OutlierCI);
-        switch config.IntraBatchMode
+        [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,OutlierMethod,config.OutlierDetectionCI);
+        switch config.WithinBatchCorrectionMode
             case 'Sample'
                 gamma = 10000;epsilon = NaN;cvMse = 0;minVal = 0;
             case 'Mean'
@@ -80,7 +86,7 @@ for i = 1:numberOfBatches
                 %gamma = 11;cvMse = 0;minVal = 0;
                 gamma = 1000;epsilon = NaN;cvMse = 0;minVal = 0;
             otherwise
-                [gamma,epsilon,cvMse,minVal] = optimiseCSAPS(tqci,yqci,config.QCRSCgammaRange,QCRSCcvMethod,config.QCRSCmcReps);               
+                [gamma,epsilon,cvMse,minVal] = optimiseCSAPS(tqci,yqci,gammaRange,QCRSCcvMethod,config.QCRSCmcReps);               
         end
    catch
        gamma = NaN;epsilon = NaN;cvMse = NaN;minVal = NaN;toutlieri = [];
@@ -101,7 +107,7 @@ for i = 1:numberOfBatches
     isQCi = isQC(idx);
     isSamplei = isSample(idx);
     try
-        [z(idx),yspline(idx)] = QCRSC3(ti,yi,isQCi,isSamplei,mpv,epsilonVal(i),gammaVal(i),toutliers,config.CorrectionType,config.OutlierPostHoc);
+        [z(idx),yspline(idx)] = QCRSC3(ti,yi,isQCi,isSamplei,mpv,epsilonVal(i),gammaVal(i),toutliers,CorrectionType,config.OutlierReplacementStrategy);
     catch
         z(idx) = yi;
     end

@@ -4,8 +4,8 @@ defaultFieldnames = [
   {'Filename'}
   {'DataTable'}
   {'FeatureDictionary'}
-  {'PreFilterPercentQCsMissingPerFeature'}
-  {'PreFilterMode'}
+  {'MissingQCPreFilterMode'}
+  {'MissingQCPreFilterPercentage'} 
   {'LOQfilter'}
   {'RelativeLOQ'}
   {'LogTransformedCorrection'}
@@ -21,18 +21,18 @@ defaultFieldnames = [
   {'BlankRatioMethod'}
   {'ParallelProcess'}
   {'CorrectedFileSuffix'}
-  {'CleaningFilterMode'}
-  {'CleaningPercentMissingPerFeature'}
-  {'CleaningFilterMode2'}
-  {'CleaningFilterQCRSD'}
-  {'CleaningFilterSampleRSD'}
-  {'CleaningFilterDRatio'}
-  {'CleaningFilterBlankRatio'}
-  {'CleanedFileSuffix'}
-  {'CleanedLogTransform'}
-  {'CleanedScaleMethod'}
-  {'CleanedImputationMethod'}
-  {'CleanedImputationK'}];
+  {'CleanMissingSampleFilterMode'}
+  {'CleanMissingSampleFilterPercentage'}
+  {'CleanFilterBankMode'}
+  {'CleanFilterQCRSD'}
+  {'CleanFilterSampleRSD'}
+  {'CleanFilterDRatio'}
+  {'CleanFilterBlankRatio'}
+  {'CleanFileSuffix'}
+  {'CleanLogTransform'}
+  {'CleanScaleMethod'}
+  {'CleanImputationMethod'}
+  {'CleanImputationK'}];
 
 baseFieldnames = fieldnames(baseConfig);
 
@@ -63,9 +63,9 @@ catch
 end
 
 try
-    validateattributes(baseConfig.CleanedFileSuffix,{'char'},{'scalartext'})
+    validateattributes(baseConfig.CleanFileSuffix,{'char'},{'scalartext'})
 catch
-    baseException = MException('QCRSC:UnexpectedCleanedFileSuffix','Config Error: CleanedFileSuffix value must be text');
+    baseException = MException('QCRSC:UnexpectedCleanFileSuffix','Config Error: CleanFileSuffix value must be text');
     throw(baseException)
 end 
 
@@ -77,16 +77,16 @@ catch
 end 
 
 try
-    validateattributes(baseConfig.PreFilterPercentQCsMissingPerFeature, {'double'},{'scalar','integer','>=',0,'<=',100})
+    validateattributes(baseConfig.MissingQCPreFilterPercentage, {'double'},{'scalar','integer','>=',0,'<=',100})
 catch
-    baseException = MException('QCRSC:UnexpectedPreFilterPercentQCsMissingPerFeatureValue','Config Error: PreFilterPercentQCsMissingPerFeatureValue value must be a positive integer between 0 and 100');
+    baseException = MException('QCRSC:UnexpectedMissingQCPreFilterPercentageValue','Config Error: MissingQCPreFilterPercentageValue value must be a positive integer between 0 and 100');
     throw(baseException)
 end
 
 try
-    mustBeMember(baseConfig.PreFilterMode,{'Complete','EveryBatch','AnyBatch'});
+    mustBeMember(baseConfig.MissingQCPreFilterMode,{'Complete','EveryBatch','AnyBatch'});
 catch
-    baseException = MException('QCRSC:UnexpectedPreFilterMode',"Config Error: PreFilterMode must be one of the following: 'Complete','Every Batch','Any Batch'.");
+    baseException = MException('QCRSC:UnexpectedMissingQCPreFilterMode',"Config Error: MissingQCPreFilterMode must be one of the following: 'Complete','Every Batch','Any Batch'.");
     throw(baseException)
 end
 
@@ -198,79 +198,79 @@ catch
 end 
 
 try
-    mustBeMember(baseConfig.CleaningFilterMode,{'Complete','EveryBatch','AnyBatch'});
+    mustBeMember(baseConfig.CleanMissingSampleFilterMode,{'Complete','EveryBatch','AnyBatch'});
 catch
-    baseException = MException('QCRSC:UnexpectedCleaningFilterMode',"Config Error: CleaningFilterMode must be one of the following: 'Complete','Every Batch','Any Batch'.");
+    baseException = MException('QCRSC:UnexpectedCleanMissingSampleFilterMode',"Config Error: CleanMissingSampleFilterMode must be one of the following: 'Complete','Every Batch','Any Batch'.");
     throw(baseException)
 end
 
 try
-    validateattributes(baseConfig.CleaningPercentMissingPerFeature, {'double'},{'scalar','integer','>=',0,'<=',100})
+    validateattributes(baseConfig.CleanMissingSampleFilterPercentage, {'double'},{'scalar','integer','>=',0,'<=',100})
 catch
-    baseException = MException('QCRSC:UnexpectedCleaningPercentMissingPerFeature','Config Error: CleaningPercentMissingPerFeature value must be a positive integer between 0 and 100');
+    baseException = MException('QCRSC:UnexpectedCleanMissingSampleFilterPercentage','Config Error: CleanMissingSampleFilterPercentage value must be a positive integer between 0 and 100');
     throw(baseException)
 end
 
 try
-    mustBeMember(baseConfig.CleaningFilterMode2,{'Complete','Max qcRSD','Max dRatio', 'Median qcRSD','Median dRatio', 'Min qcRSD', 'Min dRatio'});
+    mustBeMember(baseConfig.CleanFilterBankMode,{'Complete','Max qcRSD','Max dRatio', 'Median qcRSD','Median dRatio', 'Min qcRSD', 'Min dRatio'});
 catch
-    baseException = MException('QCRSC:UnexpectedCleaningFilterMode2',"Config Error: CleaningMissingFilterMode must be one of the following: 'Complete','Max qcRSD','Max dRatio', 'Median qcRSD','Median dRatio', 'Min qcRSD', 'Min dRatio'.");
+    baseException = MException('QCRSC:UnexpectedCleanFilterBankMode',"Config Error: CleanMissingFilterMode must be one of the following: 'Complete','Max qcRSD','Max dRatio', 'Median qcRSD','Median dRatio', 'Min qcRSD', 'Min dRatio'.");
     throw(baseException)
 end
 
 try
-    validateattributes(baseConfig.CleaningFilterQCRSD, {'double'},{'scalar','integer','>=',0,'<=',100})
+    validateattributes(baseConfig.CleanFilterQCRSD, {'double'},{'scalar','integer','>=',0,'<=',100})
 catch
-    baseException = MException('QCRSC:UnexpectedCleaningFilterQCRSD','Config Error: CleaningFilterQCRSD value must be a positive integer between 0 and 100');
+    baseException = MException('QCRSC:UnexpectedCleanFilterQCRSD','Config Error: CleanFilterQCRSD value must be a positive integer between 0 and 100');
     throw(baseException)
 end
 
 try
-    validateattributes(baseConfig.CleaningFilterSampleRSD, {'double'},{'scalar','integer','>=',0,'<=',100})
+    validateattributes(baseConfig.CleanFilterSampleRSD, {'double'},{'scalar','integer','>=',0,'<=',100})
 catch
-    baseException = MException('QCRSC:UnexpectedCleaningFilterSampleRSD','Config Error: CleaningFilterSampleRSD value must be a positive integer between 0 and 100');
+    baseException = MException('QCRSC:UnexpectedCleanFilterSampleRSD','Config Error: CleanFilterSampleRSD value must be a positive integer between 0 and 100');
     throw(baseException)
 end
 
 try
-    validateattributes(baseConfig.CleaningFilterDRatio, {'double'},{'scalar','integer','>=',0,'<=',100})
+    validateattributes(baseConfig.CleanFilterDRatio, {'double'},{'scalar','integer','>=',0,'<=',100})
 catch
-    baseException = MException('QCRSC:UnexpectedCleaningFilterDRatio','Config Error: CleaningFilterDRatio value must be a positive integer between 0 and 100');
+    baseException = MException('QCRSC:UnexpectedCleanFilterDRatio','Config Error: CleanFilterDRatio value must be a positive integer between 0 and 100');
     throw(baseException)
 end
 
 try
-    validateattributes(baseConfig.CleaningFilterBlankRatio, {'double'},{'scalar','integer','>=',0,'<=',100})
+    validateattributes(baseConfig.CleanFilterBlankRatio, {'double'},{'scalar','integer','>=',0,'<=',100})
 catch
-    baseException = MException('QCRSC:UnexpectedCleaningFilterBlankRatio','Config Error: CleaningFilterBlankRatio value must be a positive integer between 0 and 100');
+    baseException = MException('QCRSC:UnexpectedCleanFilterBlankRatio','Config Error: CleanFilterBlankRatio value must be a positive integer between 0 and 100');
     throw(baseException)
 end
 
 try
-    validateattributes(baseConfig.CleanedLogTransform, {'logical'},{'scalar'})
+    validateattributes(baseConfig.CleanLogTransform, {'logical'},{'scalar'})
 catch
-    baseException = MException('QCRSC:UnexpectedCleanedLogTransformValue','Config Error: CleanedLogTransform value must be logical (true/false)');
+    baseException = MException('QCRSC:UnexpectedCleanLogTransformValue','Config Error: CleanLogTransform value must be logical (true/false)');
     throw(baseException)
 end
 
 try
-    mustBeMember(baseConfig.CleanedScaleMethod,{'None','Autoscale','Paretoscale'});
+    mustBeMember(baseConfig.CleanScaleMethod,{'MeanCenter','Autoscale','Paretoscale'});
 catch
-    baseException = MException('QCRSC:UnexpectedCleanedScaleMethod',"Config Error: CleanedScaleMethod must be one of the following: 'None','Autoscale','Paretoscale'.");
+    baseException = MException('QCRSC:UnexpectedCleanScaleMethod',"Config Error: CleanScaleMethod must be one of the following: 'None','Autoscale','Paretoscale'.");
     throw(baseException)
 end
 
 try
-    mustBeMember(baseConfig.CleanedImputationMethod,{'KNNcolumn','KNNrow','blank20'});
+    mustBeMember(baseConfig.CleanImputationMethod,{'KNNcolumn','KNNrow','blank20'});
 catch
-    baseException = MException('QCRSC:UnexpectedCleanedImputationMethod',"Config Error: CleanedImputationMethod must be one of the following: 'KNNcolumn','KNNrow','blank20'.");
+    baseException = MException('QCRSC:UnexpectedCleanImputationMethod',"Config Error: CleanImputationMethod must be one of the following: 'KNNcolumn','KNNrow','blank20'.");
     throw(baseException)
 end
 
 try
-    validateattributes(baseConfig.CleanedImputationK, {'double'},{'scalar','integer','>=',1,'<=',20})
+    validateattributes(baseConfig.CleanImputationK, {'double'},{'scalar','integer','>=',1,'<=',20})
 catch
-    baseException = MException('QCRSC:UnexpectedCleanedImputationKvalue','Config Error: CleanedImputationK value must be a positive integer between 1 and 20');
+    baseException = MException('QCRSC:UnexpectedCleanImputationKvalue','Config Error: CleanImputationK value must be a positive integer between 1 and 20');
     throw(baseException)
 end
 
