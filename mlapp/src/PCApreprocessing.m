@@ -69,8 +69,8 @@ function [ZZ] = PCApreprocessing(Data,Feature,options)
                         ZZ = batchScale(ZZ,isSample,batchnum,'center');
                     else
                         Z0 = ZZ(isSample,:);
-                        [~,cent,scle] = normalize(Z0,1,'center');
-                        ZZ = (ZZ-cent)./sqrt(scle);
+                        [~,cent] = normalize(Z0,1,'center');
+                        ZZ = (ZZ-cent);
                     end
             end
                        
@@ -121,8 +121,8 @@ function [ZZ] = PCApreprocessing(Data,Feature,options)
                         ZZ = batchScale(ZZ,isSample,batchnum,'center');
                     else
                         Z0 = ZZ(isSample,:);
-                        [~,cent,scle] = normalize(Z0,1,'center');
-                        ZZ = (ZZ-cent)./sqrt(scle);
+                        [~,cent] = normalize(Z0,1,'center');
+                        ZZ = (ZZ-cent);
                     end
             end        
             % replace missing QCs with KNN QC values or mean
@@ -188,8 +188,8 @@ function [ZZ] = PCApreprocessing(Data,Feature,options)
                         ZZ = batchScale(ZZ,isSample,batchnum,'center');
                     else
                         Z0 = ZZ(isSample,:);
-                        [~,cent,scle] = normalize(Z0,1,'center');
-                        ZZ = (ZZ-cent)./sqrt(scle);
+                        [~,cent] = normalize(Z0,1,'center');
+                        ZZ = (ZZ-cent);
                     end
             end                           
     end
