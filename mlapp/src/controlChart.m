@@ -7,8 +7,8 @@ function controlChart(axishandle,Data,option)
                 option.cmap = lines
                 option.title = ''
                 option.islog = true;
-                option.RelativeLOD = 1.5
-                option.IntraBatchMode = 'QC'
+                option.RelativeLOQ = 1.5
+                option.WithinBatchCorrectionMode = 'QC'
             end
             
             isbatch = false;
@@ -37,7 +37,7 @@ function controlChart(axishandle,Data,option)
                 spline = Data.Yspline;
             else
                 y = Data.Z;
-                if strcmp(option.IntraBatchMode,'Sample')
+                if strcmp(option.WithinBatchCorrectionMode,'Sample')
                     mpv = median(Data.Y(Data.Sample),'omitnan');
                 else
                     mpv = mean(Data.Y(Data.QC),'omitnan');
@@ -80,11 +80,11 @@ function controlChart(axishandle,Data,option)
                 if option.islog
                     temp = power(10,temp);
                     temp = max(temp,[],1,'omitnan');
-                    temp = temp*option.RelativeLOD;
+                    temp = temp*option.RelativeLOQ;
                     temp = log10(temp);
                 else
                     temp = max(temp,[],1,'omitnan');
-                    temp = temp*option.RelativeLOD;
+                    temp = temp*option.RelativeLOQ;
                 end
             end
             
