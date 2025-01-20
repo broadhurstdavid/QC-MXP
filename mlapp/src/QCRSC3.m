@@ -16,7 +16,7 @@ ys(missingSample) = [];
 
 try
     if isnan(gammaVal)
-        myqc = mean(yqc,'omitnan');
+        myqc = median(yqc,'omitnan');
         if isnan(myqc)
             myqc = mpv;
         end

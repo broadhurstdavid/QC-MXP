@@ -78,7 +78,7 @@ for i = 1:numberOfBatches
         switch config.WithinBatchCorrectionMode
             case 'Sample'
                 gamma = 10000;epsilon = NaN;cvMse = 0;minVal = 0;
-            case 'Mean'
+            case 'Median'
                 gamma = NaN;epsilon = NaN;cvMse = 0;minVal = 0;
             case 'Linear'
                 %avDist = median(tqci(2:end) - tqci(1:end-1));
