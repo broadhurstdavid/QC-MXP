@@ -4,7 +4,7 @@ function [RES] = qcrscPCA(Data,Feature,options)
        Data {mustBeA(Data,'table')}
        Feature {mustBeA(Feature,'table')}
        options.RemoveZeros {mustBeNumericOrLogical} = true
-       options.ImputationType {mustBeMember(options.ImputationType,{'KNNcolumn','KNNrow','blank20'})} = 'KNNcol'
+       options.ImputationType {mustBeMember(options.ImputationType,{'KNNcolumn','KNNrow','blank20'})} = 'KNNcolumn'
        options.LogTransform {mustBeNumericOrLogical} = true 
        options.ScaleMethod {mustBeMember(options.ScaleMethod,{'MeanCenter','Autoscale','Paretoscale'})} = 'Autoscale'
        options.batchScale {mustBeNumericOrLogical} = false
