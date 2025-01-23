@@ -23,7 +23,7 @@ steps = 4;
 % LOAD PEAK FILE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-d.Message = ['Loading Feature Dictionary file: ',FeatureFilename];
+d.Message = ['Loading Feature Table file: ',FeatureFilename];
 step = 1;
 d.Value = step/steps;
 FeatureTable = readtable(FeatureFilename,'VariableNamingRule', 'preserve');

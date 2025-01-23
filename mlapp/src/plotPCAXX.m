@@ -113,7 +113,7 @@
                     case 'BatchQC'                   
                         tempQC = temp & Data.QC;
                          tempSample = temp & Data.Sample;
-                        b(i) = scatter(axishandle,SS(tempQC,1),SS(tempQC,2),sz,cmapx(i,:),'o','filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol);                        
+                        b(i) = scatter(axishandle,SS(tempQC,1),SS(tempQC,2),sz,cmapx(i,:),'^','filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol);                        
                         b(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempQC));
                         b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow('Batch:',Data.Batch(tempQC));
                         d(i) = scatter(axishandle,SS(tempSample,1),SS(tempSample,2),sz,cmapx(i,:),'o','filled','MarkerFaceAlpha',0.2);%,'MarkerEdgeColor',ecol); 

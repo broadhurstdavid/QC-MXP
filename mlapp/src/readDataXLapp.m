@@ -1,10 +1,10 @@
     function [DataTable,FeatureTable] = readDataXLapp(filename,options)
 
-% This function loads and validates the Metabolomics Data Sheet and Feature Dictionary from an Excel Sheet:
+% This function loads and validates the Metabolomics Data Sheet and Feature Table from an Excel Sheet:
 % Metabolite IDs must start with 'M' ... best to use M1 M2 M3 M4 etc. 
 % Remaining columns are assumed to be user specific meta data and are ignored. 
-% Feature Dictionary: The first columns should contain the Feature UID matching the DataSheet (M1 M2 .. )
-% The remaining columns can contain anything you like. Statistics will be added to this "dictionary"
+% Feature Table: The first columns should contain the Feature UID matching the DataSheet (M1 M2 .. )
+% The remaining columns can contain anything you like. Statistics will be added to this "Table"
 
     arguments
        filename

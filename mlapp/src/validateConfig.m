@@ -1,9 +1,11 @@
 function baseConfig = validateConfig(baseConfig)
 
 defaultFieldnames = [
-  {'Filename'}
+  {'WorkingDirectory'} 
+  {'FileType'}
+  {'ProjectName'}
   {'DataTable'}
-  {'FeatureDictionary'}
+  {'FeatureTable'}
   {'MissingQCPreFilterMode'}
   {'MissingQCPreFilterPercentage'} 
   {'LOQfilter'}
@@ -42,9 +44,23 @@ if ~isequal(defaultFieldnames,baseFieldnames)
 end
 
 try
-    validateattributes(baseConfig.Filename,{'char'},{'scalartext'})
+    validateattributes(baseConfig.WorkingDirectory,{'char'},{'scalartext'})
 catch
-    baseException = MException('QCRSC:UnexpectedFilename','Config Error: Filename value must be text');
+    baseException = MException('QCRSC:UnexpectedWorkingDirectory','Config Error: WorkingDirectory value must be text');
+    throw(baseException)
+end 
+
+try
+    mustBeMember(baseConfig.FileType,{'csv','xlsx',''});
+catch
+    baseException = MException('QCRSC:UnexpectedCongigFileType',"Config Error: FileType must be either 'xlsx' or 'csv'.");
+    throw(baseException)
+end
+
+try
+    validateattributes(baseConfig.ProjectName,{'char'},{'scalartext'})
+catch
+    baseException = MException('QCRSC:UnexpectedProjectName','Config Error: ProjectName value must be text');
     throw(baseException)
 end 
 
@@ -56,9 +72,9 @@ catch
 end 
 
 try
-    validateattributes(baseConfig.FeatureDictionary,{'char'},{'scalartext'})
+    validateattributes(baseConfig.FeatureTable,{'char'},{'scalartext'})
 catch
-    baseException = MException('QCRSC:UnexpectedFeatureDictionary','Config Error: FeatureDictionary value must be text');
+    baseException = MException('QCRSC:UnexpectedFeatureTable','Config Error: FeatureTable value must be text');
     throw(baseException)
 end
 
