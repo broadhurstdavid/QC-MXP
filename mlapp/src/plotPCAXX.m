@@ -277,7 +277,7 @@
         else             
             xlabel(axishandle,sprintf('PC%u (Explained Var(X) = %3.1f%%; dRatio = %.2f%%)',xaxis,pcaRES.explained(xaxis),pcaRES.DRatio(xaxis)),'FontSize',11);
         end
-        axishandle.Title.String = {'Principal Component Analysis';sprintf('(MPQ = %.2f%%; MPQ_{95} = %.2f%%)',pcaRES.MPQ,pcaRES.MPQ95)};
+        
     else
         ylabel(axishandle,sprintf('PC%u (Explained Var(X) = %3.1f%%)',yaxis,pcaRES.explained(yaxis)),'FontSize',11);
         if xaxis == 0
