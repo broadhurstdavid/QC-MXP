@@ -17,7 +17,7 @@ defaultFieldnames = [
   {'OutlierReplacementStrategy'}
   {'WithinBatchCorrectionMode'}
   {'BetweenBatchCorrectionMode'}
-  {'QCRSCgammaRange'}
+  {'QCRSCgammaConstraint'}
   {'QCRSCcvMethod'}
   {'QCRSCmcReps'}
   {'BlankRatioMethod'}
@@ -168,22 +168,14 @@ try
 catch
     baseException = MException('QCRSC:UnexpectedBetweenBatchCorrectionMode',"BetweenBatchCorrectionMode value must be one of the following: 'Sample','QC','Reference'");
     throw(baseException)
-end  
-
-if isa(baseConfig.QCRSCgammaRange,'char')   
-    QCRSCgammaRange = str2num(baseConfig.QCRSCgammaRange);
-    if isempty(QCRSCgammaRange)    
-        baseException = MException('QCRSC:UnexpectedQCRSCgammaRange',"QCRSCgammaRange must be formatted as 'lower:increment:upper' (e.g. '-1:0.5:4')");
-        throw(baseException)
-    end
-end
+end 
 
 try
-    validateattributes(QCRSCgammaRange, {'double'},{'nonempty','increasing','<=',10})
+    validateattributes(baseConfig.QCRSCgammaConstraint, {'double'},{'scalar','integer','>=',0,'<=',10})
 catch
-    baseException = MException('QCRSC:UnexpectedQCRSCgammaRange',"QCRSCgammaRange value must be a numerical vector of increasing value. Maximum = 10");
+    baseException = MException('QCRSC:UnexpectedQCRSCgammaConstraint','Config Error: QCRSCgammaConstraint value must be a positive integer between 0 and 10');
     throw(baseException)
-end 
+end
 
 try
     mustBeMember(baseConfig.QCRSCcvMethod,{'3-Fold','5-Fold','7-Fold','Leaveout'});
