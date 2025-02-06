@@ -19,7 +19,7 @@
     cla(axishandle,'reset');
     grey = [0.7,0.7,0.7];
     if ismac
-        sz = 20;
+        sz = 18;
     else
         sz = 18;
     end

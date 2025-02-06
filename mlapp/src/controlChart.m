@@ -53,13 +53,13 @@ function controlChart(axishandle,Data,option)
 
             if ismac
                 if batchNumTotal < 3
-                    dot_size = 9;
-                elseif batchNumTotal < 5
-                    dot_size = 7;
-                elseif batchNumTotal < 10
                     dot_size = 6;
-                else
+                elseif batchNumTotal < 5
                     dot_size = 5;
+                elseif batchNumTotal < 10
+                    dot_size = 4;
+                else
+                    dot_size = 2;
                 end
             else
                 if batchNumTotal < 3
