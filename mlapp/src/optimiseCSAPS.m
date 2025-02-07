@@ -2,7 +2,7 @@ function [gamma,epsilon,cvMse,minVal] = optimiseCSAPS(t,y,gammaRange,nfold,mcrep
   
 try
     
-    gammaRange = (gammaRange-5)/4; % this is to make the GUI scaling easier [0:1:25] = [-1.25:0.25:5.00]
+    gammaRange = (gammaRange-4)/4; % this is to make the GUI scaling easier [0:1:20] = [-1:0.25:4.00]
 
     avDist = median(t(2:end) - t(1:end-1));
     epsilon = avDist^3/16;     
@@ -57,7 +57,7 @@ try
         cvMse = smoothdata(cvMse,'gaussian',7);
         [minVal,idx] = min(cvMse);
         gamma = gammaRange(idx);
-        gamma = (gamma*4)+5;
+        gamma = (gamma*4)+4;
         
     end
 
