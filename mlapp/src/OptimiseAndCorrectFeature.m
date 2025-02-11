@@ -65,7 +65,7 @@ yqc = y(isQC);
 tqc = t(isQC);
 batchqc = batch(isQC);
 
-gammaRange = config.QCRSCgammaConstraint:20;
+gammaRange = config.QCRSCgammaConstraint:10;
 
 for i = 1:numberOfBatches
       

@@ -15,7 +15,7 @@ ts(missingSample) = [];
 ys(missingSample) = [];
 
 if gammaVal < 1000
-    gammaVal = (gammaVal-4)/4; % this is to make the GUI scaling easier [0:1:20] = [-1:0.25:0.4]
+    gammaVal = (gammaVal-2)/2; % this is to make the GUI scaling easier [0:1:20] = [-1:0.25:0.4]
 end
 
 try
