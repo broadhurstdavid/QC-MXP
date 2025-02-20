@@ -1,4 +1,4 @@
-function [z,yspline] = QCRSC3(t,y,isQC,isSample,mpv,epsilon,gammaVal,toutlier,CorrectionType,OutlierPostHoc)
+function [z,yspline] = QCRSC3(t,y,isQC,isSample,mpv,epsilon,gammaVal,toutlier,CorrectionType,OutlierReplacementStrategy)
 
 tqc = t(isQC);
 yqc = y(isQC);
@@ -59,14 +59,14 @@ switch CorrectionType
 end
 
 found = ismember(t,toutlier);
-switch OutlierPostHoc
+switch OutlierReplacementStrategy
     case 'Ignore'
-    case 'MPV'
+    case 'Median'
         z(found) = mpv;
     case 'NaN'
         z(found) = nan;
     otherwise
-        ME = MException('QCRSC:UnexpectedQCRSCoutlierAction',"QCRSC OutlierAction '%s' does not exist",OutlierPostHoc);
+        ME = MException('QCRSC:UnexpectedQCRSCoutlierAction',"QCRSC OutlierAction '%s' does not exist",OutlierReplacementStrategy);
         throw(ME);
 end
 
