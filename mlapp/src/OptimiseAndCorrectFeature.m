@@ -7,7 +7,6 @@ function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeature(confi
 % config.OutlierReplacementStrategy
 % config.WithinBatchCorrectionMode
 % config.BetweenBatchCorrectionMode
-% config.QCRSCgammaConstraint
 % config.QCRSCcvMethod
 % config.QCRSCmcReps
 % config.BlankRatioMethod
@@ -65,7 +64,7 @@ yqc = y(isQC);
 tqc = t(isQC);
 batchqc = batch(isQC);
 
-gammaRange = config.QCRSCgammaConstraint:15;
+gammaRange = 0:15;
 
 for i = 1:numberOfBatches
       

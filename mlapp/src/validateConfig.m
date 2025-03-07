@@ -17,7 +17,6 @@ defaultFieldnames = [
   {'OutlierReplacementStrategy'}
   {'WithinBatchCorrectionMode'}
   {'BetweenBatchCorrectionMode'}
-  {'QCRSCgammaConstraint'}
   {'QCRSCcvMethod'}
   {'QCRSCmcReps'}
   {'BlankRatioMethod'}
@@ -169,13 +168,6 @@ catch
     baseException = MException('QCRSC:UnexpectedBetweenBatchCorrectionMode',"BetweenBatchCorrectionMode value must be one of the following: 'Sample','QC','Reference'");
     throw(baseException)
 end 
-
-try
-    validateattributes(baseConfig.QCRSCgammaConstraint, {'double'},{'scalar','integer','>=',0,'<=',10})
-catch
-    baseException = MException('QCRSC:UnexpectedQCRSCgammaConstraint','Config Error: QCRSCgammaConstraint value must be a positive integer between 0 and 10');
-    throw(baseException)
-end
 
 try
     mustBeMember(baseConfig.QCRSCcvMethod,{'3-Fold','5-Fold','7-Fold','Leaveout'});
