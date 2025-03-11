@@ -47,4 +47,5 @@ function [RES] = qcrscPCA(Data,Feature,options)
         RES.cumMPQ = cumMPQ;
         RES.MPQ = MPQ;
         RES.MPQ95 = MPQ95;
+        RES.Options = options;
 end

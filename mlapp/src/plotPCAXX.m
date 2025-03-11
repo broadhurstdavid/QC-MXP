@@ -277,7 +277,15 @@
         else             
             xlabel(axishandle,sprintf('PC%u (Explained Var(X) = %3.1f%%; dRatio = %.2f%%)',xaxis,pcaRES.explained(xaxis),pcaRES.DRatio(xaxis)),'FontSize',11);
         end
-        
+        switch pcaRES.Options.ScaleMethod
+            case 'Autoscale'
+                pcaTitle = {'Principal Component Analysis';sprintf('(sMPQ = %.2f%%; sMPQ_{95} = %.2f%%)',pcaRES.MPQ,pcaRES.MPQ95)};
+            case 'MeanCenter'
+                pcaTitle =  {'Principal Component Analysis';sprintf('(MPQ = %.2f%%; MPQ_{95} = %.2f%%)',pcaRES.MPQ,pcaRES.MPQ95)};
+            otherwise
+                pcaTitle =  {'Principal Component Analysis';sprintf('(pMPQ = %.2f%%; pMPQ_{95} = %.2f%%)',pcaRES.MPQ,pcaRES.MPQ95)};
+        end
+        axishandle.Title.String = pcaTitle;
     else
         ylabel(axishandle,sprintf('PC%u (Explained Var(X) = %3.1f%%)',yaxis,pcaRES.explained(yaxis)),'FontSize',11);
         if xaxis == 0
