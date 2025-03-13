@@ -20,7 +20,7 @@ if baseConfig.LogTransformedCorrection
 end
 
 for i = 1:width(X)
-    [S(i).qcRSD,S(i).qcRSDlower95CI,S(i).qcRSDupper95CI,S(i).sampleRSD,S(i).sampleRSDlower95CI,S(i).sampleRSDupper95CI,S(i).refRSD,S(i).refRSDlower95CI,S(i).refRSDupper95CI,S(i).dRatio,S(i).blankRatio] = calcStats(X(:,i),isQC,isSample,isBlank,isReference,Logged=baseConfig.LogTransformedCorrection,BlankRatioMethod=baseConfig.BlankRatioMethod,RelativeLOQ=baseConfig.RelativeLOQ);
+    [S(i).qcRSD,S(i).qcRSDlower95CI,S(i).qcRSDupper95CI,S(i).sampleRSD,S(i).sampleRSDlower95CI,S(i).sampleRSDupper95CI,S(i).refRSD,S(i).refRSDlower95CI,S(i).refRSDupper95CI,S(i).dRatio,S(i).blankRatio,S(i).sampleMissing,S(i).qcMissing] = calcStats(X(:,i),isQC,isSample,isBlank,isReference,Logged=baseConfig.LogTransformedCorrection,BlankRatioMethod=baseConfig.BlankRatioMethod,RelativeLOQ=baseConfig.RelativeLOQ);
 end
 
 Stats = struct2table(S);
