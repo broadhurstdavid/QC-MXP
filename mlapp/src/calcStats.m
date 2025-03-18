@@ -1,4 +1,4 @@
-function [rsdQC,rsdQClower,rsdQCupper,rsdSAMPLE,rsdSAMPLElower,rsdSAMPLEupper,rsdREF,rsdREFlower,rsdREFupper,dRatio,blankRatio,sampleMissing,qcMissing] = calcStats(y,isQC,isSample,isBlank,isReference,options)
+function [rsdQC,rsdQClower,rsdQCupper,rsdSAMPLE,rsdSAMPLElower,rsdSAMPLEupper,rsdREF,rsdREFlower,rsdREFupper,dRatio,blankRatio,sampleMissingPerc,qcMissingPerc] = calcStats(y,isQC,isSample,isBlank,isReference,options)
 
 arguments
     y
@@ -26,8 +26,8 @@ if options.Logged
     yR = power(10,yR);
 end
 
-sampleMissing = sum(isnan(yS))./height(yS);
-qcMissing = sum(isnan(yQC))./height(yQC);
+sampleMissingPerc = 100 * sum(isnan(yS))./height(yS);
+qcMissingPerc = 100 * sum(isnan(yQC))./height(yQC);
 
 if options.Logged
     [cv,upperbound,lowerbound] = CVconfidenceInterval(yQC,0.05,true);
