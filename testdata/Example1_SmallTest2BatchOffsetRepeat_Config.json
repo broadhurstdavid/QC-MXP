@@ -1,5 +1,5 @@
 {
-  "WorkingDirectory": "~/GitHub/QC-MXP/testdata/",
+  "WorkingDirectory": "~/GitHub/QC-MXP1/testdata/",
   "FileType": "xlsx",
   "ProjectName": "Example1_SmallTest2BatchOffsetRepeat.xlsx",
   "DataTable": "Data",
