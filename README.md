@@ -23,13 +23,15 @@ QC:MXP is FREE and you do not need to have Matlab preinstalled to use it. It is 
 3. [QCRSC - Quality Control Regularised Spline Correction](#qcrsc)
 4. [QC-RSC Explorer - learn how to optimise QCRSC](#qc-rsc-explorer)
 5. [Operational Workflow](#operational-workflow)
-6. [Configuration File](#configuration-file)
+6. [QCRSC Configuration Options](#qcrsc-configuration-options)
 7. [Batch Explorer - examine the effects of both the intra and inter-batch correction](#batch-explorer)
 8. [Correct the whole data set](#correct-the-whole-data-set)
 9. [Data Cleaning & Exploration](#data-cleaning--exploration)
-10. [CHEAT SHEET](#cheat-sheet)
-11. [How to Download & Install QCMXP](#how-to-download--install-qcmxp)
-12. [Source Code](source-code)
+10. [Configuration File](#configuration-file)
+11. [TUTORIAL VIDEO](#tutorial-video)
+12. [CHEAT SHEET](#cheat-sheet)
+13. [How to Download & Install QCMXP](#how-to-download--install-qcmxp)
+14. [Source Code](source-code)
 
 ## Introduction
 This standalone application is written specifically for the metabolomics community (but is applicable to any multivaraite assay that uses repeat-injection reference samples to assess repeatability). It is a long overdue companion app to the publication ["Guidelines and considerations for the use of system suitability and quality control samples in mass spectrometry assays applied in untargeted clinical metabolomic studies" Metabolomics 14, 72 (2018)](https://link.springer.com/article/10.1007/s11306-018-1367-3). It can be used as an educational tool to explore the process of intra- and inter-batch correction based on repeat-injection reference samples (e.g. pooled quality control samples); however, it is designed primarily to be used as a practical tool for real world problems. It has been written as a standalone application (Mac OS, Windows 10, & Windows 11) rather than as a set of command line R or Python packages, because I wanted it to be user friendly, placing all of the cognitive load on understanding the underlying concepts, providing process transparency, and creating a highly visual interactive exploration of the data, rather than placing the majority of the cognitive load on programming skills and often frustratingly installing package dependencies. As you can see from the screenshot there are many options, which may seem daunting. However, foundational knowledge is scaffolded through interactive *Explorer* windows, and extensive beta testing has suggested that the learning curve is shallow. That said, it is worth noting that the process of batch correction, quality control, and data cleaning is non-trivial and requires some thought, education, and project-specific investigation.
@@ -61,7 +63,7 @@ Inter-batch correction is comparatively simple. Once the Intra-batch bias has be
 <br />**IMPORTANT:** Before running QCRSC please ensure that any lead-in QCs (conditioning QCs) and lead-out QCs (ID QCs) have been removed from the data set. These samples are usually included at the start and end of every batch. Including these data will compromise the effectiveness of the QC correction algorithm. Ideally, each batch should begin and end with two pooled QC.  **You have been warned!**<br />
 
 ## QC-RSC Explorer
-Before importing any of your own data, a great way to understand the underlying principles of intra-batch correction is to push the button labelled *QC-RSC Explorer*. This launches the *QC-RSC Explorer* window with some artificially generated example data (see below). Pressing the red button labeled *Random Feature* randomly selects one of 20 features. The right hand side of the window (blue) shows the before/after control charts for that feature (sample concentration vs injection order). The left hand side of the window (green) provides an interface to the QCRSC configuration options. This is a highly interactive sandbox allowing you can familiarise yourself with the basic functionality - so ‘go play!’. Hovering over buttons/boxes will trigger pop-up information windows to help explain the functions. The options will be discussed in more detail in the TUTORIAL VIDEO.
+Before importing any of your own data, a great way to understand the underlying principles of intra-batch correction is to push the button labelled *QC-RSC Explorer*. This launches the *QC-RSC Explorer* window with some artificially generated example data (see below). Pressing the red button labeled *Random Feature* randomly selects one of 20 features. The right hand side of the window shows the before/after control charts for that feature (sample concentration vs injection order). The left hand side of the window (pink) provides an interface to the QCRSC configuration options. This is a highly interactive sandbox allowing you can familiarise yourself with the basic functionality - so ‘go play!’. Hovering over buttons/boxes will trigger pop-up information windows to help explain the functions. The options will be discussed in more detail in the TUTORIAL VIDEO.
 <br />
 <br />
 ![Config Explorer](res/ConfigExplorer.png)
@@ -73,8 +75,8 @@ The figure below represents the general operational workflow for running QC:MXP 
 Once you have imported your own TidyMet\* data it is advisable, as a beginner, to again open *Config Explorer*. This time your own data is presented for configuration exploration (click on the batch number you want to look at). Depending on the number of QCs per batch, or the blank responses, or specific characteristics of data generated by your metabolomics platform & deconvolution software (e.g. XCMS), you may want to change the type of outlier detection, intra-batch correction method (and cross-validation method), or blank ratio assessment method. The software is designed to be very flexible. **Remember The configuration settings apply to all the features in the data set, across all batches, so you must review several metabolites (hit the "Random Feature" button) across multiple batches to settle on the "best" configuration settings**. This is also an opportunity to observe any unwanted artefacts that repeat across multiple features (e.g. bad samples, or unexpected change in instrument sensitivity). **NB The default settings have been specificed based on many years of experience across many data sets from many labs. So if in doublt just keep the default.**
 <br />
 <br />
-## Configuration File
-When you are happy with all the configuration settings, close the window and if you have made changes you will be asked if you want to transfer the setting to the main application. Once back in the main window, it is advisable to save the current configuration settings before proceeding. The configuration can also be editied from the main window should you wish to make any further changes. Some additional options are avialable in this window. For example, if your data set is small you may want to switch off the parallel processor, as it sometimes takes longer to start the parallel engine than to complete the full correction. Configuration settings are stored as plain text (.json file) to enable users to transparently archive the settings making them readily available for publication or repeat processing. The function and choices for each configuration setting is explained in the [CHEAT SHEET](https://github.com/broadhurstdavid/QC-MXP/blob/main/docs/CheatSheet.pdf) 
+## QCRSC Configuration Options
+When you are happy with all the QCRSC configuration options, close the window and if you have made changes you will be asked if you want to transfer the setting to the main application. Once back in the main window, it is advisable to save the current configuration settings before proceeding. The QCRSC configuration can also be editied from the main window should you wish to make any changes without opening the explorer. Configuration options are stored as plain text (.json file) to enable users to transparently archive the settings making them readily available for publication or repeat processing. The function and choices for each configuration option is explained in the [CHEAT SHEET](https://github.com/broadhurstdavid/QC-MXP/blob/main/docs/CheatSheet.pdf) 
 <br />
 <br />
 <img src="res/configFile.png" width="300">
@@ -95,8 +97,10 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 <br />
 <br />
 ![Batch Explorer](res/ScreenshotExploring.png)
+## Configuration File
 <br />
 <br />
+<img src="res/QCRSCengine.png" width="400">
 ## TUTORIAL VIDEO
 
 This is a brief tutorial [A Data-Driven Framework for Metabolomics Quality Control](https://www.youtube.com/watch?v=B6iGZgnLZE8) presented on the "Chemometrics & Machine Learning in Copenhagen" YouTube channel. Thanks again to Rasmus Bro for inviting me to speak. I will upload more detailed tutorials to my own youtube site soon.
