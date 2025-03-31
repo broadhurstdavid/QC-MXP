@@ -101,12 +101,13 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 <br />
 <br />
 <img src="res/QCRSCengine.png" width="400">
-## TUTORIAL VIDEO
 
-This is a brief tutorial [A Data-Driven Framework for Metabolomics Quality Control](https://www.youtube.com/watch?v=B6iGZgnLZE8) presented on the "Chemometrics & Machine Learning in Copenhagen" YouTube channel. Thanks again to Rasmus Bro for inviting me to speak. I will upload more detailed tutorials to my own youtube site soon.
+## TUTORIAL VIDEO
+A brief tutorial [A Data-Driven Framework for Metabolomics Quality Control](https://www.youtube.com/watch?v=B6iGZgnLZE8) presented to the "Chemometrics & Machine Learning in Copenhagen" YouTube channel. Thanks again to Rasmus Bro for inviting me to speak. I will upload more detailed tutorials to my own YouTube site soon.
 
 ## CHEAT SHEET
-There is a pdf explaining the QC-MXP & QCRSC options [here](https://github.com/broadhurstdavid/QC-MXP/blob/main/docs/CheatSheet.pdf).
+There is a pdf explaining the QC-MXP & QCRSC options [here](https://github.com/broadhurstdavid/QC-MXP/blob/main/docs/CheatSheet.pdf). This can also be accessed from within the app using the *CHEATSHEET* button.
+
 ## How to Download & Install QCMXP
 The binary installation files are found in the [latest release section of the repository](https://github.com/broadhurstdavid/QC-MXP/releases/latest). Choose the one that matches your operating system (Apple Intel or Apple Silicon, Windows 10, Windows 11, or Matlab App). Download (unzip if Apple) and run. The helper app will guide you through installation. Note: For Apple users, once installed, application can be found in '/Applications/QCMXP/application' (unless you customized your install). Maybe pin the app to your Dock once opened.
 <br />
