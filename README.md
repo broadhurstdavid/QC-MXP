@@ -24,7 +24,7 @@ QC:MXP is FREE and you do not need to have Matlab preinstalled to use it. It is 
 4. [QC-RSC Explorer - learn how to optimise QCRSC](#qc-rsc-explorer)
 5. [Operational Workflow](#operational-workflow)
 6. [Configuration File](#configuration-file)
-7. [Batch Explorer - examine the effects of both the intra and inter-batch correction for a given feature](#batch-explorer)
+7. [Batch Explorer - examine the effects of both the intra and inter-batch correction](#batch-explorer)
 8. [Correct the whole data set](#correct-the-whole-data-set)
 9. [Data Cleaning & Exploration](#data-cleaning--exploration)
 10. [CHEAT SHEET](#cheat-sheet)
