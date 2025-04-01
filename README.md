@@ -59,7 +59,7 @@ Between-batch correction is comparatively simple. Once the within-batch bias has
 *Footnote: There are many published alternatives to QCRSC. I am not going to list them here. Many claim to be superior based on comparison of only a couple of specific data sets. I would suggest that, given sufficient QC data, it is likely that most are equally ‘fit for purpose’ within reasonable confidence intervals. More important is the lab based design of experiment (i.e. number of samples in a batch, number of QCs in a batch, frequency of QC, inclusion of sufficient Blanks). Any nonlinear correction algorithm is going to be crippled by a low number and/or frequency of QC sample injection. So, 'if in doubt' use a simple batch-wise ‘linear’ correction method over any complex machine learning method. Finally, be wary of any method that celebrates the ability to automatically detect batches. IMHO batch identity is as easy to provide as the injection order, so should be used by the algorithm.*
 <br />
 <br />
-<img src="res/interbatchcorrection.png" width="600">
+![Between-batch correction](res/interbatchcorrection.png)  
 <br />**IMPORTANT:** Before running QCRSC please ensure that any lead-in QCs (conditioning QCs) and lead-out QCs (ID QCs) have been removed from the data set. These samples are usually included at the start and end of every batch. Including these data will compromise the effectiveness of the QC correction algorithm. Ideally, each batch should begin and end with two pooled QC.  **You have been warned!**<br />
 
 ## QC-RSC Explorer
