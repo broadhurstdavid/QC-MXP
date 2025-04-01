@@ -105,7 +105,7 @@ The QC:MXP app is built around a user/project configuration object. The default 
 ![Help](res/userConfig.png)
 
 ## TUTORIAL VIDEO
-A brief tutorial [A Data-Driven Framework for Metabolomics Quality Control](https://www.youtube.com/watch?v=B6iGZgnLZE8) presented to the "Chemometrics & Machine Learning in Copenhagen" YouTube channel. Thanks again to Rasmus Bro for inviting me to speak. I will upload more detailed tutorials to my own YouTube site soon.
+A brief tutorial for version 1.4 of QC:MXP [A Data-Driven Framework for Metabolomics Quality Control](https://www.youtube.com/watch?v=B6iGZgnLZE8) was presented to the "Chemometrics & Machine Learning in Copenhagen" YouTube channel. Thanks again to Rasmus Bro for inviting me to speak. I will upload more detailed tutorials for the latest to my own YouTube site soon.
 
 ## CHEAT SHEET
 There is a pdf explaining the QC-MXP & QCRSC options [here](https://github.com/broadhurstdavid/QC-MXP/blob/main/docs/CheatSheet.pdf). This can also be accessed from within the app using the *CHEATSHEET* button.
