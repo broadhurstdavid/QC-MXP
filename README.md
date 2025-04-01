@@ -100,7 +100,9 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 ## Configuration File
 <br />
 <br />
-![User Config](res/userConfig.png)
+
+![Help](res/userConfig.png)
+
 ## TUTORIAL VIDEO
 A brief tutorial [A Data-Driven Framework for Metabolomics Quality Control](https://www.youtube.com/watch?v=B6iGZgnLZE8) presented to the "Chemometrics & Machine Learning in Copenhagen" YouTube channel. Thanks again to Rasmus Bro for inviting me to speak. I will upload more detailed tutorials to my own YouTube site soon.
 
