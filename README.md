@@ -48,6 +48,8 @@ The engine that powers the application is called **QCRSC** - *Quality Control Re
 <br />
 <br />
 ![Equation](res/equation.png)
+<br />
+<br />
 The backbone of QCRSC is a cubic spline function written by Carl de Boor (A Practical Guide to Splines. Springer-Verlag, New York: 1978). The original code was written in Fortran and called "SMOOTH". It is available as part of [PPPACK](https://www.netlib.org/pppack/). It was then implemented by Matlab as [CSAPS](https://www.mathworks.com/help/curvefit/csaps.html). It is this version of the function that is used here. For anyone interested, there is a Python modified port of CSAPS available [here](https://github.com/espdev/csaps). The degree of linearity in the spline (regularisation) is dependent on a smoothing parameter. A very small value overfits a very nonlinear curve to the QC data points and conversely a large value removes nonlinearity completely and fits a simple linear regression. Automatic selection of the smoothing parameter is important to balance the [bias-variance tradeoff](https://mlu-explain.github.io/bias-variance/). This is done using cross-validation. If there is fewer than 5 QCs in a batch, or if the user does not want to use non-linear correction, a 'Linear' correction option has been implemented (using Robust (bisquare) linear regression). Alternatively, within-batch correction can be ignored by disabling QCRSC (also called 'median correction'). In this case between-batch correction aligns batches based on the within-batch median QC value.
 <br />
 <br />
