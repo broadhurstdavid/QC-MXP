@@ -101,6 +101,7 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 <br />
 ![Batch Explorer](res/ScreenshotExploring.png)
 ## Configuration File
+The QC:MXP app is built around a user/project configuration object. The default generic configuration is established automatically. Once user data is uploaded the configuration switches to project mode. Every completed project will have an associated configuration file containing all the settings across the whole QC:MXP workflow (filenames, project name, prefilter settings, QCRSC settings, cleaning settings). It is possible to load a whole project with data and settings from a configuration file and it is also possible to save a generic user config file to use as a starting point for subsequent projects. The project file also acts as a record of the QC:MXP workflow for reporting purposes. 
 <br />
 <br />
 
