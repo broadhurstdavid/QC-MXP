@@ -88,7 +88,7 @@ Before applying *QCRSC* to the complete data set it is worth opening *Batch Expl
 <br />
 <br />
 ## Correct the whole data set
-To run QCRSC on the whole data set press the green 'play' button on the QCRSC engine. The QCRSC algorithm will be applied to each feature in the data set. Upon completion a new corrected Data table has been created and the Feature table has been updated to include basic statistical measures (QC-RSD, D-Ratio, Blank Ratio, percent missing etc). It is advisable to save the corrected data at this point. Note an additional Statistics Table is saved which contains an exhuastive set of statistics for each individual batch and across all batches.
+To run QCRSC on the whole data set press the green 'play' button on the QCRSC engine. The QCRSC algorithm will be applied sequentially to each feature in the data set. Upon completion a new corrected Data table has been created and the Feature table has been updated to include basic statistical measures (QC-RSD, D-Ratio, Blank Ratio, percent missing etc). It is advisable to save the corrected data at this point. Note an additional Statistics Table is saved which contains an exhuastive set of statistics for each individual batch and across all batches.
 <br />
 <br />
 <img src="res/QCRSCengine.png" width="400">
