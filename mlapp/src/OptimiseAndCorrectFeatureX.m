@@ -3,7 +3,7 @@ function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeatureX(conf
     if strcmp(config.BetweenBatchCorrectionMode,'Reference')
         tempConfig = config;
         tempConfig.OutlierDetectionMethod = 'none';
-         tempConfig.BetweenBatchMode = 'Mean';
+         tempConfig.WithinBatchCorrectionMode = 'Median';
         z = OptimiseAndCorrectFeature(tempConfig,t,z,batch,isREF,isSample,isBlank);
     end
 end
