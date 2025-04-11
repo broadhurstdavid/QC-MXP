@@ -1,25 +1,45 @@
-function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectPeak(config,t,y,batch,isQC,isSample,isBlank)
+function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeature(config,t,y,batch,isQC,isSample,isBlank)
 
-% config.LogTransform
+% config.LogTransformedCorrection
 % config.RemoveZeros
-% config.OutlierMethod
-% config.OutlierCI
-% config.OutlierPostHoc
-% config.IntraBatchMode
-% config.InterBatchMode
-% config.QCRSCgammaRange
+% config.OutlierDetectionMethod
+% config.OutlierDetectionCI
+% config.OutlierReplacementStrategy
+% config.WithinBatchCorrectionMode
+% config.BetweenBatchCorrectionMode
 % config.QCRSCcvMethod
 % config.QCRSCmcReps
-% config.CorrectionType
 % config.BlankRatioMethod
-% config.RelativeLOD
-% config.StatsParametric
+% config.RelativeLOQ
 % config.ParallelProcess
 
-if strcmp(config.IntraBatchMode,'Sample')
+switch config.QCRSCcvMethod
+    case '3-Fold', QCRSCcvMethod = 3;
+    case '5-Fold', QCRSCcvMethod = 5;
+    case '7-Fold', QCRSCcvMethod = 7;
+    case 'Leaveout', QCRSCcvMethod = -1;
+    otherwise, error('This CrossValidation method does not exist'); 
+end
+
+switch config.OutlierDetectionMethod
+    case 'None', OutlierMethod = 'none';
+    case 'Percentile', OutlierMethod = 'prctile';
+    case 'Linear', OutlierMethod = 'poly1';                    
+    case 'Quadratic', OutlierMethod = 'poly2';                    
+    case 'Cubic', OutlierMethod = 'poly3';                    
+    otherwise, error('This OutlierDetectionMethod does not exist');                    
+end
+
+if strcmp(config.WithinBatchCorrectionMode,'Sample')
     mpv = median(y(isSample),'omitnan');
 else
-    mpv = mean(y(isQC),'omitnan');
+    mpv = median(y(isQC),'omitnan');
+end
+
+if config.LogTransformedCorrection
+    CorrectionType = 'Subtract';
+else
+    CorrectionType = 'Divide';
 end
 
 z = nan(length(y),1);
@@ -44,6 +64,8 @@ yqc = y(isQC);
 tqc = t(isQC);
 batchqc = batch(isQC);
 
+gammaRange = 0:15;
+
 for i = 1:numberOfBatches
       
     idx = batchqc == ub(i);
@@ -51,11 +73,11 @@ for i = 1:numberOfBatches
     yqci = yqc(idx);
 
     try        
-        [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,config.OutlierMethod,config.OutlierCI);
-        switch config.IntraBatchMode
+        [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,OutlierMethod,config.OutlierDetectionCI);
+        switch config.WithinBatchCorrectionMode
             case 'Sample'
                 gamma = 10000;epsilon = NaN;cvMse = 0;minVal = 0;
-            case 'Mean'
+            case 'Median'
                 gamma = NaN;epsilon = NaN;cvMse = 0;minVal = 0;
             case 'Linear'
                 %avDist = median(tqci(2:end) - tqci(1:end-1));
@@ -63,7 +85,7 @@ for i = 1:numberOfBatches
                 %gamma = 11;cvMse = 0;minVal = 0;
                 gamma = 1000;epsilon = NaN;cvMse = 0;minVal = 0;
             otherwise
-                [gamma,epsilon,cvMse,minVal] = optimiseCSAPS(tqci,yqci,config.QCRSCgammaRange,config.QCRSCcvMethod,config.QCRSCmcReps);               
+                [gamma,epsilon,cvMse,minVal] = optimiseCSAPS(tqci,yqci,gammaRange,QCRSCcvMethod,config.QCRSCmcReps);               
         end
    catch
        gamma = NaN;epsilon = NaN;cvMse = NaN;minVal = NaN;toutlieri = [];
@@ -84,7 +106,7 @@ for i = 1:numberOfBatches
     isQCi = isQC(idx);
     isSamplei = isSample(idx);
     try
-        [z(idx),yspline(idx)] = QCRSC3(ti,yi,isQCi,isSamplei,mpv,epsilonVal(i),gammaVal(i),toutliers,config.CorrectionType,config.OutlierPostHoc);
+        [z(idx),yspline(idx)] = QCRSC3(ti,yi,isQCi,isSamplei,mpv,epsilonVal(i),gammaVal(i),toutliers,CorrectionType,config.OutlierReplacementStrategy);
     catch
         z(idx) = yi;
     end

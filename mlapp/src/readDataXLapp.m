@@ -1,20 +1,20 @@
-    function [DataTable,PeakTable] = readDataXLapp(filename,options)
+    function [DataTable,FeatureTable] = readDataXLapp(filename,options)
 
-% This function loads and validates the Metabolomics DataFile and PeakFile from an Excel Sheet:
+% This function loads and validates the Metabolomics Data Sheet and Feature Table from an Excel Sheet:
 % Metabolite IDs must start with 'M' ... best to use M1 M2 M3 M4 etc. 
 % Remaining columns are assumed to be user specific meta data and are ignored. 
-% Peak File: The first columns should contain the Peak Label matching the DataFile (M1 M2 .. )
-% The remaining columns can contain anything you like. Statistics will be added to this "table"
+% Feature Table: The first columns should contain the Feature UID matching the DataSheet (M1 M2 .. )
+% The remaining columns can contain anything you like. Statistics will be added to this "Table"
 
     arguments
        filename
        options.DataSheet (1,:) char = 'Data'
-       options.PeakSheet (1,:) char = 'Peak'
+       options.FeatureSheet (1,:) char = 'Features'
        options.fighandle = uifigure;
     end
 
 DataSheet = options.DataSheet;
-PeakSheet = options.PeakSheet;
+FeatureSheet = options.FeatureSheet;
 
 
 d = uiprogressdlg(options.fighandle,'Title',['Importing ',filename]);
@@ -25,10 +25,10 @@ steps = 4;
 % LOAD PEAK FILE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-d.Message = ['Loading Excel Sheet: ',PeakSheet];
+d.Message = ['Loading Excel Sheet: ',FeatureSheet];
 step = 1;
 d.Value = step/steps;
-PeakTable = readtable(filename,'Sheet',PeakSheet,'VariableNamingRule','preserve');
+FeatureTable = readtable(filename,'Sheet',FeatureSheet,'VariableNamingRule','preserve');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LOAD DATA FILE
@@ -49,15 +49,15 @@ d.Message = 'Vaildating Data';
 step = 3;
 d.Value = step/steps;
 
-[DataTable,PeakTable] = validatingDataPeakTables(DataTable,PeakTable,fighandle = options.fighandle);
+[DataTable,FeatureTable] = validatingDataFeatureTables(DataTable,FeatureTable,fighandle = options.fighandle);
 
 step = 4;
 d.Value = step/steps;
 
 r = size(DataTable,1);
-c = height(PeakTable);
+c = height(FeatureTable);
 
-d.Message = ['TOTAL SAMPLES: ',num2str(r),' TOTAL PEAKS: ',num2str(c)];
+d.Message = ['TOTAL SAMPLES: ',num2str(r),' TOTAL FEATURES: ',num2str(c)];
 
 
 pause(3);

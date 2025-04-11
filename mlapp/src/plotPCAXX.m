@@ -19,7 +19,7 @@
     cla(axishandle,'reset');
     grey = [0.7,0.7,0.7];
     if ismac
-        sz = 20;
+        sz = 18;
     else
         sz = 18;
     end
@@ -107,12 +107,22 @@
                     case 'SampleType'
                         b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,hash(grps{i}),'filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol);
                         b(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(temp));
-                        b(i).DataTipTemplate.DataTipRows(2) = [];                   
+                        b(i).DataTipTemplate.DataTipRows(2) = []; 
+                        b(i).UserData = {grps{i},''};
+                        b(i).DisplayName = grps{i};   
                     case 'BatchQC'                   
                         tempQC = temp & Data.QC;
+                         tempSample = temp & Data.Sample;
                         b(i) = scatter(axishandle,SS(tempQC,1),SS(tempQC,2),sz,cmapx(i,:),'^','filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol);                        
                         b(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempQC));
-                        b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow('Batch:',Data.Batch(tempQC)); 
+                        b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow('Batch:',Data.Batch(tempQC));
+                        d(i) = scatter(axishandle,SS(tempSample,1),SS(tempSample,2),sz,cmapx(i,:),'o','filled','MarkerFaceAlpha',0.2);%,'MarkerEdgeColor',ecol); 
+                        d(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempSample));
+                        d(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow('Batch:',Data.Batch(tempSample));
+                        b(i).UserData = {['QC-',grps{i}],''};                       
+                        b(i).DisplayName = grps{i};
+                        d(i).UserData = {['Sample-',grps{i}],''};
+                        d(i).DisplayName = ['Sample-',grps{i}];
                     otherwise
                         if any(strcmp(grps(i),{'QC','Blank','Reference'}))
                             b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,hash(grps{i}),'filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol);
@@ -120,10 +130,11 @@
                             b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,cmapx(i,:),'filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol);
                         end
                         b(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(temp));
-                        b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(temp));                        
+                        b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(temp));
+                        b(i).UserData = {grps{i},''};
+                        b(i).DisplayName = grps{i};   
                 end
-                b(i).UserData = {grps{i},''};
-                b(i).DisplayName = grps{i};           
+                        
             end
         end
         
@@ -131,11 +142,11 @@
             for i = 1:length(grps)
                 temp = ismember(Y,grps(i));
                 if sum(temp) == 0, continue; end
-                if sum(temp) > 2
-                    [xm,ym] = ci95_ellipse2018(SS(temp,:),'mean');
-                    [xp,yp] = ci95_ellipse2018(SS(temp,:),'pop');
+                if sum(temp) > 2             
                     switch options.label
                         case 'SampleType'
+                            [xm,ym] = ci95_ellipse2018(SS(temp,:),'mean');
+                            [xp,yp] = ci95_ellipse2018(SS(temp,:),'pop');
                             if options.plotCIA
                                 a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',hash(grps{i}));                  
                                 a2(i).UserData = {grps{i},'Sample'};
@@ -184,6 +195,9 @@
                                     a2(i).DataTipTemplate.DataTipRows(2) = [];
                                 end
                             else
+                                tempSample = temp & Data.Sample;   
+                                [xm,ym] = ci95_ellipse2018(SS(tempSample,:),'mean');
+                                [xp,yp] = ci95_ellipse2018(SS(tempSample,:),'pop');
                                 if options.plotCIA
                                     a1(i) = plot(axishandle,xm,ym,':','linewidth',1,'color',cmapx(i,:)); 
                                     a1label = repmat(grps(i),length(xm));     
@@ -216,9 +230,29 @@
                 
                 switch options.label
                     case 'SampleType'
+                        m = mean(SS(temp,:),1);
+                        x0=m(1);
+                        y0=m(2);
                         c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',hash(grps{i})); 
+                    case 'BatchQC'
+                        tempQC = temp & Data.QC;
+                        m = mean(SS(tempQC,:),1);
+                        x0=m(1);
+                        y0=m(2);
+                        c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',cmapx(i,:));
                     otherwise
-                        c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',cmapx(i,:)); 
+                        if any(strcmp(grps(i),{'QC','Blank','Reference'}))
+                            m = mean(SS(temp,:),1);
+                            x0=m(1);
+                            y0=m(2);
+                            c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',hash(grps{i}));
+                        else
+                            tempSample = temp & Data.Sample; 
+                            m = mean(SS(tempSample,:),1);
+                            x0=m(1);
+                            y0=m(2);
+                            c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',cmapx(i,:)); 
+                        end
                 end
                     c(i).UserData = {grps{i},'mean'};
                     c(i).DisplayName = grps{i};
@@ -243,7 +277,15 @@
         else             
             xlabel(axishandle,sprintf('PC%u (Explained Var(X) = %3.1f%%; dRatio = %.2f%%)',xaxis,pcaRES.explained(xaxis),pcaRES.DRatio(xaxis)),'FontSize',11);
         end
-        axishandle.Title.String = {'Principal Component Analysis';sprintf('(MPQ = %.2f%%; MPQ_{95} = %.2f%%)',pcaRES.MPQ,pcaRES.MPQ95)};
+        switch pcaRES.Options.ScaleMethod
+            case 'Autoscale'
+                pcaTitle = {'Principal Component Analysis';sprintf('(sMPQ = %.2f%%; sMPQ_{95} = %.2f%%)',pcaRES.MPQ,pcaRES.MPQ95)};
+            case 'MeanCenter'
+                pcaTitle =  {'Principal Component Analysis';sprintf('(MPQ = %.2f%%; MPQ_{95} = %.2f%%)',pcaRES.MPQ,pcaRES.MPQ95)};
+            otherwise
+                pcaTitle =  {'Principal Component Analysis';sprintf('(pMPQ = %.2f%%; pMPQ_{95} = %.2f%%)',pcaRES.MPQ,pcaRES.MPQ95)};
+        end
+        axishandle.Title.String = pcaTitle;
     else
         ylabel(axishandle,sprintf('PC%u (Explained Var(X) = %3.1f%%)',yaxis,pcaRES.explained(yaxis)),'FontSize',11);
         if xaxis == 0

@@ -7,8 +7,8 @@ function controlChart(axishandle,Data,option)
                 option.cmap = lines
                 option.title = ''
                 option.islog = true;
-                option.RelativeLOD = 1.5
-                option.IntraBatchMode = 'QC'
+                option.RelativeLOQ = 1.5
+                option.WithinBatchCorrectionMode = 'QC'
             end
             
             isbatch = false;
@@ -37,7 +37,7 @@ function controlChart(axishandle,Data,option)
                 spline = Data.Yspline;
             else
                 y = Data.Z;
-                if strcmp(option.IntraBatchMode,'Sample')
+                if strcmp(option.WithinBatchCorrectionMode,'Sample')
                     mpv = median(Data.Y(Data.Sample),'omitnan');
                 else
                     mpv = mean(Data.Y(Data.QC),'omitnan');
@@ -53,13 +53,13 @@ function controlChart(axishandle,Data,option)
 
             if ismac
                 if batchNumTotal < 3
-                    dot_size = 9;
-                elseif batchNumTotal < 5
-                    dot_size = 7;
-                elseif batchNumTotal < 10
                     dot_size = 6;
-                else
+                elseif batchNumTotal < 5
                     dot_size = 5;
+                elseif batchNumTotal < 10
+                    dot_size = 4;
+                else
+                    dot_size = 2;
                 end
             else
                 if batchNumTotal < 3
@@ -80,11 +80,11 @@ function controlChart(axishandle,Data,option)
                 if option.islog
                     temp = power(10,temp);
                     temp = max(temp,[],1,'omitnan');
-                    temp = temp*option.RelativeLOD;
+                    temp = temp*option.RelativeLOQ;
                     temp = log10(temp);
                 else
                     temp = max(temp,[],1,'omitnan');
-                    temp = temp*option.RelativeLOD;
+                    temp = temp*option.RelativeLOQ;
                 end
             end
             
@@ -165,9 +165,9 @@ function controlChart(axishandle,Data,option)
             
             xlabel(axishandle, 'Injection order')
             if option.islog
-                ylabel(axishandle, 'log_{10}(Peak Value)')
+                ylabel(axishandle, 'log_{10}(Feature Value)')
             else
-                ylabel(axishandle, 'Peak Value')
+                ylabel(axishandle, 'Feature Value')
             end
   
             hold(axishandle,'off');
