@@ -3,7 +3,8 @@
 
 [![General badge](https://img.shields.io/badge/Bluesky-0285FF?logo=bluesky&logoColor=fff&style=for-the-badge)](https://bsky.app/profile/davidbroadhurst.bsky.social)
 [![Email Badge](https://img.shields.io/badge/Gmail-Contact_Me-green?style=flat-square&logo=gmail&logoColor=FFFFFF&labelColor=red&color=grey)](mailto:dvdbrdhrst@gmail.com) 
-[![Email Badge](https://img.shields.io/badge/Gmail-Signup_to_the_Newsletter-green?style=flat-square&logo=gmail&logoColor=FFFFFF&labelColor=red&color=grey)](mailto:dvdbrdhrst@gmail.com?subject=QC%3AMXP%20Newsletter&body=Please%20sign%20me%20up%20to%20the%20QC%3AMXP%20newsletter!) 
+
+[![Email Badge](https://img.shields.io/badge/Gmail-Signup_to_the_Newsletter-green?style=flat-square&logo=gmail&logoColor=FFFFFF&labelColor=red&color=yellow)](mailto:dvdbrdhrst@gmail.com?subject=QC%3AMXP%20Newsletter&body=Please%20sign%20me%20up%20to%20the%20QC%3AMXP%20newsletter!) 
 
 
 
