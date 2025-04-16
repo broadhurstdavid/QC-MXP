@@ -1,4 +1,4 @@
-function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeature(config,t,y,batch,isQC,isSample,isBlank)
+function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeature(config,t,y,batch,isQC,isSample,isRef,isBlank)
 
 % config.LogTransformedCorrection
 % config.RemoveZeros
@@ -30,10 +30,12 @@ switch config.OutlierDetectionMethod
     otherwise, error('This OutlierDetectionMethod does not exist');                    
 end
 
-if strcmp(config.WithinBatchCorrectionMode,'Sample')
-    mpv = median(y(isSample),'omitnan');
-else
-    mpv = median(y(isQC),'omitnan');
+
+switch config.WithinBatchCorrectionMode
+    case 'Sample'
+        mpv = median(y(isSample),'omitnan');
+    otherwise
+        mpv = median(y(isQC),'omitnan');
 end
 
 if config.LogTransformedCorrection
@@ -111,7 +113,7 @@ for i = 1:numberOfBatches
         z(idx) = yi;
     end
     %next line stops the blank from being corrected - disabled
-    %z(isBlank) = y(isBlank);   
+    z(isBlank) = y(isBlank);   
 end
 
 

@@ -8,7 +8,7 @@ function controlChart(axishandle,Data,option)
                 option.title = ''
                 option.islog = true;
                 option.RelativeLOQ = 1.5
-                option.WithinBatchCorrectionMode = 'QC'
+                option.BetweenBatchCorrectionMode = 'QC'
             end
             
             isbatch = false;
@@ -37,10 +37,13 @@ function controlChart(axishandle,Data,option)
                 spline = Data.Yspline;
             else
                 y = Data.Z;
-                if strcmp(option.WithinBatchCorrectionMode,'Sample')
-                    mpv = median(Data.Y(Data.Sample),'omitnan');
-                else
-                    mpv = mean(Data.Y(Data.QC),'omitnan');
+                switch option.BetweenBatchCorrectionMode
+                    case 'Sample'
+                        mpv = median(Data.Y(Data.Sample),'omitnan');
+                    case 'Reference'
+                        mpv = median(Data.Y(Data.Reference),'omitnan');
+                    otherwise
+                        mpv = median(Data.Y(Data.QC),'omitnan');
                 end
                 spline = repmat(mpv,numel(y),1);
             end
