@@ -1,5 +1,5 @@
 {
-  "WorkingDirectory": "~/Github/QC-MXP/mlapp/res/",
+  "WorkingDirectory": "",
   "FileType": "xlsx",
   "ProjectName": "QuickDemoMetabolomicsData.xlsx",
   "DataTable": "Data",
@@ -19,7 +19,7 @@
   "QCRSCmcReps": 10,
   "BlankRatioMethod": "QC",
   "ParallelProcess": false,
-  "CorrectedFileSuffix": "_1",
+  "CorrectedFileSuffix": "_QCRSC",
   "CleanMissingSampleFilterMode": "EveryBatch",
   "CleanMissingSampleFilterPercentage": 20,
   "CleanFilterBankMode": "Complete",
