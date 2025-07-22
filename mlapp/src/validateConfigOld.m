@@ -25,7 +25,6 @@ defaultFieldnames = [
   {'CleanMissingSampleFilterMode'}
   {'CleanMissingSampleFilterPercentage'}
   {'CleanFilterBankMode'}
-  {'CleanFilterOnQC'}
   {'CleanFilterQCRSD'}
   {'CleanFilterSampleRSD'}
   {'CleanFilterDRatio'}
@@ -212,21 +211,12 @@ catch
     throw(baseException)
 end
 
-if isempty(regexpi(baseConfig.CleanFilterBankMode,'Batch\d+','once'))
-    try
-    mustBeMember(baseConfig.CleanFilterBankMode,{'Complete','Median','Max','Min'});
-    catch
-        baseException = MException('QCRSC:UnexpectedCleanFilterBankMode',"Config Error: CleanMissingFilterMode must be either a batch number (e.g. 'Batch1') or one of the following: 'Complete', 'Median', 'Max', 'Min'.");
-        throw(baseException)
-    end
-end
-
 try
-    validateattributes(baseConfig.CleanFilterOnQC, {'logical'},{'scalar'})
+    mustBeMember(baseConfig.CleanFilterBankMode,{'Complete','Max qcRSD','Max dRatio', 'Median qcRSD','Median dRatio', 'Min qcRSD', 'Min dRatio'});
 catch
-    baseException = MException('QCRSC:UnexpectedCleanFilterOnQC',"CleanFilterOnQC value must must be logical (true/false)");
+    baseException = MException('QCRSC:UnexpectedCleanFilterBankMode',"Config Error: CleanMissingFilterMode must be one of the following: 'Complete','Max qcRSD','Max dRatio', 'Median qcRSD','Median dRatio', 'Min qcRSD', 'Min dRatio'.");
     throw(baseException)
-    end 
+end
 
 try
     validateattributes(baseConfig.CleanFilterQCRSD, {'double'},{'scalar','integer','>=',0,'<=',100})

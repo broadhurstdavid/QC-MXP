@@ -15,15 +15,11 @@ function [] = QCRSCplotdistribution(axishandle,statsTable,BatchVector,options)
 ubatch = unique(BatchVector);
 NumOfBatches = numel(ubatch);
 
-% bc = options.baseColor;
-% cmap = bc;
-% for i = 1:15
-%     temp = bc+0.1;
-%     cmap = [bc;temp];
-% end
-% cmap(cmap>1) = 1;
-% cmap = [cmap;cmap;cmap;cmap];
-
+bc = options.baseColor;
+cmap = bc;
+for i = 1:20
+    temp = bc+0.1
+    cmap = [bc,bc+]
 
 cmap = mapRcolors('quoka');
 smoothValue = (options.smooth+10)/600;
@@ -35,7 +31,6 @@ center = edges(1:end-1) + diff(edges) / 2;
 
 
 if strcmp(options.split,'all')
-    cmap = [options.baseColor;cmap];
     ubatch = 1;
     NumOfBatches = 1;
     statsTable(:,[options.label,'B1']) = statsTable(:,options.label); 

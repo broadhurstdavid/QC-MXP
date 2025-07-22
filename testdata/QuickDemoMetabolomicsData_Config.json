@@ -23,6 +23,7 @@
   "CleanMissingSampleFilterMode": "EveryBatch",
   "CleanMissingSampleFilterPercentage": 20,
   "CleanFilterBankMode": "Complete",
+  "CleanFilterOnQC": true,
   "CleanFilterQCRSD": 100,
   "CleanFilterSampleRSD": 0,
   "CleanFilterDRatio": 100,
