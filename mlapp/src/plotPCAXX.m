@@ -150,7 +150,7 @@
                             [xm,ym] = ci95_ellipse2018(SS(temp,:),'mean');
                             [xp,yp] = ci95_ellipse2018(SS(temp,:),'pop');
                             if options.plotCIA
-                                a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',hash(grps{i}));                  
+                                a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',hash(grps{i}));                  
                                 a2(i).UserData = {grps{i},'Sample'};
                                 a2(i).DisplayName = grps{i};
                                 a2label = repmat(grps(i),length(xp));
@@ -161,7 +161,7 @@
                             if options.plotCIA
                                 tempQC = temp & Data.QC;                        
                                 [xp1,yp1] = ci95_ellipse2018(SS(tempQC,:),'pop');
-                                a1(i) = plot(axishandle,xp1,yp1,':','linewidth',1,'color',cmapx(i,:));                  
+                                a1(i) = plot(axishandle,xp1,yp1,':','linewidth',0.5,'color',cmapx(i,:));                  
                                 a1(i).UserData = {grps{i},'QC'};
                                 a1(i).DisplayName = grps{i};
                                 a1label = repmat(grps(i),length(xp1));     
@@ -171,7 +171,7 @@
                             if options.plotCIB 
                                 tempSample = temp & Data.Sample;                    
                                 [xp,yp] = ci95_ellipse2018(SS(tempSample,:),'pop');
-                                a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',cmapx(i,:));                  
+                                a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',cmapx(i,:));                  
                                 a2(i).UserData = {grps{i},'Sample'};
                                 a2(i).DisplayName = grps{i};
                                 a2label = repmat(grps(i),length(xp));
@@ -181,7 +181,7 @@
                         otherwise
                             if any(strcmp(grps(i),{'QC','Blank','Reference'}))
                                 if options.plotCIA
-                                    a1(i) = plot(axishandle,xm,ym,':','linewidth',1,'color',hash(grps{i})); 
+                                    a1(i) = plot(axishandle,xm,ym,':','linewidth',0.5,'color',hash(grps{i})); 
                                     a1label = repmat(grps(i),length(xm));     
                                     a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a1label);
                                     a1(i).DataTipTemplate.DataTipRows(2) = [];                      
@@ -189,7 +189,7 @@
                                     a1(i).DisplayName = grps{i};
                                 end
                                 if options.plotCIB
-                                    a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',hash(grps{i})); 
+                                    a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',hash(grps{i})); 
                                     a2(i).UserData = {grps{i},'CI pop'};
                                     a2(i).DisplayName = grps{i};
                                     a2label = repmat(grps(i),length(xp));
@@ -201,7 +201,7 @@
                                 [xm,ym] = ci95_ellipse2018(SS(tempSample,:),'mean');
                                 [xp,yp] = ci95_ellipse2018(SS(tempSample,:),'pop');
                                 if options.plotCIA
-                                    a1(i) = plot(axishandle,xm,ym,':','linewidth',1,'color',cmapx(i,:)); 
+                                    a1(i) = plot(axishandle,xm,ym,':','linewidth',0.5,'color',cmapx(i,:)); 
                                     a1label = repmat(grps(i),length(xm));     
                                     a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a1label);
                                     a1(i).DataTipTemplate.DataTipRows(2) = [];                      
@@ -209,7 +209,7 @@
                                     a1(i).DisplayName = grps{i};
                                 end
                                 if options.plotCIB
-                                    a2(i) = plot(axishandle,xp,yp,'--','linewidth',1,'color',cmapx(i,:));                                     
+                                    a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',cmapx(i,:));                                     
                                     a2(i).UserData = {grps{i},'CI pop'};
                                     a2(i).DisplayName = grps{i};
                                     a2label = repmat(grps(i),length(xp));
