@@ -20,6 +20,7 @@ function [ZZ] = PCApreprocessing(Data,Feature,options)
     isQC = logical(Data.QC);
     isSample = logical(Data.Sample);
     isBlank = logical(Data.Blank);
+    isREF = logical(Data.Reference);
     
     if options.RemoveZeros
         ZZ(ZZ == 0) = NaN;
@@ -80,7 +81,15 @@ function [ZZ] = PCApreprocessing(Data,Feature,options)
             mqcX = repmat(mqc,height(ZZqc),1);
             temp = isnan(ZZqc);
             ZZqc(temp) = mqcX(temp);
-            ZZ(isQC,:) = ZZqc;               
+            ZZ(isQC,:) = ZZqc;     
+
+            % replace missing REFs with mean
+            ZZref = ZZ(isREF,:);                        
+            mref = mean(ZZref,1,'omitnan');
+            mrefX = repmat(mref,height(ZZref),1);
+            temp = isnan(ZZref);
+            ZZref(temp) = mrefX(temp);
+            ZZ(isREF,:) = ZZref;     
      
             % replace every other missing with KNN
             try
@@ -134,9 +143,22 @@ function [ZZ] = PCApreprocessing(Data,Feature,options)
                 mqcX = repmat(mqc,height(ZZqc),1);
                 temp = isnan(ZZqc);
                 ZZqc(temp) = mqcX(temp);
-                ZZ(isQC,:) = ZZqc;
             end
             ZZ(isQC,:) = ZZqc;
+
+
+           % replace missing REFs with KNN QC values or mean
+            ZZref = ZZ(isREF,:);  
+            try
+                ZZref = knnimpute(ZZref',k)';
+            catch
+                mref = mean(ZZref,1,'omitnan');
+                mrefX = repmat(mref,height(ZZref),1);
+                temp = isnan(ZZref);
+                ZZref(temp) = mrefX(temp);
+                ZZ(isREF,:) = ZZref;
+            end
+            ZZ(isREF,:) = ZZref;
     
             % replace every other missing with KNN
             try
@@ -157,6 +179,13 @@ function [ZZ] = PCApreprocessing(Data,Feature,options)
             temp = isnan(ZZqc);
             ZZqc(temp) = mqcX(temp);
             ZZ(isQC,:) = ZZqc;
+            % replace missing REFs with mean
+            ZZref = ZZ(isREF,:);                        
+            mref = mean(ZZref,1,'omitnan');
+            mrefX = repmat(mref,height(ZZref),1);
+            temp = isnan(ZZref);
+            ZZref(temp) = mrefX(temp);
+            ZZ(isREF,:) = ZZref;  
             % replace missing nonQCs with blank value
             temp = isnan(ZZ);
             minValX = repmat(min10Val,height(ZZ),1);

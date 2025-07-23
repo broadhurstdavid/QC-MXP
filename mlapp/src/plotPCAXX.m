@@ -24,10 +24,12 @@
         sz = 18;
     end
     ecol = [0.9,0.9,0.9];
+    ecol2 = [0.5,0.5,0.5];
     cmapx = options.cmap;
     %      {'blue','red','orange','purple'};
     %cols = {[0,68,136]./255,[221, 65, 36]./255,[230, 137, 40]./255,[175, 29, 139]./255};
-    cols = {[0,68,136]./255,[255, 0, 0]./255,[230, 137, 40]./255,[175, 29, 139]./255};
+    %cols = {[0,68,136]./255,[255, 0, 0]./255,[230, 137, 40]./255,[175, 29, 139]./255};
+    cols = {[0,68,136]./255,[255, 0, 0]./255,[230, 137, 40]./255,[212,175,55]/255};
     labels = {'Sample','QC','Blank','Reference'};
     hash = containers.Map(labels,cols);
 
@@ -105,7 +107,7 @@
                 if sum(temp) == 0, continue; end
                 switch options.label
                     case 'SampleType'
-                        b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,hash(grps{i}),'filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol);
+                        b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,hash(grps{i}),'filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2,'LineWidth',0.3);
                         b(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(temp));
                         b(i).DataTipTemplate.DataTipRows(2) = []; 
                         b(i).UserData = {grps{i},''};
@@ -113,10 +115,10 @@
                     case 'BatchQC'                   
                         tempQC = temp & Data.QC;
                          tempSample = temp & Data.Sample;
-                        b(i) = scatter(axishandle,SS(tempQC,1),SS(tempQC,2),sz,cmapx(i,:),'^','filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol);                        
+                        b(i) = scatter(axishandle,SS(tempQC,1),SS(tempQC,2),sz,cmapx(i,:),'^','filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol2);                        
                         b(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempQC));
                         b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow('Batch:',Data.Batch(tempQC));
-                        d(i) = scatter(axishandle,SS(tempSample,1),SS(tempSample,2),sz,cmapx(i,:),'o','filled','MarkerFaceAlpha',0.2);%,'MarkerEdgeColor',ecol); 
+                        d(i) = scatter(axishandle,SS(tempSample,1),SS(tempSample,2),sz,cmapx(i,:),'o','filled','MarkerFaceAlpha',0.1);%,'MarkerEdgeColor',ecol); 
                         d(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempSample));
                         d(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow('Batch:',Data.Batch(tempSample));
                         b(i).UserData = {['QC-',grps{i}],''};                       
@@ -125,9 +127,9 @@
                         d(i).DisplayName = ['Sample-',grps{i}];
                     otherwise
                         if any(strcmp(grps(i),{'QC','Blank','Reference'}))
-                            b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,hash(grps{i}),'filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol);
+                            b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,hash(grps{i}),'filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
                         else
-                            b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,cmapx(i,:),'filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol);
+                            b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,cmapx(i,:),'filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
                         end
                         b(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(temp));
                         b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(temp));
