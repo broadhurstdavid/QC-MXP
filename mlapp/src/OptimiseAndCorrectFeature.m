@@ -1,4 +1,4 @@
-function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeature(config,t,y,batch,isQC,isSample,isRef,isBlank)
+function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeature(config,t,y,batch,isQC,isSample,isBlank)
 
 % config.LogTransformedCorrection
 % config.RemoveZeros

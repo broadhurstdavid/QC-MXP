@@ -1,5 +1,5 @@
 {
-  "WorkingDirectory": "",
+  "WorkingDirectory": "~/Github/QC-MXP/testdata/",
   "FileType": "xlsx",
   "ProjectName": "QuickDemoMetabolomicsData.xlsx",
   "DataTable": "Data",
