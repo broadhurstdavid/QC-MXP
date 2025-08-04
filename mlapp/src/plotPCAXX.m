@@ -118,13 +118,48 @@
                         b(i) = scatter(axishandle,SS(tempQC,1),SS(tempQC,2),sz,cmapx(i,:),'^','filled','MarkerFaceAlpha',0.7,'MarkerEdgeColor',ecol2);                        
                         b(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempQC));
                         b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow('Batch:',Data.Batch(tempQC));
-                        d(i) = scatter(axishandle,SS(tempSample,1),SS(tempSample,2),sz,cmapx(i,:),'o','filled','MarkerFaceAlpha',0.1);%,'MarkerEdgeColor',ecol); 
+                        d(i) = scatter(axishandle,SS(tempSample,1),SS(tempSample,2),sz,cmapx(i,:),'o','filled','MarkerFaceAlpha',0.25);%,'MarkerEdgeColor',ecol); 
                         d(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempSample));
                         d(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow('Batch:',Data.Batch(tempSample));
                         b(i).UserData = {['QC-',grps{i}],''};                       
                         b(i).DisplayName = grps{i};
                         d(i).UserData = {['Sample-',grps{i}],''};
                         d(i).DisplayName = ['Sample-',grps{i}];
+                    case 'Batch'
+                        tempQC = temp & Data.QC;
+                        tempSample = temp & Data.Sample;
+                        tempREF = temp & Data.Reference;
+                        tempBlank = temp & Data.Blank;
+                        if any(tempQC)
+                            d(i) = scatter(axishandle,SS(tempQC,1),SS(tempQC,2),sz,cmapx(i,:),'^','filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
+                            d(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempQC));
+                            d(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(tempQC));
+                            d(i).UserData = {grps{i},''};
+                            d(i).DisplayName = grps{i};   
+                        end
+                        if any(tempSample)
+                            b(i) = scatter(axishandle,SS(tempSample,1),SS(tempSample,2),sz,cmapx(i,:),'filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
+                            b(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempSample));
+                            b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(tempSample));
+                            b(i).UserData = {grps{i},''};
+                            b(i).DisplayName = grps{i};
+                        end
+                        if any(tempREF)
+                            e(i) = scatter(axishandle,SS(tempREF,1),SS(tempREF,2),sz,cmapx(i,:),'s','filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
+                            e(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempREF));
+                            e(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(tempREF));
+                            e(i).UserData = {grps{i},''};
+                            e(i).DisplayName = grps{i};
+                        end
+                        if any(tempBlank)
+                            f(i) = scatter(axishandle,SS(tempBlank,1),SS(tempBlank,2),sz,cmapx(i,:),'v','filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
+                            f(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempBlank));
+                            f(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(tempBlank));
+                            f(i).UserData = {grps{i},''};
+                            f(i).DisplayName = grps{i};
+                        end
+
+
                     otherwise
                         if any(strcmp(grps(i),{'QC','Blank','Reference'}))
                             b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,hash(grps{i}),'filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
@@ -180,6 +215,8 @@
                             end
                         otherwise
                             if any(strcmp(grps(i),{'QC','Blank','Reference'}))
+                                [xm,ym] = ci95_ellipse2018(SS(temp,:),'mean');
+                                [xp,yp] = ci95_ellipse2018(SS(temp,:),'pop');
                                 if options.plotCIA
                                     a1(i) = plot(axishandle,xm,ym,':','linewidth',0.5,'color',hash(grps{i})); 
                                     a1label = repmat(grps(i),length(xm));     
