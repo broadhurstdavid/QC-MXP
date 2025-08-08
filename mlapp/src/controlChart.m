@@ -8,6 +8,7 @@ function controlChart(axishandle,Data,option)
                 option.title = ''
                 option.islog = true;
                 option.RelativeLOQ = 1.5
+                option.WithinBatchCorrectionMode = 'QC'
                 option.BetweenBatchCorrectionMode = 'QC'
             end
             
@@ -35,18 +36,27 @@ function controlChart(axishandle,Data,option)
             if option.before
                 y = Data.Y;
                 spline = Data.Yspline;
+                if strcmp(option.WithinBatchCorrectionMode,'Sample')
+                    lineColor = 'b';
+                else
+                    lineColor = 'r';
+                end
             else
                 y = Data.Z;
                 switch option.BetweenBatchCorrectionMode
                     case 'Sample'
                         mpv = median(Data.Y(Data.Sample),'omitnan');
+                        lineColor = 'b';
                     case 'Reference'
                         mpv = median(Data.Y(Data.Reference),'omitnan');
+                        lineColor = 'y';
                     otherwise
                         mpv = median(Data.Y(Data.QC),'omitnan');
+                        lineColor = 'r';
                 end
                 spline = repmat(mpv,numel(y),1);
             end
+
             
             t = Data.Order;
             youtlier = y(Data.Outlier);
@@ -133,7 +143,7 @@ function controlChart(axishandle,Data,option)
             
            % if option.before
                 for i = 1:batchNumTotal
-                    s(i) = plot(axishandle,t(Data.Batch==batches(i)),spline(Data.Batch==batches(i)),'r--','MarkerSize',ms,'LineWidth',lw-1);
+                    s(i) = plot(axishandle,t(Data.Batch==batches(i)),spline(Data.Batch==batches(i)),lineColor,'MarkerSize',ms,'LineWidth',lw-1);
                     s(i).PickableParts = 'none';
                 end
                 

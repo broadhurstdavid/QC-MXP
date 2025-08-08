@@ -1,4 +1,4 @@
-function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeatureX(config,t,y,batch,isQC,isSample,isBlank)
+function [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeatureX(config,t,y,batch,isQC,isSample,isBlank,isRef)
     [z,yspline,gammaVal,toutliers,Report] = OptimiseAndCorrectFeature(config,t,y,batch,isQC,isSample,isBlank);
     if strcmp(config.BetweenBatchCorrectionMode,'Reference')
         tempConfig = config;
