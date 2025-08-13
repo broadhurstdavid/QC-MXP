@@ -1,5 +1,5 @@
 
-[![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) [![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/releases/latest)  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101541.svg)](https://doi.org/10.5281/zenodo.11101541) [![GitHub last commit](https://img.shields.io/github/last-commit/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/)
+[![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) [![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/releases/latest) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16824822.svg)](https://doi.org/10.5281/zenodo.16824822) [![GitHub last commit](https://img.shields.io/github/last-commit/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/)
 
 [![General badge](https://img.shields.io/badge/Bluesky-0285FF?logo=bluesky&logoColor=fff&style=for-the-badge)](https://bsky.app/profile/davidbroadhurst.bsky.social)
 [![Email Badge](https://img.shields.io/badge/Gmail-Contact_Me-green?style=flat-square&logo=gmail&logoColor=FFFFFF&labelColor=red&color=grey)](mailto:dvdbrdhrst@gmail.com?subject=QCMXP) 
@@ -15,7 +15,7 @@
 <br />
 <br />
 This [GitHub repository](https://github.com/broadhurstdavid/QC-MXP) contains the binary installation files (Apple OSX & Microsoft Windows) and the Matlab source code for the metabolomics standalone application *QC:MXP* written by [Professor David Broadhurst](http://www.davidbroadhurst.net). You can cite this package as follows: 
->Broadhurst, D.I. (2025). *QC:MXP Repeat Injection based Quality Control, Batch Correction, Exploration & Data Cleaning* (Version 2.1) Zendono. <https://zenodo.org/doi/10.5281/zenodo.11101541>. Retrieved from <https://github.com/broadhurstdavid/QC-MXP.>
+>Broadhurst, D.I. (2025). *QC:MXP Repeat Injection based Quality Control, Batch Correction, Exploration & Data Cleaning* (Version 2.1) Zendono. <https://doi.org/10.5281/zenodo.16824822>. Retrieved from <https://github.com/broadhurstdavid/QC-MXP.>
 <br />
 QC:MXP is FREE and you do not need to have Matlab preinstalled to use it. It is built on top of the free Matlab Runtime library, which is automatically installed.<br /><br />
 
