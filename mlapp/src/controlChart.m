@@ -69,7 +69,7 @@ function controlChart(axishandle,Data,option)
                     dot_size = 6;
                 elseif batchNumTotal < 5
                     dot_size = 5;
-                elseif batchNumTotal < 10
+                elseif batchNumTotal < 15
                     dot_size = 4;
                 else
                     dot_size = 2;
@@ -79,7 +79,7 @@ function controlChart(axishandle,Data,option)
                     dot_size = 6;
                 elseif batchNumTotal < 5
                     dot_size = 5;
-                elseif batchNumTotal < 10
+                elseif batchNumTotal < 15
                     dot_size = 4;
                 else
                     dot_size = 3;
