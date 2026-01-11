@@ -100,9 +100,9 @@ catch
 end
 
 try
-    mustBeMember(baseConfig.MissingQCPreFilterMode,{'Complete','EveryBatch','AnyBatch','Disabled'});
+    mustBeMember(baseConfig.MissingQCPreFilterMode,{'Complete','EveryBatch','AnyBatch','Disable'});
 catch
-    baseException = MException('QCRSC:UnexpectedMissingQCPreFilterMode',"Config Error: MissingQCPreFilterMode must be one of the following: 'Complete','Every Batch','Any Batch, Disabled'.");
+    baseException = MException('QCRSC:UnexpectedMissingQCPreFilterMode',"Config Error: MissingQCPreFilterMode must be one of the following: 'Complete','Every Batch','Any Batch, Disable'.");
     throw(baseException)
 end
 
