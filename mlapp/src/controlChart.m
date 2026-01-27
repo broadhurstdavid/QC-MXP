@@ -64,27 +64,29 @@ function controlChart(axishandle,Data,option)
             batches = unique(Data.Batch);
             batchNumTotal = numel(batches);
 
-            if ismac
-                if batchNumTotal < 3
-                    dot_size = 6;
-                elseif batchNumTotal < 5
-                    dot_size = 5;
-                elseif batchNumTotal < 15
-                    dot_size = 4;
-                else
-                    dot_size = 2;
-                end
-            else
-                if batchNumTotal < 3
-                    dot_size = 6;
-                elseif batchNumTotal < 5
-                    dot_size = 5;
-                elseif batchNumTotal < 15
-                    dot_size = 4;
-                else
-                    dot_size = 3;
-                end
-            end
+            dot_size = 6;
+
+            % if ismac
+            %     if batchNumTotal < 3
+            %         dot_size = 6;
+            %     elseif batchNumTotal < 5
+            %         dot_size = 5;
+            %     elseif batchNumTotal < 15
+            %         dot_size = 4;
+            %     else
+            %         dot_size = 2;
+            %     end
+            % else
+            %     if batchNumTotal < 3
+            %         dot_size = 6;
+            %     elseif batchNumTotal < 5
+            %         dot_size = 5;
+            %     elseif batchNumTotal < 15
+            %         dot_size = 4;
+            %     else
+            %         dot_size = 3;
+            %     end
+            % end
             
             temp = y(Data.Blank);
             if isempty(temp)
