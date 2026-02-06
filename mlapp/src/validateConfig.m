@@ -7,6 +7,7 @@ defaultFieldnames = [
   {'DataTable'}
   {'FeatureTable'}
   {'MissingQCPreFilterMode'}
+  {'MissingQCPreFilterBatchN'}
   {'MissingQCPreFilterPercentage'} 
   {'LOQfilter'}
   {'RelativeLOQ'}
@@ -95,14 +96,21 @@ end
 try
     validateattributes(baseConfig.MissingQCPreFilterPercentage, {'double'},{'scalar','integer','>=',0,'<=',100})
 catch
-    baseException = MException('QCRSC:UnexpectedMissingQCPreFilterPercentageValue','Config Error: MissingQCPreFilterPercentageValue value must be a positive integer between 0 and 100');
+    baseException = MException('QCRSC:UnexpectedMissingQCPreFilterPercentageValue','Config Error: MissingQCPreFilterPercentage value must be a positive integer between 0 and 100');
     throw(baseException)
 end
 
 try
-    mustBeMember(baseConfig.MissingQCPreFilterMode,{'Complete','EveryBatch','AnyBatch','Disable'});
+    mustBeMember(baseConfig.MissingQCPreFilterMode,{'Complete','EveryBatch','AnyBatch','NBatch','Disable'});
 catch
-    baseException = MException('QCRSC:UnexpectedMissingQCPreFilterMode',"Config Error: MissingQCPreFilterMode must be one of the following: 'Complete','Every Batch','Any Batch, Disable'.");
+    baseException = MException('QCRSC:UnexpectedMissingQCPreFilterMode',"Config Error: MissingQCPreFilterMode must be one of the following: 'Complete','Every Batch','Any Batch','N Batch','Disable'.");
+    throw(baseException)
+end
+
+try
+    validateattributes(baseConfig.MissingQCPreFilterBatchN, {'double'},{'scalar','integer','>=',-1})
+catch
+    baseException = MException('QCRSC:UnexpectedMissingQCPreFilterBatchNvalue','Config Error: MissingQCPreFilterBatchN value must be a positive integer >= 0');
     throw(baseException)
 end
 

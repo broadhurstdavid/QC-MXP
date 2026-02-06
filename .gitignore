@@ -3,6 +3,8 @@
 .DS_Store
 .DS_Store?
 .mat
+/mlapp/src/*.mat
+/mlapp/src/*.asv
 ._*
 ~$*
 .Spotlight-V100

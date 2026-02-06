@@ -5,6 +5,7 @@
   "DataTable": "Data",
   "FeatureTable": "Peak",
   "MissingQCPreFilterMode": "EveryBatch",
+  "MissingQCPreFilterBatchN": 0,
   "MissingQCPreFilterPercentage": 20,
   "LOQfilter": true,
   "RelativeLOQ": 1.2,
