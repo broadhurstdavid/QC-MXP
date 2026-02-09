@@ -92,14 +92,14 @@
     
     grps = unique(Y);
 
-    if length(grps) > 25
+    if length(grps) > 100
         baseException = MException('QCMXP:TooManyGroups',"There are too many groups. MaxNum = 25");
         throw(baseException)
     end
 
     
 
-    %try
+    try
         if options.plotDataPoints
             %count = 1;
             for i = 1:length(grps)
@@ -304,10 +304,10 @@
         else
             legend(axishandle,c,string(grps));
         end
-%     catch
-%         baseException = MException('QCRSC:UnexpectedGroupLabel',"Something went wrong with the PCA labelling.");
-%         throw(baseException)
-%     end
+    catch
+        baseException = MException('QCRSC:UnexpectedGroupLabel',"Something went wrong with the PCA labelling.");
+        throw(baseException)
+    end
 
     if isSampleType
         ylabel(axishandle,sprintf('PC%u (Explained Var(X) = %3.1f%%; dRatio = %.2f%%)',yaxis,pcaRES.explained(yaxis),pcaRES.DRatio(yaxis)),'FontSize',11);

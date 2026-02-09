@@ -165,9 +165,9 @@ catch
 end
 
 try
-    mustBeMember(baseConfig.WithinBatchCorrectionMode,{'Sample','Median','Linear','Spline'});
+    mustBeMember(baseConfig.WithinBatchCorrectionMode,{'Sample','Median','Linear','Spline','Spline-C2','Spline-C4','Spline-C6'});
 catch
-    baseException = MException('QCRSC:UnexpectedWithinBatchCorrectionMode',"WithinBatchCorrectionMode value must be one of the following: 'Sample','Median','Linear','Spline'");
+    baseException = MException('QCRSC:UnexpectedWithinBatchCorrectionMode',"WithinBatchCorrectionMode value must be one of the following: 'Sample','Median','Linear','Spline,'Spline-C2','Spline-C4','Spline-C6'");
     throw(baseException)
 end  
 

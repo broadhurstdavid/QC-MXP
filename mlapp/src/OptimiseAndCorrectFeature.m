@@ -66,8 +66,6 @@ yqc = y(isQC);
 tqc = t(isQC);
 batchqc = batch(isQC);
 
-gammaRange = 0:15;
-
 for i = 1:numberOfBatches
       
     idx = batchqc == ub(i);
@@ -87,6 +85,16 @@ for i = 1:numberOfBatches
                 %gamma = 11;cvMse = 0;minVal = 0;
                 gamma = 1000;epsilon = NaN;cvMse = 0;minVal = 0;
             otherwise
+                switch config.WithinBatchCorrectionMode                 
+                    case 'Spline-C2'
+                        gammaRange = 2:15;
+                    case 'Spline-C4'
+                        gammaRange = 4:15;
+                    case 'Spline-C6'
+                        gammaRange = 6:15;
+                    otherwise                        
+                        gammaRange = 0:15;
+                end
                 [gamma,epsilon,cvMse,minVal] = optimiseCSAPS(tqci,yqci,gammaRange,QCRSCcvMethod,config.QCRSCmcReps);               
         end
    catch
