@@ -1,11 +1,11 @@
 {
-  "WorkingDirectory": "~/Github/QC-MXP/testdata/",
+  "WorkingDirectory": "~/Github/QC-MXP/testdata",
   "FileType": "xlsx",
   "ProjectName": "QuickDemoMetabolomicsData.xlsx",
   "DataTable": "Data",
   "FeatureTable": "Peak",
   "MissingQCPreFilterMode": "EveryBatch",
-  "MissingQCPreFilterBatchN": 0,
+  "MissingQCPreFilterBatchN": 2,
   "MissingQCPreFilterPercentage": 20,
   "LOQfilter": true,
   "RelativeLOQ": 1.2,
