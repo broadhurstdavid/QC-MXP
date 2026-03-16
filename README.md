@@ -1,7 +1,7 @@
 
-[![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) [![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/releases/latest) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16824822.svg)](https://doi.org/10.5281/zenodo.16824822) [![GitHub last commit](https://img.shields.io/github/last-commit/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/)
+[![General badge](https://img.shields.io/badge/github:-QC:MXP-success.svg)](https://github.com/broadhurstdavid/QC-MXP/) [![GitHub Release](https://img.shields.io/github/v/release/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/releases/latest) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11101541.svg)]([https://doi.org/10.5281/zenodo.16824822](https://doi.org/10.5281/zenodo.11101541)) [![GitHub last commit](https://img.shields.io/github/last-commit/broadhurstdavid/QC-MXP)](https://github.com/broadhurstdavid/QC-MXP/)
 
-[![General badge](https://img.shields.io/badge/Bluesky-0285FF?logo=bluesky&logoColor=fff&style=for-the-badge)](https://bsky.app/profile/davidbroadhurst.bsky.social)
+[![General badge](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/david-broadhurst/)
 [![Email Badge](https://img.shields.io/badge/Gmail-Contact_Me-green?style=flat-square&logo=gmail&logoColor=FFFFFF&labelColor=red&color=grey)](mailto:dvdbrdhrst@gmail.com?subject=QCMXP) 
 
 
@@ -15,7 +15,7 @@
 <br />
 <br />
 This [GitHub repository](https://github.com/broadhurstdavid/QC-MXP) contains the binary installation files (Apple OSX & Microsoft Windows) and the Matlab source code for the metabolomics standalone application *QC:MXP* written by [Professor David Broadhurst](http://www.davidbroadhurst.net). You can cite this package as follows: 
->Broadhurst, D.I. (2025). *QC:MXP Repeat Injection based Quality Control, Batch Correction, Exploration & Data Cleaning* (Version 3.0) Zendono. <https://doi.org/10.5281/zenodo.16824822>. Retrieved from <https://github.com/broadhurstdavid/QC-MXP.>
+>Broadhurst, D.I. (2025). *QC:MXP Repeat Injection based Quality Control, Batch Correction, Exploration & Data Cleaning* (Version 3.0) Zendono. [DOI: 10.5281/zenodo.11101541](https://doi.org/10.5281/zenodo.11101541) Retrieved from <https://github.com/broadhurstdavid/QC-MXP.>
 <br />
 QC:MXP is FREE and you do not need to have Matlab preinstalled to use it. It is built on top of the free Matlab Runtime library, which is automatically installed.<br /><br />
 
@@ -64,7 +64,7 @@ Between-batch correction is comparatively simple. Once the within-batch bias has
 <br />
 <br />
 ![Between-batch correction](res/interbatchcorrection.png)  
-<br />**IMPORTANT:** Before running QCRSC please ensure that any lead-in QCs (conditioning QCs) and lead-out QCs (ID QCs) have been removed from the data set. These samples are usually included at the start and end of every batch. Including these data will compromise the effectiveness of the QC correction algorithm. However, ideally before processing, each batch should begin and end with two pooled QC (please refer to [Broadhurst et al. (2018)](https://link.springer.com/article/10.1007/s11306-018-1367-3) for details).  If spline correction is performed and batches do not start and end with QCs there is a danger of some pretty wild non-linear extrapolation. In those cases you may wish to experiemnt with constrained spline correction ("Spline-C2", Spline-C4" or "Spline-C6"). **You have been warned!**<br />
+<br />**IMPORTANT:** Before running QCRSC please ensure that any lead-in QCs (conditioning QCs) and lead-out QCs (ID QCs) have been removed from the data set. These samples are usually included at the start and end of every batch. Including these data will compromise the effectiveness of the QC correction algorithm. However, ideally before processing, each batch should begin and end with two pooled QC (please refer to [Broadhurst et al. (2018)](https://link.springer.com/article/10.1007/s11306-018-1367-3) for details).  If spline correction is performed and batches do not start and end with QCs there is a danger of some pretty wild non-linear extrapolation. In those cases you may wish to experiment with constrained spline correction ("Spline-C2", Spline-C4" or "Spline-C6"). **You have been warned!**<br />
 
 ## QC-RSC Explorer
 A great way to understand the underlying principles of within-batch correction is to push the button labelled *QC-RSC Explorer* before importing any of your own data. This launches the *QC-RSC Explorer* window with some artificially generated example data (see below). Pressing the red button labelled *Random Feature* randomly selects one of 20 metabolite features. The right-hand side of the window (gold) shows the before/after control charts for that feature (sample concentration vs injection order). The left-hand side of the window (pink) provides an interface to the QCRSC configuration options. This is a highly interactive sandbox allowing you can familiarise yourself with the basic functionality - so ‘go play!’. Hovering over buttons/boxes will trigger pop-up information windows to help explain the functions. The options will be discussed in more detail in the TUTORIAL VIDEO.
@@ -78,7 +78,7 @@ Once you have imported your own TidyMet\* data it is advisable, as a beginner, t
 <br />
 <br />
 ## Feature Inclusion PreFilter
-The *Feature Inclusion PreFilter* enables the user to filter out features with poor QC representation (< % QC missing), either across all batches or for a specified number of batches (e.g. for a feature to pass there must be less than 20% missing QCs in 5 or more batches). There is an optional feature to force any QC response below a given hypothetical Limit of Detection (LOD) to be classified as missing. The LOD is defined as some mutliple of the maximum data value labeled as "Blank" in a given batch. This option is best investigated using the *QC-RSC Explorer* app. The *Feature Inclusion PreFilter* can be completetly disabled if so desired.
+The *Feature Inclusion PreFilter* enables the user to filter out features with poor QC representation (< % QC missing), either across all batches or for a specified number of batches (e.g. for a feature to pass there must be less than 20% missing QCs in 5 or more batches). There is an optional feature to force any QC response below a given hypothetical Limit of Detection (LOD) to be classified as missing. The LOD is defined as some multiple of the maximum data value labelled as "Blank" in a given batch. This option is best investigated using the *QC-RSC Explorer* app. The *Feature Inclusion PreFilter* can be completely disabled if so desired.
 <br />
 <br />
 ## QCRSC Configuration Options
@@ -99,7 +99,10 @@ To run QCRSC on the whole data set press the green 'play' button on the QCRSC en
 <br />
 <img src="res/QCRSCengine.png" width="400">
 ## Batch Selection
-New to version 3 is the ability to select subsets of batches to explore in isolation. Click the 'Batch Select' tab and select those batches you wish to include (or exclude) from analysis and then "Send" the resulting list to the visualisation windows. This feature was requested for investigating studies with a large number of batches. To help guide the inclusion/exlusion process a new pop-out 'Batch Summary Statistics' window has also been implemented. 
+New to version 3 is the ability to select subsets of batches to explore in isolation. Click the 'Batch Select' tab and select those batches you wish to include (or exclude) from analysis and then "Send" the resulting list to the visualisation windows. This feature was requested for investigating studies with a large number of batches. To help guide the inclusion/exclusion process a new pop-out 'Batch Summary Statistics' window has also been implemented. 
+<br />
+<br />
+![Batch Explorer](res/BatchSelect.png)
 <br />
 <br />
 ## Data Cleaning & Exploration
