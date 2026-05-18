@@ -1,5 +1,8 @@
 function [CV,upperbound,lowerbound] = CVconfidenceInterval(x,alpha,islog)
 
+% https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/coefvacl.htm
+% Vangel modification to McKay's method. 
+
 x(isnan(x)) = [];
 
 n = length(x);
