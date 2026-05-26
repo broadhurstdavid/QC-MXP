@@ -27,7 +27,7 @@ try
         minVal = NaN;
         epsilon = NaN;
     elseif len < 5
-        % QCs <= 5 cannot effectively perform spline cross-valiadation
+        % QCs <= 5 cannot effectively perform spline cross-validation
         % setting gamma to effectively produce a linear correction.
         gamma = max(gammaRange);
         cvMse = 0; %zeros(1,numel(gammaRange));
