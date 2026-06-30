@@ -87,9 +87,11 @@
             Y(Data.Blank) = {'Blank'};
             Y(Data.Reference) = {'Reference'};
             Y = strrep(Y,'_',' ');
+            Data.(options.label) = strrep(Data.(options.label),'_',' ');
     end
 
-    
+    Data.SampleID = strrep(Data.SampleID,'_',' ');
+        
     grps = unique(Y);
 
     if length(grps) > 100
@@ -133,28 +135,28 @@
                         if any(tempQC)
                             d(i) = scatter(axishandle,SS(tempQC,1),SS(tempQC,2),sz,cmapx(i,:),'^','filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
                             d(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempQC));
-                            d(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(tempQC));
+                            d(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow([options.label,':'],Y(tempQC));
                             d(i).UserData = {grps{i},''};
                             d(i).DisplayName = grps{i};   
                         end
                         if any(tempSample)
                             b(i) = scatter(axishandle,SS(tempSample,1),SS(tempSample,2),sz,cmapx(i,:),'filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
                             b(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempSample));
-                            b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(tempSample));
+                            b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow([options.label,':'],Y(tempSample));
                             b(i).UserData = {grps{i},''};
                             b(i).DisplayName = grps{i};
                         end
                         if any(tempREF)
                             e(i) = scatter(axishandle,SS(tempREF,1),SS(tempREF,2),sz,cmapx(i,:),'s','filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
                             e(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempREF));
-                            e(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(tempREF));
+                            e(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow([options.label,':'],Y(tempREF));
                             e(i).UserData = {grps{i},''};
                             e(i).DisplayName = grps{i};
                         end
                         if any(tempBlank)
                             f(i) = scatter(axishandle,SS(tempBlank,1),SS(tempBlank,2),sz,cmapx(i,:),'v','filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
                             f(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(tempBlank));
-                            f(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(tempBlank));
+                            f(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow([options.label,':'],Y(tempBlank));
                             f(i).UserData = {grps{i},''};
                             f(i).DisplayName = grps{i};
                         end
@@ -167,7 +169,7 @@
                             b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,cmapx(i,:),'filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
                         end
                         b(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('SampleID:',Data.SampleID(temp));
-                        b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow(options.label,Y(temp));
+                        b(i).DataTipTemplate.DataTipRows(2) = dataTipTextRow([options.label,':'],Y(temp));
                         b(i).UserData = {grps{i},''};
                         b(i).DisplayName = grps{i};   
                 end
@@ -189,7 +191,7 @@
                                 a2(i).UserData = {grps{i},'Sample'};
                                 a2(i).DisplayName = grps{i};
                                 a2label = repmat(grps(i),length(xp));
-                                a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a2label);
+                                a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI: Batch',a2label);
                                 a2(i).DataTipTemplate.DataTipRows(2) = [];
                             end
                         case 'BatchQC'
@@ -200,7 +202,7 @@
                                 a1(i).UserData = {grps{i},'QC'};
                                 a1(i).DisplayName = grps{i};
                                 a1label = repmat(grps(i),length(xp1));     
-                                a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('Batch',a1label);
+                                a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(mean): Batch',a1label);
                                 a1(i).DataTipTemplate.DataTipRows(2) = [];
                             end
                             if options.plotCIB 
@@ -210,7 +212,7 @@
                                 a2(i).UserData = {grps{i},'Sample'};
                                 a2(i).DisplayName = grps{i};
                                 a2label = repmat(grps(i),length(xp));
-                                a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('Batch',a2label);
+                                a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(sample): Batch',a2label);
                                 a2(i).DataTipTemplate.DataTipRows(2) = [];
                             end
                         otherwise
@@ -220,7 +222,7 @@
                                 if options.plotCIA
                                     a1(i) = plot(axishandle,xm,ym,':','linewidth',0.5,'color',hash(grps{i})); 
                                     a1label = repmat(grps(i),length(xm));     
-                                    a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a1label);
+                                    a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(mean):',a1label);
                                     a1(i).DataTipTemplate.DataTipRows(2) = [];                      
                                     a1(i).UserData = {grps{i},'CI mean'};
                                     a1(i).DisplayName = grps{i};
@@ -230,7 +232,7 @@
                                     a2(i).UserData = {grps{i},'CI pop'};
                                     a2(i).DisplayName = grps{i};
                                     a2label = repmat(grps(i),length(xp));
-                                    a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a2label);
+                                    a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(sample):',a2label);
                                     a2(i).DataTipTemplate.DataTipRows(2) = [];
                                 end
                             else
@@ -240,7 +242,7 @@
                                 if options.plotCIA
                                     a1(i) = plot(axishandle,xm,ym,':','linewidth',0.5,'color',cmapx(i,:)); 
                                     a1label = repmat(grps(i),length(xm));     
-                                    a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a1label);
+                                    a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(mean):',a1label);
                                     a1(i).DataTipTemplate.DataTipRows(2) = [];                      
                                     a1(i).UserData = {grps{i},'CI mean'};
                                     a1(i).DisplayName = grps{i};
@@ -250,51 +252,55 @@
                                     a2(i).UserData = {grps{i},'CI pop'};
                                     a2(i).DisplayName = grps{i};
                                     a2label = repmat(grps(i),length(xp));
-                                    a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,a2label);
+                                    a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(sample):',a2label);
                                     a2(i).DataTipTemplate.DataTipRows(2) = [];
                                 end
                             end                          
                     end                   
                     
-                end
                 
-                if strcmp(options.label,'BatchQC')
-                    tempQC = temp & Data.QC;
-                    m = mean(SS(tempQC,:),1);
-                else
-                    m = mean(SS(temp,:),1);
-                end        
-                x0=m(1);
-                y0=m(2);
                 
-                switch options.label
-                    case 'SampleType'
-                        m = mean(SS(temp,:),1);
-                        x0=m(1);
-                        y0=m(2);
-                        c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',hash(grps{i})); 
-                    case 'BatchQC'
+                    if strcmp(options.label,'BatchQC')
                         tempQC = temp & Data.QC;
                         m = mean(SS(tempQC,:),1);
-                        x0=m(1);
-                        y0=m(2);
-                        c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',cmapx(i,:));
-                    otherwise
-                        if any(strcmp(grps(i),{'QC','Blank','Reference'}))
+                    else
+                        m = mean(SS(temp,:),1);
+                    end        
+                    x0=m(1);
+                    y0=m(2);
+                    
+                    switch options.label
+                        case 'SampleType'
                             m = mean(SS(temp,:),1);
                             x0=m(1);
                             y0=m(2);
-                            c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',hash(grps{i}));
-                        else
-                            tempSample = temp & Data.Sample; 
-                            m = mean(SS(tempSample,:),1);
+                            c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',hash(grps{i})); 
+                        case 'BatchQC'
+                            tempQC = temp & Data.QC;
+                            m = mean(SS(tempQC,:),1);
                             x0=m(1);
                             y0=m(2);
-                            c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',cmapx(i,:)); 
-                        end
-                end
+                            c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',cmapx(i,:));
+                        otherwise
+                            if any(strcmp(grps(i),{'QC','Blank','Reference'}))
+                                m = mean(SS(temp,:),1);
+                                x0=m(1);
+                                y0=m(2);
+                                c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',hash(grps{i}));
+                            else
+                                tempSample = temp & Data.Sample; 
+                                m = mean(SS(tempSample,:),1);
+                                x0=m(1);
+                                y0=m(2);
+                                c(i) = plot(axishandle,x0,y0,'x','markersize',5,'color',cmapx(i,:)); 
+                            end
+                    end
                     c(i).UserData = {grps{i},'mean'};
                     c(i).DisplayName = grps{i};
+                    clabel = repmat(grps(i),length(xp));
+                    c(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('grpMean:',clabel);
+                    c(i).DataTipTemplate.DataTipRows(2) = [];
+                end
              end
         end
  
