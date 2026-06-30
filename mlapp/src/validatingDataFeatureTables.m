@@ -55,9 +55,9 @@ catch
 end
 
 try
-    mustBeMember(DataTable.SampleType,{'Sample','QC','Blank','Reference'});
+    mustBeMember(DataTable.SampleType,{'Sample','QC','Blank','Reference','Ignore'});
 catch
-    baseException = MException('QCRSC:QCRSCDataTableError','DataTable ''SampleType'' column values must be one of the following: ''Sample'',''QC'',''Blank'', or ''Reference''');
+    baseException = MException('QCRSC:QCRSCDataTableError','DataTable ''SampleType'' column values must be one of the following: ''Sample'',''QC'',''Blank'',''Reference'', or ''Ignore''');
     throw(baseException)
 end
 
@@ -75,6 +75,7 @@ DataTable.QC = ismember(DataTable.SampleType,'QC');
 DataTable.Blank = ismember(DataTable.SampleType,'Blank');
 DataTable.Reference = ismember(DataTable.SampleType,'Reference');
 DataTable.Sample = ~DataTable.QC & ~DataTable.Blank & ~DataTable.Reference;
+DataTable.Ignore = ismember(DataTable.SampleType,'Ignore');
 
 maxNumQCperBatch = checkNumberInBatch(DataTable,'QC');
 
@@ -90,7 +91,7 @@ end
 
 
 
-DataTable = movevars(DataTable,{'SampleType','Order','Batch','QC','Blank','Reference','Sample'},'After','SampleID');
+DataTable = movevars(DataTable,{'SampleType','Order','Batch','QC','Blank','Reference','Sample','Ignore'},'After','SampleID');
 
 %DataTable = movevars(DataTable,'SampleID','Before',1);
 %DataTable = movevars(DataTable,{'SampleType','Order','Batch','QC','Blank','Reference','Sample'},'After','SampleID');

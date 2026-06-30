@@ -6,7 +6,7 @@ end
 
 X = Data{:,Feature.UID};
 isQC = logical(Data.QC);
-isSample = logical(Data.Sample);
+isSample = logical(Data.Sample & ~Data.Ignore);
 isBlank = logical(Data.Blank);
 isReference = logical(Data.Reference);
 
