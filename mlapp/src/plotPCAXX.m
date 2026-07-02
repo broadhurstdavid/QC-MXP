@@ -95,7 +95,7 @@
     grps = unique(Y);
 
     if length(grps) > 100
-        baseException = MException('QCMXP:TooManyGroups',"There are too many groups. MaxNum = 25");
+        baseException = MException('QCMXP:TooManyGroups',"There are too many groups. MaxNum = 100");
         throw(baseException)
     end
 
@@ -184,76 +184,109 @@
                 if sum(temp) > 2             
                     switch options.label
                         case 'SampleType'
-                            [xm,ym] = ci95_ellipse2018(SS(temp,:),'mean');
-                            [xp,yp] = ci95_ellipse2018(SS(temp,:),'pop');
-                            if options.plotCIA
-                                a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',hash(grps{i}));                  
-                                a2(i).UserData = {grps{i},'Sample'};
-                                a2(i).DisplayName = grps{i};
-                                a2label = repmat(grps(i),length(xp));
-                                a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI: Batch',a2label);
-                                a2(i).DataTipTemplate.DataTipRows(2) = [];
+                            try
+                                [xm,ym] = ci95_ellipse2018(SS(temp,:),'mean');
+                            catch
+                                % Do nothing
+                            end
+                            try
+                                [xp,yp] = ci95_ellipse2018(SS(temp,:),'pop');
+                                if options.plotCIA
+                                    a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',hash(grps{i}));                  
+                                    a2(i).UserData = {grps{i},'Sample'};
+                                    a2(i).DisplayName = grps{i};
+                                    a2label = repmat(grps(i),length(xp));
+                                    a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI: Batch',a2label);
+                                    a2(i).DataTipTemplate.DataTipRows(2) = [];
+                                end
+                            catch
+                                % Do nothing
                             end
                         case 'BatchQC'
                             if options.plotCIA
-                                tempQC = temp & Data.QC;                        
-                                [xp1,yp1] = ci95_ellipse2018(SS(tempQC,:),'pop');
-                                a1(i) = plot(axishandle,xp1,yp1,':','linewidth',0.5,'color',cmapx(i,:));                  
-                                a1(i).UserData = {grps{i},'QC'};
-                                a1(i).DisplayName = grps{i};
-                                a1label = repmat(grps(i),length(xp1));     
-                                a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(mean): Batch',a1label);
-                                a1(i).DataTipTemplate.DataTipRows(2) = [];
+                                tempQC = temp & Data.QC; 
+                                try
+                                    [xp1,yp1] = ci95_ellipse2018(SS(tempQC,:),'pop');                                                                
+                                    a1(i) = plot(axishandle,xp1,yp1,':','linewidth',0.5,'color',cmapx(i,:));                  
+                                    a1(i).UserData = {grps{i},'QC'};
+                                    a1(i).DisplayName = grps{i};
+                                    a1label = repmat(grps(i),length(xp1));     
+                                    a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(mean): Batch',a1label);
+                                    a1(i).DataTipTemplate.DataTipRows(2) = [];
+                                catch
+                                    %Do nothing
+                                end
+
                             end
                             if options.plotCIB 
-                                tempSample = temp & Data.Sample;                    
-                                [xp,yp] = ci95_ellipse2018(SS(tempSample,:),'pop');
-                                a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',cmapx(i,:));                  
-                                a2(i).UserData = {grps{i},'Sample'};
-                                a2(i).DisplayName = grps{i};
-                                a2label = repmat(grps(i),length(xp));
-                                a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(sample): Batch',a2label);
-                                a2(i).DataTipTemplate.DataTipRows(2) = [];
+                                tempSample = temp & Data.Sample; 
+                                try
+                                    [xp,yp] = ci95_ellipse2018(SS(tempSample,:),'pop');                                
+                                    a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',cmapx(i,:));                  
+                                    a2(i).UserData = {grps{i},'Sample'};
+                                    a2(i).DisplayName = grps{i};
+                                    a2label = repmat(grps(i),length(xp));
+                                    a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(sample): Batch',a2label);
+                                    a2(i).DataTipTemplate.DataTipRows(2) = [];
+                                catch
+                                    % Do nothing
+                                end
                             end
                         otherwise
                             if any(strcmp(grps(i),{'QC','Blank','Reference'}))
-                                [xm,ym] = ci95_ellipse2018(SS(temp,:),'mean');
-                                [xp,yp] = ci95_ellipse2018(SS(temp,:),'pop');
-                                if options.plotCIA
-                                    a1(i) = plot(axishandle,xm,ym,':','linewidth',0.5,'color',hash(grps{i})); 
-                                    a1label = repmat(grps(i),length(xm));     
-                                    a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(mean):',a1label);
-                                    a1(i).DataTipTemplate.DataTipRows(2) = [];                      
-                                    a1(i).UserData = {grps{i},'CI mean'};
-                                    a1(i).DisplayName = grps{i};
+                                try
+                                    [xm,ym] = ci95_ellipse2018(SS(temp,:),'mean');
+                                    if options.plotCIA
+                                        a1(i) = plot(axishandle,xm,ym,':','linewidth',0.5,'color',hash(grps{i})); 
+                                        a1label = repmat(grps(i),length(xm));     
+                                        a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(mean):',a1label);
+                                        a1(i).DataTipTemplate.DataTipRows(2) = [];                      
+                                        a1(i).UserData = {grps{i},'CI mean'};
+                                        a1(i).DisplayName = grps{i};
+                                    end                                 
+                                catch
+                                    % Do nothing;
                                 end
-                                if options.plotCIB
-                                    a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',hash(grps{i})); 
-                                    a2(i).UserData = {grps{i},'CI pop'};
-                                    a2(i).DisplayName = grps{i};
-                                    a2label = repmat(grps(i),length(xp));
-                                    a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(sample):',a2label);
-                                    a2(i).DataTipTemplate.DataTipRows(2) = [];
+                                try
+                                    [xp,yp] = ci95_ellipse2018(SS(temp,:),'pop');
+                                    if options.plotCIB
+                                        a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',hash(grps{i})); 
+                                        a2(i).UserData = {grps{i},'CI pop'};
+                                        a2(i).DisplayName = grps{i};
+                                        a2label = repmat(grps(i),length(xp));
+                                        a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(sample):',a2label);
+                                        a2(i).DataTipTemplate.DataTipRows(2) = [];
+                                    end
+                                catch
+                                    % Do nothing                               
                                 end
                             else
-                                tempSample = temp & Data.Sample;   
-                                [xm,ym] = ci95_ellipse2018(SS(tempSample,:),'mean');
-                                [xp,yp] = ci95_ellipse2018(SS(tempSample,:),'pop');
-                                if options.plotCIA
-                                    a1(i) = plot(axishandle,xm,ym,':','linewidth',0.5,'color',cmapx(i,:)); 
-                                    a1label = repmat(grps(i),length(xm));     
-                                    a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(mean):',a1label);
-                                    a1(i).DataTipTemplate.DataTipRows(2) = [];                      
-                                    a1(i).UserData = {grps{i},'CI mean'};
-                                    a1(i).DisplayName = grps{i};
+                                tempSample = temp & Data.Sample;  
+                                try
+                                    [xm,ym] = ci95_ellipse2018(SS(tempSample,:),'mean');
+                                    if options.plotCIA
+                                        a1(i) = plot(axishandle,xm,ym,':','linewidth',0.5,'color',cmapx(i,:)); 
+                                        a1label = repmat(grps(i),length(xm));     
+                                        a1(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(mean):',a1label);
+                                        a1(i).DataTipTemplate.DataTipRows(2) = [];                      
+                                        a1(i).UserData = {grps{i},'CI mean'};
+                                        a1(i).DisplayName = grps{i};
+                                    end                                    
+                                catch
+                                    % Do nothing
                                 end
-                                if options.plotCIB
-                                    a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',cmapx(i,:));                                     
-                                    a2(i).UserData = {grps{i},'CI pop'};
-                                    a2(i).DisplayName = grps{i};
-                                    a2label = repmat(grps(i),length(xp));
-                                    a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(sample):',a2label);
-                                    a2(i).DataTipTemplate.DataTipRows(2) = [];
+                                try
+                                    [xp,yp] = ci95_ellipse2018(SS(tempSample,:),'pop');           
+                                    if options.plotCIB
+                                        a2(i) = plot(axishandle,xp,yp,'--','linewidth',0.5,'color',cmapx(i,:));                                     
+                                        a2(i).UserData = {grps{i},'CI pop'};
+                                        a2(i).DisplayName = grps{i};
+                                        a2label = repmat(grps(i),length(xp));
+                                        a2(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(sample):',a2label);
+                                        a2(i).DataTipTemplate.DataTipRows(2) = [];
+                                    end
+                                catch
+                                    % Do nothing                               
                                 end
                             end                          
                     end                   
@@ -311,7 +344,7 @@
             legend(axishandle,c,string(grps));
         end
     catch
-        baseException = MException('QCRSC:UnexpectedGroupLabel',"Something went wrong with the PCA labelling.");
+        baseException = MException('QCRSC:UnexpectedGroupLabel',"Something went wrong with the PCA labelling.");        
         throw(baseException)
     end
 
