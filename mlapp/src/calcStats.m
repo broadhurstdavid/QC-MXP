@@ -1,4 +1,4 @@
-function [rsdQC,rsdQClower,rsdQCupper,rsdSAMPLE,rsdSAMPLElower,rsdSAMPLEupper,rsdREF,rsdREFlower,rsdREFupper,dRatio,blankRatio,sampleMissingPerc,qcMissingPerc] = calcStats(y,isQC,isSample,isBlank,isReference,options)
+function [S] = calcStats(y,isQC,isSample,isBlank,isReference,options)
 
 arguments
     y
@@ -93,5 +93,19 @@ if sum(~isnan(yS)) < 3
     rsdSAMPLElower = NaN;
     rsdSAMPLEupper = NaN;
 end
+
+S.qcRSD = rsdQC;
+S.qcRSDlower95CI = rsdQClower;
+S.qcRSDupper95CI = rsdQCupper;
+S.sampleRSD = rsdSAMPLE;
+S.sampleRSDlower95CI = rsdSAMPLElower;
+S.sampleRSDupper95CI = rsdSAMPLEupper;
+S.refRSD = rsdREF;
+S.refRSDlower95CI = rsdREFlower;
+S.refRSDupper95CI = rsdREFupper;
+S.dRatio = dRatio;
+S.blankRatio = blankRatio;
+S.sampleMissingPerc = sampleMissingPerc;
+S.qcMissingPerc = qcMissingPerc;
 
 end
