@@ -14,17 +14,14 @@ end
 % NOTE 'Logged' indicates whether the data has already been log transformed
 % and thus we reverse that to calculate the statistics.
 
+if options.Logged
+    y = power(10,y);
+end
+
 yQC = y(isQC);
 yS = y(isSample);
 yR = y(isReference);
 yB = y(isBlank);
-
-if options.Logged
-    yB = power(10,yB);
-    yQC = power(10,yQC);
-    yS = power(10,yS);
-    yR = power(10,yR);
-end
 
 sampleMissingPerc = 100 * sum(isnan(yS))./height(yS);
 qcMissingPerc = 100 * sum(isnan(yQC))./height(yQC);
