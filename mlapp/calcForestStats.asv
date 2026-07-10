@@ -1,14 +1,16 @@
-function ForestStatsTable = calcForestStats(Features,BeforeData,AfterData,alpha,islog)
+function ForestStatsTable = calcForestStats(Features,BeforeData,AfterData,type,alpha,islog)
 
 n = height(Features);
-RES = zeros(n,3);
+RES = zeros(n,5);
 for i = 1:n
-    before = BeforeData{:,Features.UID(i)};
-    after = AfterData{:,Features.UID(i)};
-    [meanDeltaCV,upperbound,lowerbound] = bootstrapDeltaCVconfidenceInterval(before,after,alpha,islog);
+    before = BeforeData{type,Features.UID(i)};
+    after = AfterData{type,Features.UID(i)};
+    [meanDeltaCV,upperbound,lowerbound,cvB,cvA] = bootstrapDeltaCVconfidenceInterval(before,after,alpha,islog);
     RES(i,1) = meanDeltaCV;
     RES(i,2) = lowerbound;
     RES(i,3) = upperbound;
+    RES(i,4) = cvB;
+    RES(i,5) = cvA;
 end
 
 pooled_estimate = mean(RES(:,1));
@@ -24,7 +26,7 @@ diamond_upper = pooled_estimate + (t_crit * pooled_SE);
 
 ForestStatsTable = Features(:,{'UID','Name'});
 
-Table = array2table(RES,'VariableNames',{'meanDeltaCV','lowerCI','upperCI'});  
+Table = array2table(RES,'VariableNames',{'meanDeltaCV','lowerCI','upperCI','cvB','cvA'});  
 
 ForestStatsTable = [ForestStatsTable,Table];
 

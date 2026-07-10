@@ -1,14 +1,23 @@
-function ForestStatsTable = calcForestStats(Features,BeforeData,AfterData,alpha,islog)
+function ForestStatsTable = calcForestStats(Features,BeforeDataTable,AfterDataTable,type,alpha,islog)
+
+includeB = logical(BeforeDataTable.(type));
+includeA = logical(AfterDataTable.(type));
+if ~isequal(includeB,includeA)
+    ME = MException('ForestPlot:UnexpectedDataMismatch',"Inclusion vector mismatch between Before and After tables");
+    throw(ME);
+end
 
 n = height(Features);
-RES = zeros(n,3);
-for i = 1:n
-    before = BeforeData{:,Features.UID(i)};
-    after = AfterData{:,Features.UID(i)};
-    [meanDeltaCV,upperbound,lowerbound] = bootstrapDeltaCVconfidenceInterval(before,after,alpha,islog);
-    RES(i,1) = meanDeltaCV;
-    RES(i,2) = lowerbound;
-    RES(i,3) = upperbound;
+RES = zeros(n,5);
+for i = 1:n    
+    before = BeforeDataTable{includeB,Features.UID(i)};
+    after = AfterDataTable{includeA,Features.UID(i)};
+    [meanDeltaCV,upperbound,lowerbound,cvB,cvA] = bootstrapDeltaCVconfidenceInterval(before,after,alpha,islog);
+    RES(i,1) = meanDeltaCV*100;
+    RES(i,2) = lowerbound*100;
+    RES(i,3) = upperbound*100;
+    RES(i,4) = cvB*100;
+    RES(i,5) = cvA*100;
 end
 
 pooled_estimate = mean(RES(:,1));
@@ -24,13 +33,13 @@ diamond_upper = pooled_estimate + (t_crit * pooled_SE);
 
 ForestStatsTable = Features(:,{'UID','Name'});
 
-Table = array2table(RES,'VariableNames',{'meanDeltaCV','lowerCI','upperCI'});  
+Table = array2table(RES,'VariableNames',{'meanDeltaCV','lowerCI','upperCI','cvB','cvA'});  
 
 ForestStatsTable = [ForestStatsTable,Table];
 
-oneRowTable = {{"PE"},{"PooledEffect"},pooled_estimate,diamond_lower,diamond_upper};
+oneRowTable = {{"PE"},{"PooledEffect"},pooled_estimate,diamond_lower,diamond_upper,NaN,NaN};
 
-ForestStatsTable{end+1,:} = oneRowTable;
+ForestStatsTable = [oneRowTable; ForestStatsTable];
 
 
 % % --- 3. Set up the Plot ---
