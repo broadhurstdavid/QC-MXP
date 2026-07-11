@@ -3,7 +3,7 @@ function [meanDeltaCV,upperbound,lowerbound,cvB,cvA] = bootstrapDeltaCVconfidenc
 % Combine into a single matrix
 raw_matrix = [exptBefore,exptAfter];
 
-% Clean rows listwise: removes any row containing a NaN
+% Clean rows list-wise: removes any row containing a NaN
 cleaned_matrix = rmmissing(raw_matrix); 
 
 % Anonymous function for the change in CV
