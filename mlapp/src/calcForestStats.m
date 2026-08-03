@@ -31,13 +31,13 @@ diamond_lower = pooled_estimate - (t_crit * pooled_SE);
 diamond_upper = pooled_estimate + (t_crit * pooled_SE);
 
 
-ForestStatsTable = Features(:,{'UID','Name'});
+ForestStatsTable = Features(:,{'UID','Name','cleanPeaks'});
 
 Table = array2table(RES,'VariableNames',{'meanDeltaCV','lowerCI','upperCI','cvB','cvA'});  
 
 ForestStatsTable = [ForestStatsTable,Table];
 
-oneRowTable = {{"PE"},{"PooledEffect"},pooled_estimate,diamond_lower,diamond_upper,NaN,NaN};
+oneRowTable = {{"PE"},{"PooledEffect"},false,pooled_estimate,diamond_lower,diamond_upper,NaN,NaN};
 
 ForestStatsTable = [oneRowTable; ForestStatsTable];
 
