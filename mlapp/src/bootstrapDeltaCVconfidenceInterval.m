@@ -1,4 +1,4 @@
-function [meanDeltaCV,upperbound,lowerbound,cvB,cvA] = bootstrapDeltaCVconfidenceInterval(exptBefore,exptAfter,alpha,islog)
+function [meanDeltaCV,upperbound,lowerbound,cvB,cvA,sig] = bootstrapDeltaCVconfidenceInterval(exptBefore,exptAfter,alpha,islog)
 
 % Combine into a single matrix
 raw_matrix = [exptBefore,exptAfter];
@@ -22,6 +22,11 @@ meanDeltaCV = mean(bootstat);
 upperbound = ci(2);
 lowerbound = ci(1);
 
+if lowerbound > 0
+    sig = true;
+else
+    sig = false;
+end
 
 end
 
