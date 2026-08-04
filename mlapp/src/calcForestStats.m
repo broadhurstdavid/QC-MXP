@@ -55,14 +55,14 @@ else
 end
 
 
-ForestStatsTable = Features(:,{'UID','Name','cleanPeaks'});
+ForestStatsTable = Features(:,{'UID','Name','cleanPeaks','qcRSD','qcRSDlower95CI','qcRSDupper95CI','refRSD','refRSDlower95CI','refRSDupper95CI','sampleRSD','sampleRSDlower95CI','sampleRSDupper95CI','dRatio','blankRatio','qcMissingPerc','sampleMissingPerc'});
 
 Table = array2table(RES,'VariableNames',{'meanDeltaCV','lowerCI','upperCI','cvB','cvA','sig'});  
 
 ForestStatsTable = [ForestStatsTable,Table];
 
-oneRowTable = {{"PE"},{"PooledEffect"},false,pooled_estimate,diamond_lower,diamond_upper,NaN,NaN,sig_p};
-twoRowTable = {{"PE"},{"PooledEffect"},false,pooled_estimateX,diamond_lowerX,diamond_upperX,NaN,NaN,sig_pX};
+oneRowTable = {{"PE"},{"PooledEffect"},false,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,pooled_estimate,diamond_lower,diamond_upper,NaN,NaN,sig_p};
+twoRowTable = {{"PE"},{"PooledEffect"},false,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,pooled_estimateX,diamond_lowerX,diamond_upperX,NaN,NaN,sig_pX};
 
 ForestStatsTable = [oneRowTable; twoRowTable; ForestStatsTable];
 

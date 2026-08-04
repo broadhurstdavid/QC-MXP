@@ -134,27 +134,24 @@ function MouseClick(source,labelvariable,statsData)
 
        idx = source.YData-1;
        scatter(source.Parent,statsData.meanDeltaCV(idx), idx+1, source.SizeData + 80, 'k', 'o', 'UserData',-1,'LineWidth',1.5);
-       txt0 = sprintf(' SampleID : %s : %s',statsData.UID{idx},statsData.Name{idx});
-       % txt1 = sprintf('\n qcRSD (95%%CI) : %.2f%% (%.2f-%.2f) | sampleRSD (95%%CI) : %.2f%% (%.2f-%.2f)', ...
-       % statsData.qq,statsData.qql,statsData.qqu, ...
-       % statsData.ss,statsData.ssl,statsData.ssu);
-       % if statsData.bb == 0.1
-       %      txt2 = sprintf('\n dRatio : %.2f%% | blankRatio : < 0.1%%',statsData.dd);                
-       % else
-       %      txt2 = sprintf('\n dRatio : %.2f%% | blankRatio : %.2f%%',statsData.dd,statsData.bb);
-       % end
-       % txt3 = sprintf(' | refRSD (95%%CI) : %.2f%% (%.2f-%.2f)',statsData.rr,statsData.rrl,statsData.rru);
-       % txt4 = sprintf('\n qcMissing : %.0f%% | sampleMissing : %.0f%%',statsData.qqm,statsData.ssm);
-       % txt5 = sprintf(' (filtered on Batch %d)',statsData.bestbatch);
-       % if statsData.bestbatch ~= -1
-       %     txt0 = [txt0,txt5];
-       % end
-       % if any(app.PlotDataTable.Reference)
-       %     labelvariable.Text = [txt0,txt1,txt3,txt2,txt4];
-       % else
-       %     labelvariable.Text = [txt0,txt1,txt2,txt4];
-       % end
-       labelvariable.Text = txt0;
+       txt0 = sprintf(' <b>SampleID :</b> %s : %s',statsData.UID{idx},statsData.Name{idx});
+       txt1 = sprintf('\n <b>qcRSD (95%%CI) :</b> %.2f%% (%.2f-%.2f) | <b>sampleRSD (95%%CI) :</b> %.2f%% (%.2f-%.2f)', ...
+       statsData.qcRSD(idx),statsData.qcRSDlower95CI(idx),statsData.qcRSDupper95CI(idx), ...
+       statsData.sampleRSD(idx),statsData.sampleRSDlower95CI(idx),statsData.sampleRSDupper95CI(idx));
+       if statsData.blankRatio == 0.1
+             txt2 = sprintf('\n <b>dRatio :</b> %.2f%% | <b>blankRatio :</b> < 0.1%%',statsData.dRatio(idx));                
+       else
+             txt2 = sprintf('\n <b>dRatio :</b> %.2f%% | <b>blankRatio :</b> %.2f%%',statsData.dRatio(idx),statsData.blankRatio(idx));
+       end
+       txt3 = sprintf(' | <b>refRSD (95%%CI) :</b> %.2f%% (%.2f-%.2f)',statsData.refRSD(idx),statsData.refRSDlower95CI(idx),statsData.refRSDupper95CI(idx));
+       txt4 = sprintf(' | <b>qcMissing :</b> %.0f%% | <b>sampleMissing :</b> %.0f%%',statsData.qcMissingPerc(idx),statsData.sampleMissingPerc(idx));
+       txt5 = sprintf('\n <b>%cRSD (95%%CI) :</b> %.2f%% (%.2f-%.2f)',916,statsData.meanDeltaCV(idx),statsData.lowerCI(idx),statsData.upperCI(idx));
+       
+       if any(statsData.refRSD)
+           labelvariable.Text = [txt0,txt1,txt3,txt2,txt4,txt5];
+       else
+           labelvariable.Text = [txt0,txt1,txt2,txt4,txt5];
+       end
        labelvariable.Visible = true;
 end
 
@@ -163,9 +160,4 @@ function MouseClick2(source,labelvariable)
        delete(source.Parent.Children(end).Children(1))
    end
     labelvariable.Visible ="off";
-    % if ~isempty(app.ifig2)
-    %     for i=1:length(app.ifig2)          
-    %         delete(app.ifig2(i));                 
-    %     end
-    % end
 end
