@@ -81,9 +81,9 @@ Y_diamond = [1, 1.5, 1, 0.5, 1];
 fill(ax2,X_diamond, Y_diamond, 'k', 'FaceAlpha', 0, 'EdgeColor', 'k');
 hold(ax2,"on");
 if PoolTable.sig(2)
-    fill(ax2,X_diamondX, Y_diamond, 'r', 'FaceAlpha', 0.5, 'EdgeColor', 'k');
+    fill(ax2,X_diamondX, Y_diamond, 'r', 'FaceAlpha', 0.5, 'EdgeColor', 'k','ButtonDownFcn',@(src,event)MouseClickPooled(src,textBox,PoolTable));
 else
-    fill(ax2,X_diamondX, Y_diamond, 'b', 'FaceAlpha', 0.5, 'EdgeColor', 'k');
+    fill(ax2,X_diamondX, Y_diamond, 'b', 'FaceAlpha', 0.5, 'EdgeColor', 'k','ButtonDownFcn',@(src,event)MouseClickPooled(src,textBox,PoolTable));
 end
 
 xlim(ax2,[xlim_lower, xlim_upper]);
@@ -128,24 +128,27 @@ function scroll_callback(slider_handle, target_axes, window_size)
 end
 
 function MouseClick(source,labelvariable,statsData)
-       if source.Parent.Children(1).UserData == -1
-           delete(source.Parent.Children(1))
-       end
+       % if source.Parent.Children(1).UserData == -1
+       %     delete(source.Parent.Children(1))
+       % end
+
+       childObjects = findobj(source.Parent.Parent, 'UserData', -1);
+       delete(childObjects);
 
        idx = source.YData-1;
        scatter(source.Parent,statsData.meanDeltaCV(idx), idx+1, source.SizeData + 80, 'k', 'o', 'UserData',-1,'LineWidth',1.5);
-       txt0 = sprintf(' <b>SampleID :</b> %s : %s',statsData.UID{idx},statsData.Name{idx});
-       txt1 = sprintf('\n <b>qcRSD (95%%CI) :</b> %.2f%% (%.2f-%.2f) | <b>sampleRSD (95%%CI) :</b> %.2f%% (%.2f-%.2f)', ...
+       txt0 = sprintf('<b> SampleID:</b> %s: %s',statsData.UID{idx},statsData.Name{idx});
+       txt1 = sprintf('\n<b> qcRSD (95%%CI):</b> %.2f%% (%.2f-%.2f) | <b>sampleRSD (95%%CI):</b> %.2f%% (%.2f-%.2f)', ...
        statsData.qcRSD(idx),statsData.qcRSDlower95CI(idx),statsData.qcRSDupper95CI(idx), ...
        statsData.sampleRSD(idx),statsData.sampleRSDlower95CI(idx),statsData.sampleRSDupper95CI(idx));
        if statsData.blankRatio == 0.1
-             txt2 = sprintf('\n <b>dRatio :</b> %.2f%% | <b>blankRatio :</b> < 0.1%%',statsData.dRatio(idx));                
+             txt2 = sprintf('\n<b> dRatio:</b> %.2f%% | <b>blankRatio:</b> < 0.1%%',statsData.dRatio(idx));                
        else
-             txt2 = sprintf('\n <b>dRatio :</b> %.2f%% | <b>blankRatio :</b> %.2f%%',statsData.dRatio(idx),statsData.blankRatio(idx));
+             txt2 = sprintf('\n<b> dRatio:</b> %.2f%% | <b>blankRatio:</b> %.2f%%',statsData.dRatio(idx),statsData.blankRatio(idx));
        end
-       txt3 = sprintf(' | <b>refRSD (95%%CI) :</b> %.2f%% (%.2f-%.2f)',statsData.refRSD(idx),statsData.refRSDlower95CI(idx),statsData.refRSDupper95CI(idx));
-       txt4 = sprintf(' | <b>qcMissing :</b> %.0f%% | <b>sampleMissing :</b> %.0f%%',statsData.qcMissingPerc(idx),statsData.sampleMissingPerc(idx));
-       txt5 = sprintf('\n <b>%cRSD (95%%CI) :</b> %.2f%% (%.2f-%.2f)',916,statsData.meanDeltaCV(idx),statsData.lowerCI(idx),statsData.upperCI(idx));
+       txt3 = sprintf(' | <b>refRSD (95%%CI):</b> %.2f%% (%.2f-%.2f)',statsData.refRSD(idx),statsData.refRSDlower95CI(idx),statsData.refRSDupper95CI(idx));
+       txt4 = sprintf(' | <b>qcMissing:</b> %.0f%% | <b>sampleMissing:</b> %.0f%%',statsData.qcMissingPerc(idx),statsData.sampleMissingPerc(idx));
+       txt5 = sprintf('\n<b> %cRSD (95%%CI):</b> %.2f%% (%.2f-%.2f)',916,statsData.meanDeltaCV(idx),statsData.lowerCI(idx),statsData.upperCI(idx));
        
        if any(statsData.refRSD)
            labelvariable.Text = [txt0,txt1,txt3,txt2,txt4,txt5];
@@ -160,4 +163,18 @@ function MouseClick2(source,labelvariable)
        delete(source.Parent.Children(end).Children(1))
    end
     labelvariable.Visible ="off";
+end
+
+function MouseClickPooled(source,labelvariable,statsData)
+   
+       childObjects = findobj(source.Parent.Parent, 'UserData', -1);
+       delete(childObjects);
+
+       scatter(source.Parent,statsData.meanDeltaCV(2), 1, 200, 'k', 'o', 'UserData',-1,'LineWidth',1.5);
+       txt0 = sprintf('<b> Pooled Effect </b>');
+       txt5 = sprintf('\n<b> %cRSD (95%%CI):</b> %.2f%% (%.2f-%.2f)',916,statsData.meanDeltaCV(2),statsData.lowerCI(2),statsData.upperCI(2));
+           
+       labelvariable.Text = [txt0,txt5];
+       
+       labelvariable.Visible = true;
 end
