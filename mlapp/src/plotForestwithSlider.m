@@ -1,4 +1,4 @@
-function  plotForestwithSlider(fig,ax,ax2,textBox,ForestTable,window_size)
+function  plotForestwithSlider(fig,ax,ax2,textBox,ForestTable,window_size,sigCol,tt)
 
 cla(ax);
 cla(ax2);
@@ -26,8 +26,8 @@ minMarkerSize = 20;
 for i = 1:n_studies
     if ForestTable.cleanPeaks(i)
         if ForestTable.sig(i)
-            mfc = [1,0.24,0.24];
-            lc = [1,0.24,0.24];
+            mfc = sigCol;
+            lc = sigCol;
             mfa = 1;
         else
             mfc = [0,0.2,1];
@@ -81,7 +81,7 @@ Y_diamond = [1, 1.5, 1, 0.5, 1];
 fill(ax2,X_diamond, Y_diamond, 'k', 'FaceAlpha', 0, 'EdgeColor', 'k');
 hold(ax2,"on");
 if PoolTable.sig(2)
-    fill(ax2,X_diamondX, Y_diamond, 'r', 'FaceAlpha', 0.5, 'EdgeColor', 'k','ButtonDownFcn',@(src,event)MouseClickPooled(src,textBox,PoolTable));
+    fill(ax2,X_diamondX, Y_diamond, sigCol, 'FaceAlpha', 0.5, 'EdgeColor', 'k','ButtonDownFcn',@(src,event)MouseClickPooled(src,textBox,PoolTable));
 else
     fill(ax2,X_diamondX, Y_diamond, 'b', 'FaceAlpha', 0.5, 'EdgeColor', 'k','ButtonDownFcn',@(src,event)MouseClickPooled(src,textBox,PoolTable));
 end
@@ -95,7 +95,7 @@ yticklabels(ax2,PoolTable.UID(1));
 grid(ax2,'on');
 box(ax2,'on');
 ax2.PlotBoxAspectRatio = [20 1 1];
-title(ax2,'Unweighted Forest Plot');
+title(ax2,[tt,' : Unweighted Forest Plot']);
 
 ax2.InnerPosition(1) = ax.InnerPosition(1);
 ax2.InnerPosition(3) = ax.InnerPosition(3);
@@ -118,6 +118,7 @@ uicontrol('Parent', fig, ...
         'Callback', @(src, event) scroll_callback(src, ax, window_size));
 
 ax.ButtonDownFcn = @(src,event)MouseClick2(src,textBox);
+ax2.ButtonDownFcn = @(src,event)MouseClick2(src,textBox);
 
 end
 
@@ -159,10 +160,9 @@ function MouseClick(source,labelvariable,statsData)
 end
 
 function MouseClick2(source,labelvariable)
-    if source.Parent.Children(end).Children(1).UserData == -1
-       delete(source.Parent.Children(end).Children(1))
-   end
-    labelvariable.Visible ="off";
+        childObjects = findobj(source.Parent.Parent, 'UserData', -1);
+        delete(childObjects);
+        labelvariable.Visible ="off";
 end
 
 function MouseClickPooled(source,labelvariable,statsData)
