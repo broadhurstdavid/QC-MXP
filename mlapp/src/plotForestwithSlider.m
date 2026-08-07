@@ -64,7 +64,7 @@ xlim(ax,[xlim_lower, xlim_upper]);
 xlabel(ax,['Delta %RSD (After ',char(8211),' Before)']);
 ylabel(ax,'');
 yticks(ax,2:n_studies+1);
-yticklabels(ax,ForestTable.Name(1:end));
+yticklabels(ax,ForestTable.ShortName(1:end));
 set(ax, 'YDir', 'reverse'); % Invert Y-axis so Study 1 is at the top
 grid(ax,'on');
 box(ax,'on');
@@ -91,7 +91,7 @@ ax2.XTick = ax.XTick;
 ax2.XAxis.TickLength = [0 0];
 ylim(ax2,[0,2]);
 yticks(ax2,1);
-yticklabels(ax2,PoolTable.UID(1));
+yticklabels(ax2,PoolTable.ShortName(1));
 grid(ax2,'on');
 box(ax2,'on');
 ax2.PlotBoxAspectRatio = [20 1 1];
@@ -99,26 +99,28 @@ title(ax2,[tt,' : Unweighted Forest Plot']);
 
 ax2.InnerPosition(1) = ax.InnerPosition(1);
 ax2.InnerPosition(3) = ax.InnerPosition(3);
-
-
-min_y = 1;
-max_y = n_studies;
-slider_max = max_y - window_size + 1; 
-
-fc = slider_max/(window_size);
-
-uicontrol('Parent', fig, ...
-        'Style', 'slider', ...
-        'Units', 'pixels', ...
-        'Position', [15,120,25,460], ...
-        'Min', min_y, ...
-        'Max', slider_max, ...
-        'Value', slider_max, ...
-        'SliderStep', [.1, fc], ...
-        'Callback', @(src, event) scroll_callback(src, ax, window_size));
-
 ax.ButtonDownFcn = @(src,event)MouseClick2(src,textBox);
 ax2.ButtonDownFcn = @(src,event)MouseClick2(src,textBox);
+
+
+if window_size <= n_studies
+    min_y = 1;
+    max_y = n_studies;
+    slider_max = max_y - window_size + 1; 
+    
+    fc = slider_max/(window_size);
+    
+    uicontrol('Parent', fig, ...
+            'Style', 'slider', ...
+            'Units', 'pixels', ...
+            'Position', [15,120,25,460], ...
+            'Min', min_y, ...
+            'Max', slider_max, ...
+            'Value', slider_max, ...
+            'SliderStep', [.1, fc], ...
+            'Callback', @(src, event) scroll_callback(src, ax, window_size));
+end
+    
 
 end
 
