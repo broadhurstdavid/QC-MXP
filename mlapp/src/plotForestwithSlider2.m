@@ -1,10 +1,11 @@
-function  plotForestwithSlider(fig,ax,ax2,textBox,ForestTable,window_size,sigCol,tt)
+function  plotForestwithSlider2(fig,ax,ax2,textBox,ForestTable,order,window_size,sigCol,tt)
 
-cla(ax);
-cla(ax2);
+%cla(ax);
+%cla(ax2);
 linkaxes([ax,ax2],'x');
 PoolTable = ForestTable(1:2,:);
 ForestTable = ForestTable(3:end,:);
+ForestTable = ForestTable(order,:);
 
 xlim_upper = 80;
 xlim_lower = -10;
@@ -22,40 +23,102 @@ hold(ax,"on");
 maxMarkerSize = 400;
 minMarkerSize = 20;
 
-% Plot Individual Study CIs and Effects ---
-for i = 1:n_studies
-    if ForestTable.cleanPeaks(i)
-        if ForestTable.sig(i)
-            mfc = sigCol;
-            lc = sigCol;
-            mfa = 1;
-        else
-            mfc = [0,0.2,1];
-            lc = [0,0.2,1];
-            mfa = 1;
-        end
-    else
-        mfc = [0,0,0];
-        lc = [0,0,0,0.1];
-        mfa = 0.2;
-    end
-    % Plot confidence interval lines
-    plot(ax,[ForestTable.lowerCI(i), ForestTable.upperCI(i)], [i+1, i+1], '-', 'Color', lc, 'LineWidth', 1.5);
-    % Plot point estimates
-    ms = minMarkerSize + (ForestTable.cvA(i) * (maxMarkerSize - minMarkerSize)) / 100;
-    %plot(ax,ForestTable.meanDeltaCV(i), i+1, 's', 'Color', mfc,'MarkerFaceColor', mfc, 'MarkerSize', ms);
-    f = scatter(ax,ForestTable.meanDeltaCV(i), i+1, ms, 's', 'Color', mfc,'MarkerFaceColor', mfc, 'MarkerEdgeColor',mfc, 'MarkerEdgeAlpha', mfa, 'MarkerFaceAlpha', mfa,'ButtonDownFcn',@(src,event)MouseClick(src,textBox,ForestTable));
-    % Plot outside limits
-    if ForestTable.upperCI(i) > xlim_upper
-        %plot(ax,xlim_upper, i+1, '>', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerSize', 6);
-        scatter(ax,xlim_upper, i+1, 40, '>', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerEdgeColor',mfc,'MarkerEdgeAlpha', mfa, 'MarkerFaceAlpha', mfa);
-    end
-    if ForestTable.lowerCI(i) < xlim_lower
-        %plot(ax,xlim_lower, i+1, '<', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerSize', 6);
-        scatter(ax,xlim_lower, i+1, 40, '<', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerEdgeColor',mfc, 'MarkerEdgeAlpha', mfa, 'MarkerFaceAlpha', mfa);
-    end
+colCode = ForestTable.cleanPeaks+ForestTable.sig*10;
 
+keys = [0, 1, 10, 11];
+valuesMFC = {[0,0,0], [0,0.2,1], [0,0,0], sigCol}; % black, blue, sigCol
+valuesLC = {[0,0,0,0.1], [0,0.2,1,1], [0,0,0,0.1], [sigCol,1]}; % black, blue, sigCol
+valuesMFA = {0.2, 1, 0.2, 1}; % black, blue, sigCol
+
+mfcMap = dictionary(keys, valuesMFC);
+lcMap = dictionary(keys, valuesLC);
+mfaMap = dictionary(keys, valuesMFA);
+
+mfc = cell2mat(mfcMap(colCode));
+lc = cell2mat(lcMap(colCode));
+mfa = cell2mat(mfaMap(colCode));
+
+ylinedata = [2:n_studies+1;2:n_studies+1];
+xlinedata = [ForestTable.lowerCI, ForestTable.upperCI]';
+for i = 1:4
+    keep = colCode == keys(i);
+    if any(keep)
+        tempx = xlinedata(:,keep);
+        tempy = ylinedata(:,keep);
+        plot(ax,tempx, tempy, '-', 'Color',valuesLC{i}, 'LineWidth', 1.5);
+        keep = tempx(2,:) > xlim_upper;
+        if any(keep)
+            %plot(ax,xlim_upper, tempy(1,keep), '>', 'Color',valuesLC{i}, 'LineWidth', 1.5);
+            % a = scatter(ax,xlim_upper, tempy(1,keep),50,valuesMFC{i},'filled','>');
+            % a.AlphaDataMapping = "none";
+            % a.MarkerFaceColor = 'flat';
+            % a.AlphaData = 0.2;
+            % a.MarkerFaceAlpha = 'flat';
+            scatter(ax,xlim_upper, tempy(1,keep),50,valuesMFC{i},'filled','>','AlphaDataMapping','none','AlphaData',0.2,'MarkerFaceAlpha','flat','MarkerFaceColor','flat');
+        end
+        keep = tempx(1,:) < xlim_lower;
+        if any(keep)
+            %plot(ax,xlim_lower, tempy(1,keep), '<', 'Color',valuesLC{i}, 'LineWidth', 1.5);
+            % b = scatter(ax,xlim_lower, tempy(1,keep),50,valuesMFC{i},'filled','<');
+            % b.AlphaDataMapping = "none";
+            % b.MarkerFaceColor = 'flat';
+            % b.AlphaData = 0.2;
+            % b.MarkerFaceAlpha = 'flat';
+            scatter(ax,xlim_lower, tempy(1,keep),50,valuesMFC{i},'filled','<','AlphaDataMapping','none','AlphaData',0.2,'MarkerFaceAlpha','flat','MarkerFaceColor','flat');
+        end
+    end
 end
+
+%plot(ax,[ForestTable.lowerCI, ForestTable.upperCI]', temp, '-', 'Color', 'k', 'LineWidth', 1.5);
+ms = minMarkerSize + (ForestTable.cvA * (maxMarkerSize - minMarkerSize)) / 100;
+s = scatter(ax,ForestTable.meanDeltaCV, 2:n_studies+1, ms, 's','ButtonDownFcn',@(src,event)MouseClick(src,event,textBox,ForestTable));
+% s.MarkerEdgeColor = 'flat';
+s.MarkerFaceColor = 'flat';
+s.CData = mfc;
+%s.AlphaData = mfa;
+s.AlphaDataMapping = "none";
+alpha(s,mfa);
+%s.MarkerFaceAlpha ="flat";
+%s.MarkerEdgeAlpha ="flat";
+
+
+
+
+
+% % Plot Individual Study CIs and Effects ---
+% for i = 1:n_studies
+%     if ForestTable.cleanPeaks(i)
+%         if ForestTable.sig(i)
+%             mfc = sigCol;
+%             lc = sigCol;
+%             mfa = 1;
+%         else
+%             mfc = [0,0.2,1];
+%             lc = [0,0.2,1];
+%             mfa = 1;
+%         end
+%     else
+%         mfc = [0,0,0];
+%         lc = [0,0,0,0.1];
+%         mfa = 0.2;
+%     end
+%     % Plot confidence interval lines
+%     plot(ax,[ForestTable.lowerCI(i), ForestTable.upperCI(i)], [i+1, i+1], '-', 'Color', lc, 'LineWidth', 1.5);
+%     % Plot point estimates
+%     ms = minMarkerSize + (ForestTable.cvA(i) * (maxMarkerSize - minMarkerSize)) / 100;
+%     %plot(ax,ForestTable.meanDeltaCV(i), i+1, 's', 'Color', mfc,'MarkerFaceColor', mfc, 'MarkerSize', ms);
+%     f = scatter(ax,ForestTable.meanDeltaCV(i), i+1, ms, 's', 'Color', mfc,'MarkerFaceColor', mfc, 'MarkerEdgeColor',mfc, 'MarkerEdgeAlpha', mfa, 'MarkerFaceAlpha', mfa,'ButtonDownFcn',@(src,event)MouseClick(src,textBox,ForestTable));
+%     % Plot outside limits
+%     if ForestTable.upperCI(i) > xlim_upper
+%         %plot(ax,xlim_upper, i+1, '>', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerSize', 6);
+%         scatter(ax,xlim_upper, i+1, 40, '>', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerEdgeColor',mfc,'MarkerEdgeAlpha', mfa, 'MarkerFaceAlpha', mfa);
+%     end
+%     if ForestTable.lowerCI(i) < xlim_lower
+%         %plot(ax,xlim_lower, i+1, '<', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerSize', 6);
+%         scatter(ax,xlim_lower, i+1, 40, '<', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerEdgeColor',mfc, 'MarkerEdgeAlpha', mfa, 'MarkerFaceAlpha', mfa);
+%     end
+% 
+% end
 
 % Plot formatting ---
 ylim(ax, [1, 1 + window_size]);
@@ -121,7 +184,8 @@ if window_size <= n_studies
             'Callback', @(src, event) scroll_callback(src, ax, window_size));
 end
     
-
+hold(ax,"off");
+hold(ax2,"on");
 end
 
 function scroll_callback(slider_handle, target_axes, window_size)
@@ -130,7 +194,7 @@ function scroll_callback(slider_handle, target_axes, window_size)
     ylim(target_axes, [start_y, start_y + window_size+1]);
 end
 
-function MouseClick(source,labelvariable,statsData)
+function MouseClick(source,event,labelvariable,statsData)
        % if source.Parent.Children(1).UserData == -1
        %     delete(source.Parent.Children(1))
        % end
@@ -138,8 +202,9 @@ function MouseClick(source,labelvariable,statsData)
        childObjects = findobj(source.Parent.Parent, 'UserData', -1);
        delete(childObjects);
 
-       idx = source.YData-1;
-       scatter(source.Parent,statsData.meanDeltaCV(idx), idx+1, source.SizeData + 80, 'k', 'o', 'UserData',-1,'LineWidth',1.5);
+       idx = event.IntersectionPoint(2)-1;
+       %idx = source.YData-1;
+       scatter(source.Parent,statsData.meanDeltaCV(idx), idx+1, source.SizeData(idx) + 80, 'k', 'o', 'UserData',-1,'LineWidth',1.5);
        txt0 = sprintf('<b> SampleID:</b> %s: %s',statsData.UID{idx},statsData.Name{idx});
        txt1 = sprintf('\n<b> qcRSD (95%%CI):</b> %.2f%% (%.2f-%.2f) | <b>sampleRSD (95%%CI):</b> %.2f%% (%.2f-%.2f)', ...
        statsData.qcRSD(idx),statsData.qcRSDlower95CI(idx),statsData.qcRSDupper95CI(idx), ...

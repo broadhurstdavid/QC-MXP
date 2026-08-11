@@ -1,4 +1,4 @@
-function [meanDeltaCV,upperbound,lowerbound,cvB,cvA,sig] = bootstrapDeltaCVconfidenceInterval(exptBefore,exptAfter,alpha,islog)
+function [meanDeltaCV,upperbound,lowerbound,cvB,cvA,sig] = bootstrapDeltaCVconfidenceInterval(exptBefore,exptAfter,alpha,islog,bootNum)
 
 % Combine into a single matrix
 raw_matrix = [exptBefore,exptAfter];
@@ -16,7 +16,7 @@ cv_diff_func = @(data) (CVci(data(:,1),islog) - CVci(data(:,2),islog));
 %cv_diff_func = @(data) (std(data(:,2),0)/mean(data(:,2))) - (std(data(:,1),0)/mean(data(:,1)));
 
 % Run built-in bootstrap on clean rows
-[ci,bootstat] = bootci(1000, {cv_diff_func, cleaned_matrix}, 'Alpha', alpha, 'Type', 'per');
+[ci,bootstat] = bootci(bootNum, {cv_diff_func, cleaned_matrix}, 'Alpha', alpha, 'Type', 'per');
 
 meanDeltaCV = mean(bootstat);
 upperbound = ci(2);

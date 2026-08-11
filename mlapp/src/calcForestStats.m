@@ -1,4 +1,4 @@
-function ForestStatsTable = calcForestStats(Features,BeforeDataTable,AfterDataTable,type,alpha,islog)
+function ForestStatsTable = calcForestStats(Features,BeforeDataTable,AfterDataTable,type,alpha,islog,bootNum)
 
 includeB = logical(BeforeDataTable.(type));
 includeA = logical(AfterDataTable.(type));
@@ -9,16 +9,20 @@ end
 
 n = height(Features);
 RES = zeros(n,6);
-for i = 1:n    
-    before = BeforeDataTable{includeB,Features.UID(i)};
-    after = AfterDataTable{includeA,Features.UID(i)};
-    [meanDeltaCV,upperbound,lowerbound,cvB,cvA,sig] = bootstrapDeltaCVconfidenceInterval(before,after,alpha,islog);
-    RES(i,1) = meanDeltaCV*100;
-    RES(i,2) = lowerbound*100;
-    RES(i,3) = upperbound*100;
-    RES(i,4) = cvB*100;
-    RES(i,5) = cvA*100;
-    RES(i,6) = sig;
+try
+    for i = 1:n    
+        before = BeforeDataTable{includeB,Features.UID(i)};
+        after = AfterDataTable{includeA,Features.UID(i)};
+        [meanDeltaCV,upperbound,lowerbound,cvB,cvA,sig] = bootstrapDeltaCVconfidenceInterval(before,after,alpha,islog,bootNum);
+        RES(i,1) = meanDeltaCV*100;
+        RES(i,2) = lowerbound*100;
+        RES(i,3) = upperbound*100;
+        RES(i,4) = cvB*100;
+        RES(i,5) = cvA*100;
+        RES(i,6) = sig;
+    end
+catch
+    error = i;
 end
 
 keep = Features.cleanPeaks;
