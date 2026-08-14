@@ -9,6 +9,8 @@ ForestTable = ForestTable(order,:);
 
 xlim_upper = 80;
 xlim_lower = -10;
+hold(ax2,"off");
+hold(ax,"off");
 
 
 n_studies = height(ForestTable);
@@ -23,7 +25,15 @@ hold(ax,"on");
 maxMarkerSize = 400;
 minMarkerSize = 20;
 
-colCode = ForestTable.cleanPeaks+ForestTable.sig*10;
+if ismember('cleanPeaks', ForestTable.Properties.VariableNames)
+    colCode = ForestTable.cleanPeaks+ForestTable.sig*10;
+else
+    temp = ones(height(ForestTable),1);
+    colCode = temp+ForestTable.sig*10;   
+end
+
+
+
 
 keys = [0, 1, 10, 11];
 valuesMFC = {[0,0,0], [0,0.2,1], [0,0,0], sigCol}; % black, blue, sigCol
@@ -154,7 +164,7 @@ ax2.XTick = ax.XTick;
 ax2.XAxis.TickLength = [0 0];
 ylim(ax2,[0,2]);
 yticks(ax2,1);
-yticklabels(ax2,PoolTable.ShortName(1));
+yticklabels(ax2,'Pooled Effect');
 grid(ax2,'on');
 box(ax2,'on');
 ax2.PlotBoxAspectRatio = [20 1 1];
@@ -170,22 +180,23 @@ if window_size <= n_studies
     min_y = 1;
     max_y = n_studies;
     slider_max = max_y - window_size + 1; 
+    sliderstep = [(window_size+1)/n_studies, (window_size+1)/n_studies];
     
     fc = slider_max/(window_size);
     
-    uicontrol('Parent', fig, ...
+    a = uicontrol('Parent', fig, ...
             'Style', 'slider', ...
             'Units', 'pixels', ...
             'Position', [15,120,25,460], ...
             'Min', min_y, ...
             'Max', slider_max, ...
-            'Value', slider_max, ...
-            'SliderStep', [.1, fc], ...
+            'Value', slider_max, ...  
+            'SliderStep', sliderstep, ...
             'Callback', @(src, event) scroll_callback(src, ax, window_size));
 end
-    
+%'SliderStep', [1, window_size], ...   
 hold(ax,"off");
-hold(ax2,"on");
+hold(ax2,"off");
 end
 
 function scroll_callback(slider_handle, target_axes, window_size)
@@ -204,7 +215,9 @@ function MouseClick(source,event,labelvariable,statsData)
 
        idx = event.IntersectionPoint(2)-1;
        %idx = source.YData-1;
+       hold(source.Parent,"on");
        scatter(source.Parent,statsData.meanDeltaCV(idx), idx+1, source.SizeData(idx) + 80, 'k', 'o', 'UserData',-1,'LineWidth',1.5);
+       hold(source.Parent,"off");
        txt0 = sprintf('<b> SampleID:</b> %s: %s',statsData.UID{idx},statsData.Name{idx});
        txt1 = sprintf('\n<b> qcRSD (95%%CI):</b> %.2f%% (%.2f-%.2f) | <b>sampleRSD (95%%CI):</b> %.2f%% (%.2f-%.2f)', ...
        statsData.qcRSD(idx),statsData.qcRSDlower95CI(idx),statsData.qcRSDupper95CI(idx), ...
@@ -237,7 +250,9 @@ function MouseClickPooled(source,labelvariable,statsData)
        childObjects = findobj(source.Parent.Parent, 'UserData', -1);
        delete(childObjects);
 
+       hold(source.Parent,"on");
        scatter(source.Parent,statsData.meanDeltaCV(2), 1, 200, 'k', 'o', 'UserData',-1,'LineWidth',1.5);
+       hold(source.Parent,"off");
        txt0 = sprintf('<b> Pooled Effect </b>');
        txt5 = sprintf('\n<b> %cRSD (95%%CI):</b> %.2f%% (%.2f-%.2f)',916,statsData.meanDeltaCV(2),statsData.lowerCI(2),statsData.upperCI(2));
            

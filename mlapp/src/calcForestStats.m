@@ -25,16 +25,9 @@ catch
     error = i;
 end
 
-keep = Features.cleanPeaks;
 pooled_estimate = mean(RES(:,1));
 sd_effects = std(RES(:,1)); 
 pooled_SE = sd_effects / sqrt(n);
-
-
-pooled_estimateX = mean(RES(keep,1));
-sd_effectsX = std(RES(keep,1)); 
-nX = sum(keep);
-pooled_SEX = sd_effectsX / sqrt(nX);
 
 % Calculate Confidence Interval for the diamond (using t-distribution)
 
@@ -42,33 +35,55 @@ t_crit = tinv(1 - alpha/2, n - 1);
 diamond_lower = pooled_estimate - (t_crit * pooled_SE);
 diamond_upper = pooled_estimate + (t_crit * pooled_SE);
 
-t_critX = tinv(1 - alpha/2, nX - 1);
-diamond_lowerX = pooled_estimateX - (t_critX * pooled_SEX);
-diamond_upperX = pooled_estimateX + (t_critX * pooled_SEX);
-
 if diamond_lower > 0
     sig_p = true;
 else
     sig_p = false;
 end
 
-if diamond_lowerX > 0
-    sig_pX = true;
+if ismember('cleanPeaks', Features.Properties.VariableNames)
+    keep = Features.cleanPeaks;
+    pooled_estimateX = mean(RES(keep,1));
+    sd_effectsX = std(RES(keep,1)); 
+    nX = sum(keep);
+    pooled_SEX = sd_effectsX / sqrt(nX);
+
+    t_critX = tinv(1 - alpha/2, nX - 1);
+    diamond_lowerX = pooled_estimateX - (t_critX * pooled_SEX);
+    diamond_upperX = pooled_estimateX + (t_critX * pooled_SEX);
+
+    if diamond_lowerX > 0
+        sig_pX = true;
+    else
+        sig_pX = false;
+    end
 else
-    sig_pX = false;
+    pooled_estimateX = pooled_estimate;
+    diamond_lowerX = diamond_lower;
+    diamond_upperX = diamond_upper;  
+    sig_pX = sig_p;
 end
 
 
-ForestStatsTable = Features(:,{'UID','Name','ShortName','cleanPeaks','qcRSD','qcRSDlower95CI','qcRSDupper95CI','refRSD','refRSDlower95CI','refRSDupper95CI','sampleRSD','sampleRSDlower95CI','sampleRSDupper95CI','dRatio','blankRatio','qcMissingPerc','sampleMissingPerc'});
-
 Table = array2table(RES,'VariableNames',{'meanDeltaCV','lowerCI','upperCI','cvB','cvA','sig'});  
 
-ForestStatsTable = [ForestStatsTable,Table];
+ForestStatsTable = [Features,Table];
 
-oneRowTable = {{"PE"},{"PooledEffect"},{"PooledEffect"},false,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,pooled_estimate,diamond_lower,diamond_upper,NaN,NaN,sig_p};
-twoRowTable = {{"PE"},{"PooledEffect"},{"PooledEffect"},false,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,pooled_estimateX,diamond_lowerX,diamond_upperX,NaN,NaN,sig_pX};
+varNames = ForestStatsTable.Properties.VariableNames;
+varTypes = ForestStatsTable.Properties.VariableTypes;
+sz = [2, numel(varNames)];
 
-ForestStatsTable = [oneRowTable; twoRowTable; ForestStatsTable];
+SubTable = table('Size', sz,'VariableTypes', varTypes,'VariableNames', varNames);
+t = ismember(varTypes,'cell');
+SubTable(:,t) = repmat({'x'},2,sum(t));
+
+SubTable.meanDeltaCV = [pooled_estimate;pooled_estimateX];
+SubTable.lowerCI = [diamond_lower;diamond_lowerX];
+SubTable.upperCI = [diamond_upper;diamond_upperX];
+SubTable.sig = [sig_p;sig_pX];
+SubTable.Name = {'Before';'After'};
+
+ForestStatsTable = [SubTable; ForestStatsTable];
 
 ForestStatsTable.sig = logical(ForestStatsTable.sig);
 
