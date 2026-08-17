@@ -1,4 +1,4 @@
-function  plotForestwithSlider2(fig,ax,ax2,textBox,ForestTable,order,window_size,sigCol,tt)
+function  plotForestwithSlider2(fig,ax,ax2,textBox,ForestTable,order,window_size,plotType)
 
 %cla(ax);
 %cla(ax2);
@@ -11,6 +11,16 @@ xlim_upper = 80;
 xlim_lower = -10;
 hold(ax2,"off");
 hold(ax,"off");
+
+switch plotType
+    case 'QC'
+        sigCol = [0.85,0.1,0.1];
+        tt = 'qcRSD';
+    case 'REF'
+        sigCol = [0.83,0.67,0.21];
+        tt = 'referenceRSD';
+end
+
 
 
 n_studies = height(ForestTable);
@@ -58,22 +68,10 @@ for i = 1:4
         plot(ax,tempx, tempy, '-', 'Color',valuesLC{i}, 'LineWidth', 1.5);
         keep = tempx(2,:) > xlim_upper;
         if any(keep)
-            %plot(ax,xlim_upper, tempy(1,keep), '>', 'Color',valuesLC{i}, 'LineWidth', 1.5);
-            % a = scatter(ax,xlim_upper, tempy(1,keep),50,valuesMFC{i},'filled','>');
-            % a.AlphaDataMapping = "none";
-            % a.MarkerFaceColor = 'flat';
-            % a.AlphaData = 0.2;
-            % a.MarkerFaceAlpha = 'flat';
             scatter(ax,xlim_upper, tempy(1,keep),50,valuesMFC{i},'filled','>','AlphaDataMapping','none','AlphaData',0.2,'MarkerFaceAlpha','flat','MarkerFaceColor','flat');
         end
         keep = tempx(1,:) < xlim_lower;
         if any(keep)
-            %plot(ax,xlim_lower, tempy(1,keep), '<', 'Color',valuesLC{i}, 'LineWidth', 1.5);
-            % b = scatter(ax,xlim_lower, tempy(1,keep),50,valuesMFC{i},'filled','<');
-            % b.AlphaDataMapping = "none";
-            % b.MarkerFaceColor = 'flat';
-            % b.AlphaData = 0.2;
-            % b.MarkerFaceAlpha = 'flat';
             scatter(ax,xlim_lower, tempy(1,keep),50,valuesMFC{i},'filled','<','AlphaDataMapping','none','AlphaData',0.2,'MarkerFaceAlpha','flat','MarkerFaceColor','flat');
         end
     end
@@ -81,54 +79,12 @@ end
 
 %plot(ax,[ForestTable.lowerCI, ForestTable.upperCI]', temp, '-', 'Color', 'k', 'LineWidth', 1.5);
 ms = minMarkerSize + (ForestTable.cvA * (maxMarkerSize - minMarkerSize)) / 100;
-s = scatter(ax,ForestTable.meanDeltaCV, 2:n_studies+1, ms, 's','ButtonDownFcn',@(src,event)MouseClick(src,event,textBox,ForestTable));
-% s.MarkerEdgeColor = 'flat';
-s.MarkerFaceColor = 'flat';
-s.CData = mfc;
-%s.AlphaData = mfa;
-s.AlphaDataMapping = "none";
+s = scatter(ax,ForestTable.meanDeltaCV, 2:n_studies+1, ms, 's','MarkerFaceColor','flat','AlphaDataMapping','none','CData',mfc,'ButtonDownFcn',@(src,event)MouseClick(src,event,textBox,ForestTable));
+% s = scatter(ax,ForestTable.meanDeltaCV, 2:n_studies+1, ms, 's','ButtonDownFcn',@(src,event)MouseClick(src,event,textBox,ForestTable));
+% s.MarkerFaceColor = 'flat';
+% s.CData = mfc;
+% s.AlphaDataMapping = "none";
 alpha(s,mfa);
-%s.MarkerFaceAlpha ="flat";
-%s.MarkerEdgeAlpha ="flat";
-
-
-
-
-
-% % Plot Individual Study CIs and Effects ---
-% for i = 1:n_studies
-%     if ForestTable.cleanPeaks(i)
-%         if ForestTable.sig(i)
-%             mfc = sigCol;
-%             lc = sigCol;
-%             mfa = 1;
-%         else
-%             mfc = [0,0.2,1];
-%             lc = [0,0.2,1];
-%             mfa = 1;
-%         end
-%     else
-%         mfc = [0,0,0];
-%         lc = [0,0,0,0.1];
-%         mfa = 0.2;
-%     end
-%     % Plot confidence interval lines
-%     plot(ax,[ForestTable.lowerCI(i), ForestTable.upperCI(i)], [i+1, i+1], '-', 'Color', lc, 'LineWidth', 1.5);
-%     % Plot point estimates
-%     ms = minMarkerSize + (ForestTable.cvA(i) * (maxMarkerSize - minMarkerSize)) / 100;
-%     %plot(ax,ForestTable.meanDeltaCV(i), i+1, 's', 'Color', mfc,'MarkerFaceColor', mfc, 'MarkerSize', ms);
-%     f = scatter(ax,ForestTable.meanDeltaCV(i), i+1, ms, 's', 'Color', mfc,'MarkerFaceColor', mfc, 'MarkerEdgeColor',mfc, 'MarkerEdgeAlpha', mfa, 'MarkerFaceAlpha', mfa,'ButtonDownFcn',@(src,event)MouseClick(src,textBox,ForestTable));
-%     % Plot outside limits
-%     if ForestTable.upperCI(i) > xlim_upper
-%         %plot(ax,xlim_upper, i+1, '>', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerSize', 6);
-%         scatter(ax,xlim_upper, i+1, 40, '>', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerEdgeColor',mfc,'MarkerEdgeAlpha', mfa, 'MarkerFaceAlpha', mfa);
-%     end
-%     if ForestTable.lowerCI(i) < xlim_lower
-%         %plot(ax,xlim_lower, i+1, '<', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerSize', 6);
-%         scatter(ax,xlim_lower, i+1, 40, '<', 'Color', mfc, 'MarkerFaceColor', mfc, 'MarkerEdgeColor',mfc, 'MarkerEdgeAlpha', mfa, 'MarkerFaceAlpha', mfa);
-%     end
-% 
-% end
 
 % Plot formatting ---
 ylim(ax, [1, 1 + window_size]);
@@ -138,6 +94,7 @@ xlabel(ax,['Delta %RSD (After ',char(8211),' Before)']);
 ylabel(ax,'');
 yticks(ax,2:n_studies+1);
 yticklabels(ax,ForestTable.ShortName(1:end));
+ax.YAxis.FontSize = 8;
 set(ax, 'YDir', 'reverse'); % Invert Y-axis so Study 1 is at the top
 grid(ax,'on');
 box(ax,'on');
@@ -153,11 +110,13 @@ Y_diamond = [1, 1.5, 1, 0.5, 1];
 % Draw the diamond
 fill(ax2,X_diamond, Y_diamond, 'k', 'FaceAlpha', 0, 'EdgeColor', 'k');
 hold(ax2,"on");
+plot(ax2,[line_of_no_effect, line_of_no_effect], [0, 2], 'k--', 'LineWidth', 1.5);
 if PoolTable.sig(2)
     fill(ax2,X_diamondX, Y_diamond, sigCol, 'FaceAlpha', 0.5, 'EdgeColor', 'k','ButtonDownFcn',@(src,event)MouseClickPooled(src,textBox,PoolTable));
 else
-    fill(ax2,X_diamondX, Y_diamond, 'b', 'FaceAlpha', 0.5, 'EdgeColor', 'k','ButtonDownFcn',@(src,event)MouseClickPooled(src,textBox,PoolTable));
+    fill(ax2,X_diamondX, Y_diamond, [0,0.2,1], 'FaceAlpha', 0.5, 'EdgeColor', 'k','ButtonDownFcn',@(src,event)MouseClickPooled(src,textBox,PoolTable));
 end
+
 
 xlim(ax2,[xlim_lower, xlim_upper]);
 ax2.XTick = ax.XTick;
@@ -236,6 +195,18 @@ function MouseClick(source,event,labelvariable,statsData)
        else
            labelvariable.Text = [txt0,txt1,txt2,txt4,txt5];
        end
+       switch source.CData(idx,2)
+           case 0
+               labelvariable.BackgroundColor = [0.9,0.9,0.9];
+           case 0.2
+               labelvariable.BackgroundColor = [124, 139, 245]/255; %blue
+           case 0.1
+               labelvariable.BackgroundColor = [252, 164, 168]/255; %red
+           case 0.67
+               labelvariable.BackgroundColor = [237, 214, 138]/255; %yellow
+       end
+
+
        labelvariable.Visible = true;
 end
 
@@ -257,6 +228,15 @@ function MouseClickPooled(source,labelvariable,statsData)
        txt5 = sprintf('\n<b> %cRSD (95%%CI):</b> %.2f%% (%.2f-%.2f)',916,statsData.meanDeltaCV(2),statsData.lowerCI(2),statsData.upperCI(2));
            
        labelvariable.Text = [txt0,txt5];
+
+       switch source.FaceColor(2)
+           case 0.1
+               labelvariable.BackgroundColor = [252, 164, 168]/255; %red
+           case 0.67
+               labelvariable.BackgroundColor = [237, 214, 138]/255; %yellow
+           otherwise
+               labelvariable.BackgroundColor = [124, 139, 245]/255; %blue
+       end
        
        labelvariable.Visible = true;
 end
