@@ -151,14 +151,17 @@ if window_size <= n_studies
             'Max', slider_max, ...
             'Value', slider_max, ...  
             'SliderStep', sliderstep, ...
-            'Callback', @(src, event) scroll_callback(src, ax, window_size));
+            'Callback', @(src, event) scroll_callback(src, ax, window_size, textBox));
 end
 %'SliderStep', [1, window_size], ...   
 hold(ax,"off");
 hold(ax2,"off");
 end
 
-function scroll_callback(slider_handle, target_axes, window_size)
+function scroll_callback(slider_handle, target_axes, window_size, labelvariable)
+    childObjects = findobj(slider_handle.Parent.Parent, 'UserData', -1);
+    delete(childObjects);
+    labelvariable.Visible ="off";
     start_y = get(slider_handle, 'Max') - get(slider_handle, 'Value') + 1;
     %ylim(target_axes, [start_y, start_y + window_size]);
     ylim(target_axes, [start_y, start_y + window_size+1]);
@@ -172,7 +175,7 @@ function MouseClick(source,event,labelvariable,statsData)
        childObjects = findobj(source.Parent.Parent, 'UserData', -1);
        delete(childObjects);
 
-       idx = event.IntersectionPoint(2)-1;
+       idx = int32(round(event.IntersectionPoint(2)-1));
        %idx = source.YData-1;
        hold(source.Parent,"on");
        scatter(source.Parent,statsData.meanDeltaCV(idx), idx+1, source.SizeData(idx) + 80, 'k', 'o', 'UserData',-1,'LineWidth',1.5);

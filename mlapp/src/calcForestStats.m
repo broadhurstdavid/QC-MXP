@@ -9,11 +9,20 @@ end
 
 n = height(Features);
 RES = zeros(n,6);
-try
+
     for i = 1:n    
         before = BeforeDataTable{includeB,Features.UID(i)};
         after = AfterDataTable{includeA,Features.UID(i)};
-        [meanDeltaCV,upperbound,lowerbound,cvB,cvA,sig] = bootstrapDeltaCVconfidenceInterval(before,after,alpha,islog,bootNum);
+        try
+            [meanDeltaCV,upperbound,lowerbound,cvB,cvA,sig] = bootstrapDeltaCVconfidenceInterval(before,after,alpha,islog,bootNum);
+        catch
+            meanDeltaCV = NaN;
+            upperbound = NaN;
+            lowerbound = NaN;
+            cvB = NaN;
+            cvA = NaN;
+            sig = false;
+        end
         RES(i,1) = meanDeltaCV*100;
         RES(i,2) = lowerbound*100;
         RES(i,3) = upperbound*100;
@@ -21,9 +30,7 @@ try
         RES(i,5) = cvA*100;
         RES(i,6) = sig;
     end
-catch
-    error = i;
-end
+
 
 pooled_estimate = mean(RES(:,1));
 sd_effects = std(RES(:,1)); 
@@ -41,7 +48,7 @@ else
     sig_p = false;
 end
 
-if ismember('cleanPeaks', Features.Properties.VariableNames)
+if ~all(Features.cleanPeaks)
     keep = Features.cleanPeaks;
     pooled_estimateX = mean(RES(keep,1));
     sd_effectsX = std(RES(keep,1)); 
