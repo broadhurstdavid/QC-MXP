@@ -28,11 +28,12 @@ QC:MXP is FREE and you do not need to have Matlab preinstalled to use it. It is 
 7. [Batch Explorer - examine the effects of both the within-batch and between-batch correction](#batch-explorer)
 8. [Correct the whole data set](#correct-the-whole-data-set)
 9. [Data Cleaning & Exploration](#data-cleaning--exploration)
-10. [Configuration File](#configuration-file)
-11. [TUTORIAL VIDEO](#tutorial-video)
-12. [CHEAT SHEET](#cheat-sheet)
-13. [How to Download & Install QCMXP](#how-to-download--install-qcmxp)
-14. [Source Code](#source-code)
+10. [Forest Plot](#forest-plot)
+11. [Configuration File](#configuration-file)
+12. [TUTORIAL VIDEO](#tutorial-video)
+13. [CHEAT SHEET](#cheat-sheet)
+14. [How to Download & Install QCMXP](#how-to-download--install-qcmxp)
+15. [Source Code](#source-code)
 
 ## Introduction
 This standalone application is written specifically for the metabolomics community (but is applicable to any quantitative, or relative quantitative, multi-analyte assay that uses repeat-injection reference samples to assess repeatability). It is a long overdue companion app to the publication ["Guidelines and considerations for the use of system suitability and quality control samples in mass spectrometry assays applied in untargeted clinical metabolomic studies" Metabolomics 14, 72 (2018)](https://link.springer.com/article/10.1007/s11306-018-1367-3). It can be used as an educational tool to explore the process of within-batch and between-batch correction based on repeat-injection reference samples (e.g. pooled quality control samples); however, it is designed primarily to be used as a practical tool for real world problems. It has been written as a standalone application (Mac OS, Windows 10, & Windows 11) rather than as a set of command line R or Python packages, because I wanted it to be user friendly, placing all of the cognitive load on understanding the underlying concepts, providing process transparency, and creating a highly visual interactive exploration of the data, rather than placing the majority of the cognitive load on programming skills and often frustratingly installing package dependencies. As you can see from the screenshot there are many options, which may seem daunting. However, foundational knowledge is scaffolded through interactive *Explorer* windows, and extensive beta testing has suggested that the learning curve is shallow. That said, it is worth noting that the process of batch correction, quality control, and data cleaning is non-trivial and requires some thought, education, and project-specific investigation.
@@ -110,6 +111,11 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 <br />
 <br />
 ![Batch Explorer](res/ScreenshotExploring.png)
+## Forest Plot
+As part of the Data cleaning & exploration tools, the Forest Plot provides a meta analysis of QC batch correction performance. The change in %RSD (detaRSD)for each feature is presented with 95% confidence intervals (calculated using bootstrap resampling), together with the pooled effect across all features (with 95% CI). The size of each square reflects the final %RSD value. Those features colored red are significantly improved. 
+<br />
+<br />
+
 ## Configuration File
 The QC:MXP app is built around a user/project configuration object. The default generic configuration is established automatically. Once user data is uploaded the configuration switches to project mode. Every completed project will have an associated configuration file containing all the settings across the whole QC:MXP workflow (filenames, project name, prefilter settings, QCRSC settings, cleaning settings). It is possible to load a whole project with data and settings from a configuration file and it is also possible to save a generic user config file to use as a starting point for subsequent projects. The project file also acts as a record of the QC:MXP workflow for reporting purposes. 
 <br />
