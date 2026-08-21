@@ -110,11 +110,12 @@ New to version 3 is the ability to select subsets of batches to explore in isola
 Once the QCRSC engine has finished attention shifts to the data cleaning filters and visualisation tabs. Features (metabolites) can be filtered (removed) by 'Number of missing values', 'RSD threshold', 'D-Ratio threshold', and 'Blank-Ratio threshold'. Typical settings are: Missing < 20%, QC-RSD < 20%, D-Ratio < 40%, Blank-Ratio < 20%. The effects of the QCRSC correction + filtering are shown in multiple tabs. Interpretation of these plots are discussed in the TUTORIAL VIDEO. Once you are happy with the data cleaning process, save the resulting Data table and Feature table. 
 <br />
 <br />
+![Batch Explorer](res/ScreenshotExploring.png)
 ## Forest Plot
 As part of the Data cleaning & exploration tools, the Forest Plot provides a meta analysis of QC batch correction performance. The change in %RSD (detaRSD)for each feature is presented with 95% confidence intervals (calculated using bootstrap resampling), together with the pooled effect across all features (with 95% CI). The size of each square reflects the final %RSD value. Those features colored red are significantly improved. 
 <br />
 <br />
-![Batch Explorer](res/ScreenshotExploring.png)
+
 ## Configuration File
 The QC:MXP app is built around a user/project configuration object. The default generic configuration is established automatically. Once user data is uploaded the configuration switches to project mode. Every completed project will have an associated configuration file containing all the settings across the whole QC:MXP workflow (filenames, project name, prefilter settings, QCRSC settings, cleaning settings). It is possible to load a whole project with data and settings from a configuration file and it is also possible to save a generic user config file to use as a starting point for subsequent projects. The project file also acts as a record of the QC:MXP workflow for reporting purposes. 
 <br />
