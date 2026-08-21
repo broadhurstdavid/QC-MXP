@@ -112,7 +112,7 @@ Once the QCRSC engine has finished attention shifts to the data cleaning filters
 <br />
 ![Batch Explorer](res/ScreenshotExploring.png)
 ## Forest Plot
-As part of the Data cleaning & exploration tools, the Forest Plot provides a meta analysis of QC batch correction performance. The change in %RSD (detaRSD)for each feature is presented with 95% confidence intervals (calculated using bootstrap resampling), together with the pooled effect across all features (with 95% CI). The size of each square reflects the final %RSD value. Those features colored red are significantly improved. 
+As part of the Data cleaning & exploration, the [Forest Plot](https://en.wikipedia.org/wiki/Forest_plot) tool provides an unweighted meta analysis of QC batch correction performance across all features. The change in %RSD (detaRSD for each feature) is presented (with 95% confidence intervals calculated using bootstrap resampling), together with the pooled effect across all features (with 95% CI). The size of each square reflects the final %qcRSD value (or %refRSD) for that feature. Features colored red are statistically significant. N.B. if you have a data set with many features calculating bootstrap confidence intervals can be slow. So, I recommend you use a small bootstrap number to get a rough idea of significance and only increase the number if you need to export the statistics for publication. It is also possible to disable the Forest Plot to speed things up further. 
 <br />
 <br />
 ![Forest Plot](res/ForestPlot.png)
