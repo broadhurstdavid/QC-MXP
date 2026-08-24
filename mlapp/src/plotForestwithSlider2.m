@@ -1,7 +1,5 @@
 function  plotForestwithSlider2(fig,ax,ax2,textBox,ForestTable,order,window_size,plotType)
 
-%cla(ax);
-%cla(ax2);
 linkaxes([ax,ax2],'x');
 PoolTable = ForestTable(1:2,:);
 ForestTable = ForestTable(3:end,:);
@@ -24,8 +22,6 @@ end
 
 
 n_studies = height(ForestTable);
-
-%textBox = uilabel(fig,'Position',[13,5,697,75],'BackgroundColor',[1 0.749 0.749],'Visible','off');
 
 % Line of no effect (usually 0 for differences, 1 for ratios)
 line_of_no_effect = 0; 
@@ -55,7 +51,7 @@ lcMap = dictionary(keys, valuesLC);
 mfaMap = dictionary(keys, valuesMFA);
 
 mfc = cell2mat(mfcMap(colCode));
-lc = cell2mat(lcMap(colCode));
+%lc = cell2mat(lcMap(colCode));
 mfa = cell2mat(mfaMap(colCode));
 
 ylinedata = [2:n_studies+1;2:n_studies+1];
@@ -79,11 +75,7 @@ end
 
 %plot(ax,[ForestTable.lowerCI, ForestTable.upperCI]', temp, '-', 'Color', 'k', 'LineWidth', 1.5);
 ms = minMarkerSize + (ForestTable.cvA * (maxMarkerSize - minMarkerSize)) / 100;
-s = scatter(ax,ForestTable.meanDeltaCV, 2:n_studies+1, ms, 's','MarkerFaceColor','flat','AlphaDataMapping','none','CData',mfc,'ButtonDownFcn',@(src,event)MouseClick(src,event,textBox,ForestTable));
-% s = scatter(ax,ForestTable.meanDeltaCV, 2:n_studies+1, ms, 's','ButtonDownFcn',@(src,event)MouseClick(src,event,textBox,ForestTable));
-% s.MarkerFaceColor = 'flat';
-% s.CData = mfc;
-% s.AlphaDataMapping = "none";
+s = scatter(ax,ForestTable.meanDeltaCV, 2:n_studies+1, ms, 's','MarkerFaceColor','flat','AlphaDataMapping','none','CData',mfc,'ButtonDownFcn',@(src,event)MouseClickForest(src,event,textBox,ForestTable));
 alpha(s,mfa);
 
 % Plot formatting ---
@@ -131,8 +123,8 @@ title(ax2,[tt,' : Unweighted Forest Plot']);
 
 ax2.InnerPosition(1) = ax.InnerPosition(1);
 ax2.InnerPosition(3) = ax.InnerPosition(3);
-ax.ButtonDownFcn = @(src,event)MouseClick2(src,textBox);
-ax2.ButtonDownFcn = @(src,event)MouseClick2(src,textBox);
+ax.ButtonDownFcn = @(src,event)MouseClickForest2(src,textBox);
+ax2.ButtonDownFcn = @(src,event)MouseClickForest2(src,textBox);
 
 
 if window_size <= n_studies
@@ -151,14 +143,14 @@ if window_size <= n_studies
             'Max', slider_max, ...
             'Value', slider_max, ...  
             'SliderStep', sliderstep, ...
-            'Callback', @(src, event) scroll_callback(src, ax, window_size, textBox));
+            'Callback', @(src, event) scroll_callbackForest(src, ax, window_size, textBox));
 end
 %'SliderStep', [1, window_size], ...   
 hold(ax,"off");
 hold(ax2,"off");
 end
 
-function scroll_callback(slider_handle, target_axes, window_size, labelvariable)
+function scroll_callbackForest(slider_handle, target_axes, window_size, labelvariable)
     childObjects = findobj(slider_handle.Parent.Parent, 'UserData', -1);
     delete(childObjects);
     labelvariable.Visible ="off";
@@ -167,7 +159,7 @@ function scroll_callback(slider_handle, target_axes, window_size, labelvariable)
     ylim(target_axes, [start_y, start_y + window_size+1]);
 end
 
-function MouseClick(source,event,labelvariable,statsData)
+function MouseClickForest(source,event,labelvariable,statsData)
        % if source.Parent.Children(1).UserData == -1
        %     delete(source.Parent.Children(1))
        % end
@@ -213,7 +205,7 @@ function MouseClick(source,event,labelvariable,statsData)
        labelvariable.Visible = true;
 end
 
-function MouseClick2(source,labelvariable)
+function MouseClickForest2(source,labelvariable)
         childObjects = findobj(source.Parent.Parent, 'UserData', -1);
         delete(childObjects);
         labelvariable.Visible ="off";

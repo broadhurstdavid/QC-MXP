@@ -10,6 +10,11 @@ function controlChart(axishandle,Data,option)
                 option.RelativeLOQ = 1.5
                 option.WithinBatchCorrectionMode = 'QC'
                 option.BetweenBatchCorrectionMode = 'QC'
+                option.ignoreBlanks = false;
+            end
+
+            if option.ignoreBlanks
+               Data = Data(Data.Blank == 0,:); 
             end
             
             isbatch = false;
