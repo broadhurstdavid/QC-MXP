@@ -1,4 +1,4 @@
-function controlChart(axishandle,Data,option)
+function controlChart2(axishandle,Data,option)
 
             arguments
                 axishandle
@@ -113,7 +113,7 @@ function controlChart(axishandle,Data,option)
             for i = 1:numOfGrps
                 index = ismember(Label,grps(i));
                 if ismember('QC',grps(i))
-                    b(i) = plot(axishandle,t(index),y(index),'ko','MarkerFaceColor','r','MarkerSize',dot_size);                    
+                    b(i) = plot(axishandle,t(index),y(index),'ko','MarkerFaceColor','r','MarkerSize',dot_size,'ButtonDownFcn',@(src,event)MouseClick(src,event));                    
                 elseif ismember('Blank',grps(i))
                     b(i) = plot(axishandle,t(index),y(index),'ko','MarkerFaceColor','m','MarkerSize',dot_size); 
                 elseif ismember('Reference',grps(i))
@@ -170,4 +170,9 @@ function controlChart(axishandle,Data,option)
   
             hold(axishandle,'off');
             title(axishandle,option.title);
+end
+
+function MouseClick(source,event)
+
+
 end

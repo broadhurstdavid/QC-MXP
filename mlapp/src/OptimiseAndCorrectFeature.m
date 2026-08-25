@@ -1,4 +1,4 @@
-function [z,yspline,gammaVal,toutliers,Report,mpv] = OptimiseAndCorrectFeature(config,t,y,batch,isQC,isSample,isBlank)
+function [z,yspline,gammaVal,toutliers,Report,mpv] = OptimiseAndCorrectFeature(config,t,y,batch,isQC,isSample,isBlank,isOutlier)
 
 % config.LogTransformedCorrection
 % config.RemoveZeros
@@ -26,7 +26,8 @@ switch config.OutlierDetectionMethod
     case 'Percentile', OutlierMethod = 'prctile';
     case 'Linear', OutlierMethod = 'poly1';                    
     case 'Quadratic', OutlierMethod = 'poly2';                    
-    case 'Cubic', OutlierMethod = 'poly3';                    
+    case 'Cubic', OutlierMethod = 'poly3';
+    case 'Manual', OutlierMethod = 'manual';
     otherwise, error('This OutlierDetectionMethod does not exist');                    
 end
 
@@ -65,6 +66,9 @@ isQC(missing) = false;
 yqc = y(isQC);
 tqc = t(isQC);
 batchqc = batch(isQC);
+if strcmp(OutlierMethod,'manual')
+    isOutlierqc = isOutlier(isQC);
+end
 
 for i = 1:numberOfBatches
       
@@ -72,8 +76,15 @@ for i = 1:numberOfBatches
     tqci = tqc(idx);
     yqci = yqc(idx);
 
-    try        
-        [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,OutlierMethod,config.OutlierDetectionCI);
+    try 
+        if strcmp(OutlierMethod,'manual')
+            oqci = isOutlierqc(idx);
+            toutlieri = tqci(oqci);
+            tqci = tqci(~oqci);
+            yqci = yqci(~oqci);
+        else
+            [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,OutlierMethod,config.OutlierDetectionCI);
+        end
         switch config.WithinBatchCorrectionMode
             case 'Sample'
                 gamma = 10000;epsilon = NaN;cvMse = 0;minVal = 0;

@@ -144,7 +144,7 @@ end
 
 
 try
-    mustBeMember(baseConfig.OutlierDetectionMethod,{'None','Percentile','Linear','Quadratic','Cubic'});
+    mustBeMember(baseConfig.OutlierDetectionMethod,{'None','Percentile','Linear','Quadratic','Cubic','Manual'});
 catch
     baseException = MException('QCRSC:UnexpectedOutlierDetectionMethod',"Config Error: OutlierDetectionMethod must be one of the following: 'None', 'Percentile', 'Linear', 'Quadratic', 'Cubic'");
     throw(baseException)

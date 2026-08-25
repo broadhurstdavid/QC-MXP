@@ -11,7 +11,7 @@
   "RelativeLOQ": 1.2,
   "LogTransformedCorrection": true,
   "RemoveZeros": true,
-  "OutlierDetectionMethod": "Linear",
+  "OutlierDetectionMethod": "Percentile",
   "OutlierDetectionCI": 0.95,
   "OutlierReplacementStrategy": "NaN",
   "WithinBatchCorrectionMode": "Spline",
