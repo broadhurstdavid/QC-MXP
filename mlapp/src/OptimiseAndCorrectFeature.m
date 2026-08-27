@@ -54,6 +54,7 @@ gammaVal = nan(numberOfBatches,1);
 epsilonVal = nan(numberOfBatches,1);
 
 Report(numberOfBatches).gamma = NaN;
+Report(numberOfBatches).gamma = NaN;
 Report(numberOfBatches).cvMse = NaN;
 Report(numberOfBatches).minVal = NaN;
 Report(numberOfBatches).outliers = NaN;
@@ -114,7 +115,9 @@ for i = 1:numberOfBatches
     
     gammaVal(i) = gamma;
     epsilonVal(i) = epsilon;
+    Report(i).batchNumber = ub(i);
     Report(i).gamma = gamma;
+    Report(i).epsilon = epsilon;
     Report(i).cvMse = cvMse;
     Report(i).minVal = minVal;
     toutliers = [toutliers;toutlieri];
