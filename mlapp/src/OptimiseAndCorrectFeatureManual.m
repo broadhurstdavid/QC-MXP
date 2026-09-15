@@ -1,4 +1,4 @@
-function [z,yspline,toutliers,mpv] = OptimiseAndCorrectFeatureManual(config,t,y,batch,isQC,isSample,isBlank,isOutlier,OptStruct)
+function [z,yspline,gammaVal,toutliers,mpv] = OptimiseAndCorrectFeatureManual(config,t,y,batch,isQC,isSample,isBlank,isOutlier,OptStruct)
 
 switch config.OutlierDetectionMethod
     case 'None', OutlierMethod = 'none';
@@ -64,12 +64,15 @@ for i = 1:numberOfBatches
     toutliers = [toutliers;toutlieri];
 end
 
+gammaVal = nan(numberOfBatches,1);
+
 for i = 1:numberOfBatches
     idx = batch==ub(i);
     ti = t(idx);
     yi = y(idx);
     isQCi = isQC(idx);
     isSamplei = isSample(idx);
+    gammaVal(i) = OptStruct(i).gamma;
     try
         [z(idx),yspline(idx)] = QCRSC3(ti,yi,isQCi,isSamplei,mpv,OptStruct(i).epsilon,OptStruct(i).gamma,toutliers,CorrectionType,config.OutlierReplacementStrategy);
     catch
