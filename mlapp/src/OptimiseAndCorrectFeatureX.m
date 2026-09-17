@@ -1,5 +1,5 @@
-function [z,yspline,gammaVal,toutliers,Report,mpv] = OptimiseAndCorrectFeatureX(config,t,y,batch,isQC,isSample,isBlank,isRef,isOutlier)
-    [z,yspline,gammaVal,toutliers,Report,mpv] = OptimiseAndCorrectFeature(config,t,y,batch,isQC,isSample,isBlank,isOutlier);
+function [z,yspline,gammaVal,epsilonVal,toutliers,Report,mpv] = OptimiseAndCorrectFeatureX(config,t,y,batch,isQC,isSample,isBlank,isRef,isOutlier)
+    [z,yspline,gammaVal,epsilonVal,toutliers,Report,mpv] = OptimiseAndCorrectFeature(config,t,y,batch,isQC,isSample,isBlank,isOutlier);
     if strcmp(config.BetweenBatchCorrectionMode,'Reference')
         tempConfig = config;
         if ~strcmp(tempConfig.OutlierDetectionMethod,'Manual')
