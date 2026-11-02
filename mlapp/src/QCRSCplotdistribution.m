@@ -6,7 +6,7 @@ function [] = QCRSCplotdistribution(axishandle,statsTable,BatchVector,options)
        BatchVector {mustBeInteger,mustBePositive}
        options.plotType {mustBeMember(options.plotType,{'histogram','pdf'})} = 'histogram'  
        options.split {mustBeMember(options.split ,{'all','batch'})} = 'all'
-       options.smooth {mustBeNumeric,mustBeInRange(options.smooth,0,100)} = 20
+       options.smooth {mustBeNumeric,mustBeBetween(options.smooth,0,100)} = 20
        options.label {mustBeA(options.label,{'char','string'})} = 'qcRSD'
        options.cmap = lines;
        options.baseColor = [0.1333,0.5451,0.1333]
@@ -14,15 +14,6 @@ function [] = QCRSCplotdistribution(axishandle,statsTable,BatchVector,options)
 
 ubatch = unique(BatchVector);
 NumOfBatches = numel(ubatch);
-
-% bc = options.baseColor;
-% cmap = bc;
-% for i = 1:15
-%     temp = bc+0.1;
-%     cmap = [bc;temp];
-% end
-% cmap(cmap>1) = 1;
-% cmap = [cmap;cmap;cmap;cmap];
 
 
 cmap = mapRcolors('quoka');
