@@ -40,10 +40,10 @@ if strcmp(options.plotType,'histogram')
         legendlabel{i} = ['B',num2str(ubatch(i))];
         colName = [options.label,'B',num2str(ubatch(i))];
         data = statsTable{:,colName};
-        data(data>40) = 110;
+        data(data>100) = 110;
         nAll(i,:) = histcounts(data,edges);
         data = statsTableClean{:,colName};
-        data(data>40) = 110;
+        data(data>100) = 110;
         nClean(i,:) = histcounts(data,edges);
         tt(i,:) = prctile(statsTableClean{:,colName},[25,50,75]);
     end
@@ -57,13 +57,14 @@ if strcmp(options.plotType,'histogram')
     maxval = max(max(nAll));
 
     tmp = string((round(10*edges))/10);
-    temp = cellfun(@(x,y) strcat('(',x,'<x<',y,')'),tmp(1:end-1),tmp(2:end),'UniformOutput',false);   
+    temp = cellfun(@(x,y) strcat(x,'%<',options.label,'<',y,'%'),tmp(1:end-1),tmp(2:end),'UniformOutput',false);
+    temp{end} = [options.label,'>100%'];
     for i = 1:NumOfBatches
         if NumOfBatches ==1, blabel = repmat({'All'},length(center),1); else blabel = ones(length(center),1)*ubatch(i); end       
-        plotAll(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,temp);
+        plotAll(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('',temp);
         plotAll(i).DataTipTemplate.DataTipRows(2).Label = '#Features';
         plotAll(i).DataTipTemplate.DataTipRows(3) = dataTipTextRow('Batch#',blabel);
-        plotClean(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow(options.label,temp);
+        plotClean(i).DataTipTemplate.DataTipRows(1) = dataTipTextRow('',temp);
         plotClean(i).DataTipTemplate.DataTipRows(2).Label = '#Features';
         plotClean(i).DataTipTemplate.DataTipRows(3) = dataTipTextRow('Batch#',blabel);
     end
