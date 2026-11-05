@@ -10,7 +10,7 @@ ForestTable = ForestTable(order,:);
 
 n_studies = height(ForestTable);
 
-fig = uifigure('Position', [700, 400, 650, 500]);
+fig = uifigure('Position', [700, 300, 650, 600]);
 fig.Scrollable = 'on';
 
 x0 = 10;
@@ -126,40 +126,40 @@ panelHeight = plotPanel.Position(4);
 
 vertpos = panelHeight - 30;
 
-btn = uibutton(plotPanel, ...
-    'Text', 'Export', ...
-    'Position', [5, vertpos, 80, 22],'ButtonPushedFcn',@ButtonPushed);
+ef = uieditfield(fig, 'text', ...
+    'Position', [330 vertpos-1 120 22], ...
+    'Value', 'ForestPlot.png','ValueChangedFcn',@(src,event) filenameChanged(src,event,fig));
 
-cbx = uicheckbox(plotPanel, ...
+uicheckbox(plotPanel, ...
     'Text', 'Expand Y-labels', ...
     'Position', [500, vertpos, 120, 22], ...
     'Value', useFullName,'ValueChangedFcn', @(src, event) switchChangedCallback(src,event,ax1,ForestTable));
 
 
-dpiLabel = uilabel(plotPanel, ...
+uilabel(plotPanel, ...
     'Text', 'dpi', ...
     'HorizontalAlignment', 'right', ...
     'Position', [90 vertpos 20 22]);
 
-dpiEditField = uieditfield(plotPanel, 'numeric', ...
+dpi = uieditfield(plotPanel, 'numeric', ...
     'Position', [115 vertpos 50 22], ...
     'Value', 300, ...                     % Default integer value
     'RoundFractionalValues', 'on', ...    % Forces fractional inputs to round to integers
     'ValueDisplayFormat', '%d'); 
 
-ef = uieditfield(fig, 'text', ...
-    'Position', [330 vertpos-1 120 22], ...
-    'Value', 'ForestPlot.png','ValueChangedFcn',@filenameChanged);
-
 uilabel(fig, ...
     'Position', [270 vertpos-1 60 22], ...
     'Text', 'File Name:');
 
-dropdown = uidropdown(plotPanel, ...
+uidropdown(plotPanel, ...
     'Position', [180, vertpos, 70, 22], ...                     % [left, bottom, width, height]
     'Items', {' PNG', ' SVG', ' PDF', ' JPG', ' TIF'}, ...        % Labels displayed to the user
     'ItemsData', {'png', 'svg', 'pdf', 'jpg', 'tif'}, ...      % Underlying code/values for each label
     'ValueChangedFcn', @(src, event) dropdownCallback(src,event,ef));
+
+uibutton(plotPanel, ...
+    'Text', 'Export', ...
+    'Position', [5, vertpos, 80, 22],'ButtonPushedFcn',@(src,event) ButtonPushed(src,event,ef.Value,dpi.Value,fig));
 
 
 
@@ -191,19 +191,26 @@ function dropdownCallback(src,~,uieditfield)
 
 end
 
-function filenameChanged(src,~)
+function filenameChanged(src,~,fig)
     [~, name, ext] = fileparts(src.Value);
     if ~ismember(lower(ext),{'png', 'svg', 'pdf', 'jpg', 'tif'})
-        uialert(app.UIFigure,"Only {'png', 'svg', 'pdf', 'jpg', 'tif'} filetypes supported. Now set to '.png' ",'Icon','Warning');
+        uialert(fig,"Only {'png', 'svg', 'pdf', 'jpg', 'tif'} filetypes supported. Now set to '.png' ",'Warning','Icon','Warning');
         src.Value = [name,'.png'];
     end
 end
 
 
 
-function ButtonPushed()
+function ButtonPushed(~,~,filename,dpi,fig)
 
-
+    if isfile(filename)
+        selection = uiconfirm(fig,['Overwrite file ',filename,'?'],'Confirm DataTable Action','Icon','question');
+        if strcmp(selection,'Cancel')
+            return;
+        end
+    end
+    exportgraphics(fig,filename,'Resolution',dpi);
+    uialert(fig,'Forest plot saved!','Success','Icon','success');
 end
 
 
