@@ -164,7 +164,7 @@
 
                     otherwise
                         if any(strcmp(grps(i),{'QC','Blank','Reference'}))
-                            b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,hash(grps{i}),'filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
+                            b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,hash(grps{i}),'^','filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
                         else
                             b(i) = scatter(axishandle,SS(temp,1),SS(temp,2),sz,cmapx(i,:),'filled','MarkerFaceAlpha',0.5,'MarkerEdgeColor',ecol2);
                         end
@@ -371,7 +371,7 @@
         else        
             xlabel(axishandle,sprintf('PC%u (Explained Var(X) = %3.1f%%)',xaxis,pcaRES.explained(xaxis)),'FontSize',11);
         end
-        axishandle.Title.String = 'Principal Component Analysis';
+        axishandle.Title.String = {'';'Principal Component Analysis'};
     end
     
     axishandle.Title.FontSize = 12;

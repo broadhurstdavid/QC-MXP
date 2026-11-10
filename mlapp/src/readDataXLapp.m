@@ -38,7 +38,11 @@ d.Message = ['Loading Excel Sheet: ',DataSheet];
 step = 2;
 d.Value = step/steps;
 
-DataTable = readtable(filename,'Sheet',DataSheet,'VariableNamingRule','preserve');
+opts = detectImportOptions(filename,'Sheet',DataSheet);
+opts = setvartype(opts, FeatureTable.UID, 'double');
+opts.VariableNamingRule = 'preserve';
+
+DataTable = readtable(filename,opts,'Sheet',DataSheet);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

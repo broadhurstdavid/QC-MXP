@@ -32,8 +32,8 @@ RES = zeros(n,6);
     end
 
 
-pooled_estimate = mean(RES(:,1));
-sd_effects = std(RES(:,1)); 
+pooled_estimate = mean(RES(:,1),1,"omitnan");
+sd_effects = std(RES(:,1),"omitnan"); 
 pooled_SE = sd_effects / sqrt(n);
 
 % Calculate Confidence Interval for the diamond (using t-distribution)
@@ -50,8 +50,8 @@ end
 
 if ~all(Features.cleanPeaks)
     keep = Features.cleanPeaks;
-    pooled_estimateX = mean(RES(keep,1));
-    sd_effectsX = std(RES(keep,1)); 
+    pooled_estimateX = mean(RES(keep,1),1,"omitnan");
+    sd_effectsX = std(RES(keep,1),"omitnan"); 
     nX = sum(keep);
     pooled_SEX = sd_effectsX / sqrt(nX);
 
