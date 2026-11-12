@@ -1,11 +1,18 @@
-function [plotPanel,ax1] = plotStaticForest(ForestPoolTable,useFullName)
+function fig = plotStaticForest(FullForestStatsTable,useFullName,QCorREF)
 
-order = 1:height(ForestPoolTable)-2;
+order = 1:height(FullForestStatsTable)-2;
 
-sigCol = [0.85,0.1,0.1];
+switch QCorREF
+    case 'QC'       
+        sigCol = [0.85,0.1,0.1];
+        tt = 'qcRSD';
+    case 'REF'       
+        sigCol = [0.83,0.67,0.21];
+        tt = 'Reference';
+end
 
-PoolTable = ForestPoolTable(1:2,:);
-ForestTable = ForestPoolTable(3:end,:);
+PoolTable = FullForestStatsTable(1:2,:);
+ForestTable = FullForestStatsTable(3:end,:);
 ForestTable = ForestTable(order,:);
 
 n_studies = height(ForestTable);
@@ -17,7 +24,7 @@ x0 = 10;
 y0 = 0;
 hh = 1000;
 ww = 620;
-buffer = 20;
+buffer = 40;
 
 plotPanel = uipanel(fig, 'Position', [x0, y0, x0+ww, x0+hh], 'BorderType', 'none');
 
@@ -88,7 +95,7 @@ alpha(s,mfa);
 % %ylim(ax1, [1, 1 + window_size]);
 % %ylim(ax,[0, n_studies+2]);
 xlim(ax1,[xlim_lower, xlim_upper]);
-xlabel(ax1,['Delta %RSD (After ',char(8211),' Before)']);
+xlabel(ax1,['% Improvement in ',tt,' RSD (95% CI)']);
 ylabel(ax1,'');
 yticks(ax1,1:n_studies+2);
 if useFullName
@@ -97,12 +104,14 @@ else
     yticklabels(ax1,[{'Pooled Effect';''};ForestTable.ShortName(1:end)]);
 end
 ax1.YAxis.FontSize = 8;
+ax1.YAxis.FontName = 'Monaco';
 ax1.TickLength = [0.005, 0.025]; 
 set(ax1, 'YDir', 'reverse'); % Invert Y-axis so Study 1 is at the top
 grid(ax1,'on');
 box(ax1,'on');
 ax1.Toolbar.Visible = 'off';
 plot(ax1,[xlim_lower, xlim_upper], [2, 2], 'k-', 'LineWidth', 0.75);
+ax1.XTick = [xlim_lower:10:xlim_upper];
 
 
 % Plot the Pooled Effect Diamond ---
@@ -121,6 +130,12 @@ if PoolTable.sig(2)
 else
     fill(ax1,X_diamondX, Y_diamond, [0,0.2,1], 'FaceAlpha', 0.5, 'EdgeColor', 'k','ButtonDownFcn',@(src,event)app.MouseClickPooled(src,PoolTable));
 end
+
+
+
+txt5 = sprintf('Unweighted %cRSD Forest Plot: (%s)',916,tt);
+
+title(ax1,txt5);
 
 panelHeight = plotPanel.Position(4); 
 
@@ -158,8 +173,11 @@ uidropdown(plotPanel, ...
     'ValueChangedFcn', @(src, event) dropdownCallback(src,event,ef));
 
 uibutton(plotPanel, ...
-    'Text', 'Export', ...
+    'Text', 'Export Figure', ...
     'Position', [5, vertpos, 80, 22],'ButtonPushedFcn',@(src,event) ButtonPushed(src,event,ef.Value,dpi.Value,fig));
+uibutton(plotPanel, ...
+    'Text', 'Export Data', ...
+    'Position', [5, vertpos-25, 80, 22],'ButtonPushedFcn',@(src,event) ButtonPushed2(src,event,FullForestStatsTable,QCorREF,uieditfield,fig));
 
 
 
@@ -209,10 +227,37 @@ function ButtonPushed(~,~,filename,dpi,fig)
             return;
         end
     end
-    exportgraphics(fig,filename,'Resolution',dpi);
-    uialert(fig,'Forest plot saved!','Success','Icon','success');
+    try
+        exportgraphics(fig,filename,'Resolution',dpi);
+        uialert(fig,'Forest plot saved!','Success','Icon','success');
+    catch
+        uialert(fig,"Unable to save the figure",'Warning','Icon','Warning');
+    end
+    
+    
 end
 
+function ButtonPushed2(~,~,FullForestStatsTable,QCorREF,uieditfield,fig)
+    [name,~] = fileparts(uieditfield.Value);
+    filename = [name,'.csv'];
+    Temp = FullForestStatsTable(:,{'UID','Name','meanDeltaCV','lowerCI','upperCI','sig'});
+    Temp(1,:) = [];
+    Temp.UID{1} = 'PE';
+    Temp.Name{1} = 'PooledEffect';
+
+    if QCorREF        
+        Temp.Properties.VariableNames = {'UID','Name','meanDeltaCV_QC','lowerCI_QC','upperCI_QC','sig_QC'};
+    else
+        Temp.Properties.VariableNames = {'UID','Name','meanDeltaCV_REF','lowerCI_REF','upperCI_REF','sig_REF'};        
+    end
+    try
+        writetable(T,filename);
+        uialert(fig,'Forest plot data saved as a csv file!','Success','Icon','success');
+    catch
+        uialert(fig,"Unable to save the figure data",'Warning','Icon','Warning');
+    end
+
+end
 
 end
 
