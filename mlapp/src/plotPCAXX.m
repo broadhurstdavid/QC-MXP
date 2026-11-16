@@ -101,7 +101,7 @@
 
     
 
-    try
+    %try
         if options.plotDataPoints
             %count = 1;
             for i = 1:length(grps)
@@ -336,6 +336,19 @@
                 end
              end
         end
+
+        if ~strcmp(options.label,{'SampleType','Batch','BatchQC'})
+            if options.plotCIA
+                [xp,yp] = ci95_ellipse2018(SS(Data.Sample,:),'pop');                
+                x1 = plot(axishandle,xp,yp,'--','linewidth',0.5,'color','k');  
+                x1label = repmat({'All Samples'},length(xp));
+                x1.DataTipTemplate.DataTipRows(1) = dataTipTextRow('95%CI(sample):',x1label);
+                x1.DataTipTemplate.DataTipRows(2) = [];                      
+                x1.UserData = {'All Samples CI pop'};
+                x1.DisplayName = 'All Samples';
+            end
+        end
+
  
 
         if options.plotDataPoints
@@ -343,10 +356,10 @@
         else
             legend(axishandle,c,string(grps));
         end
-    catch
-        baseException = MException('QCRSC:UnexpectedGroupLabel',"Something went wrong with the PCA labelling.");        
-        throw(baseException)
-    end
+    % catch
+    %     baseException = MException('QCRSC:UnexpectedGroupLabel',"Something went wrong with the PCA labelling.");        
+    %     throw(baseException)
+    % end
 
     if isSampleType
         ylabel(axishandle,sprintf('PC%u (Explained Var(X) = %3.1f%%; dRatio = %.2f%%)',yaxis,pcaRES.explained(yaxis),pcaRES.DRatio(yaxis)),'FontSize',11);
