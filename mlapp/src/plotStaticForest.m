@@ -1,5 +1,7 @@
 function fig = plotStaticForest(FullForestStatsTable,useFullName,QCorREF)
 
+FullForestStatsTable = FullForestStatsTable(1:70,:);
+
 order = 1:height(FullForestStatsTable)-2;
 
 switch QCorREF
@@ -17,18 +19,21 @@ ForestTable = ForestTable(order,:);
 
 n_studies = height(ForestTable);
 
-fig = uifigure('Position', [700, 300, 650, 600]);
+fig = uifigure('Position', [700, 300, 650, 700]);
 fig.Scrollable = 'on';
 
 x0 = 10;
 y0 = 0;
-hh = 1000;
+%hh = 1000;
+hh = height(FullForestStatsTable)*9;
 ww = 620;
 buffer = 40;
 
-plotPanel = uipanel(fig, 'Position', [x0, y0, x0+ww, x0+hh], 'BorderType', 'none');
+plotPanel = uipanel(fig, 'Position', [x0, y0, x0+ww, y0+hh], 'BorderType', 'none');
 
-ax1 = uiaxes(plotPanel, 'Position', [x0, y0, x0+ww-buffer, x0+hh-buffer]);
+%ax1 = uiaxes(plotPanel, 'Position', [x0, y0, x0+ww-buffer, x0+hh-buffer]);
+%ax1 = uiaxes(plotPanel,'Position', [x0, y0, x0+ww-buffer, y0+hh-buffer]);
+ax1 = uiaxes(plotPanel, 'Units','normalized','Position', [0.1, 0.01, 0.9, 0.98]);
 disableDefaultInteractivity(ax1);
 
 
@@ -40,8 +45,8 @@ hold(ax1,"on");
 xlim_upper = 100;
 xlim_lower = -20;
 
-maxMarkerSize = 400;
-minMarkerSize = 20;
+maxMarkerSize = 100;
+minMarkerSize = 10;
 
 if ismember('cleanPeaks', ForestTable.Properties.VariableNames)
     colCode = ForestTable.cleanPeaks+ForestTable.sig*10;
@@ -58,7 +63,7 @@ keys = [0, 1, 10, 11];
 valuesMFC = {[0,0,0], grey, [0,0,0], sigCol}; % black, blue, sigCol
 %valuesLC = {[0,0,0,0.1], [0,0.2,1,1], [0,0,0,0.1], [sigCol,1]}; % black, blue, sigCol
 valuesLC = {[0,0,0,0.1], [grey,1], [0,0,0,0.1], [sigCol,1]}; % black, blue, sigCol
-valuesMFA = {0.1, 1, 0.1, 1}; % black, blue, sigCol
+valuesMFA = {0.1, 0.8, 0.1, 0.8}; % black, blue, sigCol
 
 mfcMap = dictionary(keys, valuesMFC);
 lcMap = dictionary(keys, valuesLC);
@@ -75,7 +80,7 @@ for i = 1:4
     if any(keep)
         tempx = xlinedata(:,keep);
         tempy = ylinedata(:,keep);
-        plot(ax1,tempx, tempy, '-', 'Color',valuesLC{i}, 'LineWidth', 1.5);
+        plot(ax1,tempx, tempy, '-', 'Color',valuesLC{i}, 'LineWidth', 1);
         keep = tempx(2,:) > xlim_upper;
         if any(keep)
             scatter(ax1,xlim_upper, tempy(1,keep),50,valuesMFC{i},'filled','>','AlphaDataMapping','none','AlphaData',0.2,'MarkerFaceAlpha','flat','MarkerFaceColor','flat');
@@ -98,15 +103,17 @@ xlim(ax1,[xlim_lower, xlim_upper]);
 xlabel(ax1,['% Improvement in ',tt,' RSD (95% CI)']);
 ylabel(ax1,'');
 yticks(ax1,1:n_studies+2);
+%yticks(ax1,'manual'); 
 if useFullName
     yticklabels(ax1,[{'Pooled Effect';''};ForestTable.Name(1:end)]);
 else
     yticklabels(ax1,[{'Pooled Effect';''};ForestTable.ShortName(1:end)]);
 end
-ax1.YAxis.FontSize = 8;
+ax1.YAxis.FontSize = 6;
 ax1.YAxis.FontName = 'Monaco';
 ax1.TickLength = [0.005, 0.025]; 
 set(ax1, 'YDir', 'reverse'); % Invert Y-axis so Study 1 is at the top
+ylim(ax1,[0, n_studies+2]);
 grid(ax1,'on');
 box(ax1,'on');
 ax1.Toolbar.Visible = 'off';
