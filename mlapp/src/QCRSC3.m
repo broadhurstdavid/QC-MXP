@@ -29,7 +29,7 @@ try
         try
             mdl = fit(tqc,yqc,'poly1','Robust','Bisquare');
         catch
-            mdl = fit(tqc,yqc);
+            mdl = fit(tqc,yqc,'poly1');
         end
         yspline = feval(mdl,t);
     elseif gammaVal == 10000

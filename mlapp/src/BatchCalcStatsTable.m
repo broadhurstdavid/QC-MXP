@@ -11,11 +11,11 @@ isBlank = logical(Data.Blank);
 isReference = logical(Data.Reference);
 
 if baseConfig.RemoveZeros
-    X(X == 0) = NaN;
+    X(X <= 0) = NaN;
 end
             
 if baseConfig.LogTransformedCorrection
-    X(X == 0) = NaN;
+    X(X <= 0) = NaN;
     X = log10(X);
 end
 

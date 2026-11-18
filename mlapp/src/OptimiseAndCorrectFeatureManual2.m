@@ -33,9 +33,9 @@ numberOfBatches = length(ub);
 
 toutliers = [];
 
-yqc = y(isQC);
-missing = isnan(yqc);
+missing = isnan(y);
 isQC(missing) = false;
+
 yqc = y(isQC);
 tqc = t(isQC);
 batchqc = batch(isQC);

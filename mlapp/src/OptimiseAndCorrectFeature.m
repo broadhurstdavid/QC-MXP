@@ -61,9 +61,13 @@ Report(numberOfBatches).outliers = NaN;
 
 toutliers = [];
 
-yqc = y(isQC);
-missing = isnan(yqc);
+missing = isnan(y);
 isQC(missing) = false;
+% 
+% 
+% yqc = y(isQC);
+% missing = isnan(yqc);
+% isQC(missing) = false;
 yqc = y(isQC);
 tqc = t(isQC);
 batchqc = batch(isQC);
@@ -77,6 +81,7 @@ for i = 1:numberOfBatches
     tqci = tqc(idx);
     yqci = yqc(idx);
 
+    
     try 
         if strcmp(OutlierMethod,'manual')
             oqci = isOutlierqc(idx);
@@ -86,16 +91,20 @@ for i = 1:numberOfBatches
         else
             [tqci,yqci,toutlieri] = OutlierFilter(tqci,yqci,OutlierMethod,config.OutlierDetectionCI);
         end
+
+        avDist = median(tqci(2:end) - tqci(1:end-1));
+        epsilon0 = avDist^3/16;
+
         switch config.WithinBatchCorrectionMode
             case 'Sample'
-                gamma = 10000;epsilon = NaN;cvMse = 0;minVal = 0;
+                gamma = 10000;epsilon = epsilon0;cvMse = 0;minVal = 0;
             case 'Median'
-                gamma = NaN;epsilon = NaN;cvMse = 0;minVal = 0;
+                gamma = NaN;epsilon = epsilon0;cvMse = 0;minVal = 0;
             case 'Linear'
                 %avDist = median(tqci(2:end) - tqci(1:end-1));
                 %epsilon = avDist^3/16;
                 %gamma = 11;cvMse = 0;minVal = 0;
-                gamma = 1000;epsilon = NaN;cvMse = 0;minVal = 0;
+                gamma = 1000;epsilon = epsilon0;cvMse = 0;minVal = 0;
             otherwise
                 switch config.WithinBatchCorrectionMode                 
                     case 'Spline-C2'
