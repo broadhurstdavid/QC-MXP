@@ -1,8 +1,22 @@
 function fig = plotStaticForest(FullForestStatsTable,useFullName,QCorREF)
 
-FullForestStatsTable = FullForestStatsTable(1:70,:);
+FullForestStatsTable = FullForestStatsTable(1:874,:);
 
-order = 1:height(FullForestStatsTable)-2;
+num = ceil(height(FullForestStatsTable)/100)-1;
+
+for i = 1:num
+    startIndex = (i - 1) * 100 + 1;
+    endIndex = min(i * 100, height(FullForestStatsTable));
+    forestPage{i} = FullForestStatsTable(startIndex:endIndex, :);
+end
+startIndex = endIndex+1;
+forestPage{num+1} = FullForestStatsTable(startIndex:end, :);
+
+
+TT = forestPage{1};
+
+order = 1:height(TT)-2;
+
 
 switch QCorREF
     case 'QC'       
@@ -13,27 +27,32 @@ switch QCorREF
         tt = 'Reference';
 end
 
-PoolTable = FullForestStatsTable(1:2,:);
-ForestTable = FullForestStatsTable(3:end,:);
+PoolTable = TT(1:2,:);
+ForestTable = TT(3:end,:);
 ForestTable = ForestTable(order,:);
 
 n_studies = height(ForestTable);
 
-fig = uifigure('Position', [700, 300, 650, 700]);
+% fig = figure('Units', 'pixels', 'Position', [100, 100, 2480, 3508]);
+% fig.PaperUnits = 'centimeters';
+% fig.PaperSize = [21, 29.7];
+% fig.PaperPosition = [0, 0, 21, 29.7];
+
+fig = uifigure('Units', 'pixels', 'Position', [700, 50, 650, 900]);
 fig.Scrollable = 'on';
 
 x0 = 10;
 y0 = 0;
 %hh = 1000;
-hh = height(FullForestStatsTable)*9;
+hh = height(TT)*9;
 ww = 620;
 buffer = 40;
 
 plotPanel = uipanel(fig, 'Position', [x0, y0, x0+ww, y0+hh], 'BorderType', 'none');
 
 %ax1 = uiaxes(plotPanel, 'Position', [x0, y0, x0+ww-buffer, x0+hh-buffer]);
-%ax1 = uiaxes(plotPanel,'Position', [x0, y0, x0+ww-buffer, y0+hh-buffer]);
-ax1 = uiaxes(plotPanel, 'Units','normalized','Position', [0.1, 0.01, 0.9, 0.98]);
+ax1 = uiaxes(plotPanel,'Position', [x0, y0, x0+ww-buffer, y0+hh-buffer-20]);
+%ax1 = uiaxes(plotPanel, 'Units','normalized','Position', [0.1, 0.01, 0.9, 0.985]);
 disableDefaultInteractivity(ax1);
 
 
@@ -100,7 +119,7 @@ alpha(s,mfa);
 % %ylim(ax1, [1, 1 + window_size]);
 % %ylim(ax,[0, n_studies+2]);
 xlim(ax1,[xlim_lower, xlim_upper]);
-xlabel(ax1,['% Improvement in ',tt,' RSD (95% CI)']);
+xlabel(ax1,{['% Improvement in ',tt,' RSD (95% CI)'];''},"FontSize",10);
 ylabel(ax1,'');
 yticks(ax1,1:n_studies+2);
 %yticks(ax1,'manual'); 
@@ -109,6 +128,7 @@ if useFullName
 else
     yticklabels(ax1,[{'Pooled Effect';''};ForestTable.ShortName(1:end)]);
 end
+ax1.FontUnits = 'points';
 ax1.YAxis.FontSize = 6;
 ax1.YAxis.FontName = 'Monaco';
 ax1.TickLength = [0.005, 0.025]; 
@@ -159,18 +179,18 @@ uicheckbox(plotPanel, ...
 
 
 uilabel(plotPanel, ...
-    'Text', 'dpi', ...
+    'Text', 'dpi:', ...
     'HorizontalAlignment', 'right', ...
-    'Position', [90 vertpos 20 22]);
+    'Position', [90 vertpos 25 22]);
 
 dpi = uieditfield(plotPanel, 'numeric', ...
-    'Position', [115 vertpos 50 22], ...
+    'Position', [118 vertpos 50 22], ...
     'Value', 300, ...                     % Default integer value
     'RoundFractionalValues', 'on', ...    % Forces fractional inputs to round to integers
     'ValueDisplayFormat', '%d'); 
 
-uilabel(fig, ...
-    'Position', [270 vertpos-1 60 22], ...
+uilabel(plotPanel, ...
+    'Position', [258 vertpos-1 60 22], ...
     'Text', 'File Name:');
 
 uidropdown(plotPanel, ...
@@ -181,10 +201,18 @@ uidropdown(plotPanel, ...
 
 uibutton(plotPanel, ...
     'Text', 'Export Figure', ...
-    'Position', [5, vertpos, 80, 22],'ButtonPushedFcn',@(src,event) ButtonPushed(src,event,ef.Value,dpi.Value,fig));
+    'Position', [5, vertpos, 80, 22],'ButtonPushedFcn',@(src,event) ButtonPushed(src,event,ef.Value,dpi.Value,fig,ax1));
 uibutton(plotPanel, ...
     'Text', 'Export Data', ...
-    'Position', [5, vertpos-25, 80, 22],'ButtonPushedFcn',@(src,event) ButtonPushed2(src,event,FullForestStatsTable,QCorREF,uieditfield,fig));
+    'Position', [5, vertpos-25, 80, 22],'ButtonPushedFcn',@(src,event) ButtonPushed2(src,event,TT,QCorREF,uieditfield,fig));
+uilabel(plotPanel, ...
+    'Position', [95 vertpos-26 100 22], ...
+    'Text', 'Feature Range:');
+uidropdown(plotPanel, ...
+    'Position', [180, vertpos-25, 70, 22], ...                     % [left, bottom, width, height]
+    'Items', {'1-500', '500-1000'}, ...        % Labels displayed to the user
+    'ItemsData', [1,2], ...      % Underlying code/values for each label
+    'ValueChangedFcn', @(src, event) dropdownRangeCallback(src,event,ef));
 
 
 
@@ -226,7 +254,7 @@ end
 
 
 
-function ButtonPushed(~,~,filename,dpi,fig)
+function ButtonPushed(~,~,filename,dpi,fig,ax)
 
     if isfile(filename)
         selection = uiconfirm(fig,['Overwrite file ',filename,'?'],'Confirm DataTable Action','Icon','question');
@@ -235,7 +263,9 @@ function ButtonPushed(~,~,filename,dpi,fig)
         end
     end
     try
-        exportgraphics(fig,filename,'Resolution',dpi);
+        exportgraphics(ax,"scaledchart.pdf",Units="centimeters",Resolution=dpi,Height=29.7,PreserveAspectRatio="on",Padding="figure");
+        exportgraphics(ax,"scaledchart.pdf",Units="centimeters",Resolution=dpi,Height=29.7,PreserveAspectRatio="on",Padding="figure",Append=true);
+        %exportgraphics(fig,filename,'Resolution',dpi);
         uialert(fig,'Forest plot saved!','Success','Icon','success');
     catch
         uialert(fig,"Unable to save the figure",'Warning','Icon','Warning');
@@ -244,10 +274,10 @@ function ButtonPushed(~,~,filename,dpi,fig)
     
 end
 
-function ButtonPushed2(~,~,FullForestStatsTable,QCorREF,uieditfield,fig)
+function ButtonPushed2(~,~,TT,QCorREF,uieditfield,fig)
     [name,~] = fileparts(uieditfield.Value);
     filename = [name,'.csv'];
-    Temp = FullForestStatsTable(:,{'UID','Name','meanDeltaCV','lowerCI','upperCI','sig'});
+    Temp = TT(:,{'UID','Name','meanDeltaCV','lowerCI','upperCI','sig'});
     Temp(1,:) = [];
     Temp.UID{1} = 'PE';
     Temp.Name{1} = 'PooledEffect';
@@ -263,7 +293,6 @@ function ButtonPushed2(~,~,FullForestStatsTable,QCorREF,uieditfield,fig)
     catch
         uialert(fig,"Unable to save the figure data",'Warning','Icon','Warning');
     end
-
 end
 
 end
