@@ -1,34 +1,40 @@
 function fig = plotStaticForest(FullForestStatsTable,useFullName,QCorREF)
 
-FullForestStatsTable = FullForestStatsTable(1:874,:);
+FullForestStatsTable = FullForestStatsTable(1:120,:);
 
 
 % ---------------------- Create Figure ---------------------------
 
-fig = uifigure('Units', 'pixels', 'Position', [700, 50, 650, 900]);
+fig = uifigure('Units', 'pixels', 'Position', [700, 20, 650, 980]);
 fig.Scrollable = 'on';
 
-x0 = 10;
-y0 = 0;
-hh = 900;
-ww = 620;
-buffer = 40;
+% x0 = 10;
+% y0 = 0;
+% hh = 900;
+% ww = 620;
+% buffer = 40;
 
-plotPanel = uipanel(fig, 'Position', [x0, y0, x0+ww, y0+hh], 'BorderType', 'none');
-ax1 = uiaxes(plotPanel,'Position', [x0, y0, x0+ww-buffer, y0+hh-buffer-20]);
+px_per_unit = 11;
+numFeaturesperPage = 80;
+ax_height = px_per_unit * numFeaturesperPage;
+
+
+plotPanel = uipanel(fig,'Units','pixels','Position', [10, 30, 630, ax_height+30], 'BorderType', 'line');
+interfacePanel = uipanel(fig,'Units','pixels' ,'Position', [10, 920, 630, 60], 'BorderType', 'line');
+ax1 = uiaxes(plotPanel,'Units','pixels','Position', [10, 0, 590, ax_height]);
 disableDefaultInteractivity(ax1);
 ax1.UserData = 1;
 
-panelHeight = plotPanel.Position(4); 
+panelHeight = interfacePanel.Position(4); 
 vertpos = panelHeight - 30;
 
 % ---------------------- Create Page Data ---------------------------
 
-num = ceil(height(FullForestStatsTable)/100)-1;
+num = ceil(height(FullForestStatsTable)/numFeaturesperPage)-1;
 
 for i = 1:num
-    startIndex = (i - 1) * 100 + 1;
-    endIndex = min(i * 100, height(FullForestStatsTable));
+    startIndex = (i - 1) * numFeaturesperPage + 1;
+    endIndex = min(i * numFeaturesperPage, height(FullForestStatsTable));
     forestPages{i} = FullForestStatsTable(startIndex:endIndex, :);
 end
 startIndex = endIndex+1;
@@ -37,10 +43,10 @@ forestPages{num+1} = FullForestStatsTable(startIndex:end, :);
 %pageNumTxt = ['1/',num2str(num+1)];
 
 
-countLabel = uilabel(plotPanel, ...
+countLabel = uilabel(interfacePanel, ...
     'Position', [595 vertpos-25 100 22], ...
     'Text', '1/1', ...
-    'FontSize',14, ...
+    'FontSize',12, ...
     'FontColor','r');
 
 % ---------------------- Plot Page ---------------------------
@@ -50,34 +56,34 @@ plotPage(forestPages,ax1,countLabel,QCorREF);
 % ---------------------- User Interface Page ---------------------------
 
 
-uilabel(plotPanel, ...
+uilabel(interfacePanel, ...
     'Position', [100 vertpos-1 60 22], ...
     'Text', 'File Name:');
 
-ef = uieditfield(fig, 'text', ...
+ef = uieditfield(interfacePanel, 'text', ...
     'Position', [170 vertpos-1 120 22], ...
     'Value', 'ForestPlot.pdf','ValueChangedFcn',@(src,event) filenameChanged(src,event,fig));
 
-uilabel(plotPanel, ...
+uilabel(interfacePanel, ...
     'Position', [490 vertpos-1 80 22], ...
     'Text', 'Label Width:');
 
-ef2 = uieditfield(fig, 'numeric', ...
+ef2 = uieditfield(interfacePanel, 'numeric', ...
     'Position', [568 vertpos-1 30 22], ...
     'Value', 100,'ValueChangedFcn',@(src,event) labelwidthChanged(src,event,fig));
 
-uibutton(plotPanel, ...
+uibutton(interfacePanel, ...
     'Text', 'Export Figure', ...
     'Position', [5, vertpos, 80, 22],'ButtonPushedFcn',@(src,event) ButtonPushed(src,event,ef.Value,dpi.Value,fig,ax1));
-uibutton(plotPanel, ...
+uibutton(interfacePanel, ...
     'Text', 'Export Data', ...
     'Position', [5, vertpos-25, 80, 22],'ButtonPushedFcn',@(src,event) ButtonPushed2(src,event,TT,QCorREF,uieditfield,fig));
 
-uibutton(plotPanel, ...
+uibutton(interfacePanel, ...
     'Text', 'PgUp', ...
     'Position', [505, vertpos-25, 40, 22],'ButtonPushedFcn',@(src,event) PgUpButtonPushed(src,event,ax1,forestPages,countLabel,QCorREF));
 
-uibutton(plotPanel, ...
+uibutton(interfacePanel, ...
     'Text', 'PgDn', ...
     'Position', [550, vertpos-25, 40, 22],'ButtonPushedFcn',@(src,event) PgDnButtonPushed(src,event,ax1,forestPages,countLabel,QCorREF));
 
@@ -89,11 +95,23 @@ end
 
 function plotPage(forestPages,ax1,countLabel,QCorREF)
 
+    
     cla(ax1);
     currentPage = ax1.UserData;
-    countLabel.Text = [num2str(currentPage),'/',num2str(numel(forestPages))];
+    lastPage = numel(forestPages);
+    countLabel.Text = [num2str(currentPage),'/',num2str(lastPage)];
 
     TT = forestPages{currentPage};
+
+    numRows = height(TT);
+
+    numFeaturesperPage = 80;
+    px_per_unit = 11;
+    ax_height_max = px_per_unit * numFeaturesperPage;
+    ax_height = px_per_unit * numRows;
+    ax1.Position = [10, ax_height_max-ax_height, 590, ax_height];
+    
+
     
    switch QCorREF
         case 'QC'       
@@ -133,11 +151,6 @@ function plotPage(forestPages,ax1,countLabel,QCorREF)
         ylim(ax1,[0, n_studies]);
     end
 
-    
-    
-    
-   
-    
     xlim_upper = 100;
     xlim_lower = -20;
     
@@ -209,7 +222,7 @@ function plotPage(forestPages,ax1,countLabel,QCorREF)
     % Plot formatting ---
     
     xlim(ax1,[xlim_lower, xlim_upper]);
-    xlabel(ax1,{['% Improvement in ',tt,'-RSD (95% CI)'];''},"FontSize",12);
+    xlabel(ax1,{['% Improvement in ',tt,'-RSD (95% CI)'];''},"FontSize",11);
     ylabel(ax1,'');
     
     %yticks(ax1,'manual'); 
@@ -245,9 +258,9 @@ function plotPage(forestPages,ax1,countLabel,QCorREF)
         hold(ax1,"on");
         %plot(ax1,[line_of_no_effect, line_of_no_effect], [0, 2], 'k--', 'LineWidth', 1.5);
         if PoolTable.sig(2)
-            fill(ax1,X_diamondX, Y_diamond, sigCol, 'FaceAlpha', 0.5, 'EdgeColor', 'k','ButtonDownFcn',@(src,event)app.MouseClickPooled(src,PoolTable));
+            fill(ax1,X_diamondX, Y_diamond, sigCol, 'FaceAlpha', 0.5, 'EdgeColor', 'k');
         else
-            fill(ax1,X_diamondX, Y_diamond, [0,0.2,1], 'FaceAlpha', 0.5, 'EdgeColor', 'k','ButtonDownFcn',@(src,event)app.MouseClickPooled(src,PoolTable));
+            fill(ax1,X_diamondX, Y_diamond, [0,0.2,1], 'FaceAlpha', 0.5, 'EdgeColor', 'k');
         end
     end
     
@@ -255,7 +268,7 @@ function plotPage(forestPages,ax1,countLabel,QCorREF)
     
     txt5 = sprintf('Unweighted %cRSD Forest Plot: (%s)',916,tt);
     
-    title(ax1,txt5,FontSize=14);
+    title(ax1,txt5,FontSize=12,FontUnits="points");
     
     
 end

@@ -34,6 +34,7 @@ defaultFieldnames = [
   {'CleanFileSuffix'}
   {'CleanLogTransform'}
   {'CleanScaleMethod'}
+  {'CleanBatchNorm'}
   {'CleanImputationMethod'}
   {'CleanImputationK'}];
 
@@ -272,9 +273,16 @@ catch
 end
 
 try
-    mustBeMember(baseConfig.CleanScaleMethod,{'MeanCenter','Autoscale','Paretoscale'});
+    validateattributes(baseConfig.CleanBatchNorm, {'logical'},{'scalar'})
 catch
-    baseException = MException('QCRSC:UnexpectedCleanScaleMethod',"Config Error: CleanScaleMethod must be one of the following: 'None','Autoscale','Paretoscale'.");
+    baseException = MException('QCRSC:UnexpectedCleanBatchNormValue','Config Error: CleanBatchNorm value must be logical (true/false)');
+    throw(baseException)
+end
+
+try
+    mustBeMember(baseConfig.CleanScaleMethod,{'MeanCenter','Autoscale'});
+catch
+    baseException = MException('QCRSC:UnexpectedCleanScaleMethod',"Config Error: CleanScaleMethod must be one of the following: 'MeanCenter', 'Autoscale'.");
     throw(baseException)
 end
 

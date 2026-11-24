@@ -99,8 +99,6 @@
         throw(baseException)
     end
 
-    
-
     %try
         if options.plotDataPoints
             %count = 1;

@@ -32,6 +32,7 @@
   "CleanFileSuffix": "_Clean",
   "CleanLogTransform": true,
   "CleanScaleMethod": "Autoscale",
+  "CleanBatchNorm": false,
   "CleanImputationMethod": "KNNcolumn",
   "CleanImputationK": 3
 }
