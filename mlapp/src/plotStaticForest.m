@@ -1,6 +1,6 @@
 function fig = plotStaticForest(FullForestStatsTable,useFullName,QCorREF)
 
-FullForestStatsTable = FullForestStatsTable(1:120,:);
+FullForestStatsTable = FullForestStatsTable(1:220,:);
 
 
 % ---------------------- Create Figure ---------------------------
@@ -15,15 +15,12 @@ fig.Scrollable = 'on';
 % buffer = 40;
 
 px_per_unit = 11;
-numFeaturesperPage = 80;
+numFeaturesperPage = 100;
 ax_height = px_per_unit * numFeaturesperPage;
 
 
 plotPanel = uipanel(fig,'Units','pixels','Position', [10, 30, 630, ax_height+30], 'BorderType', 'line');
 interfacePanel = uipanel(fig,'Units','pixels' ,'Position', [10, 920, 630, 60], 'BorderType', 'line');
-ax1 = uiaxes(plotPanel,'Units','pixels','Position', [10, 0, 590, ax_height]);
-disableDefaultInteractivity(ax1);
-ax1.UserData = 1;
 
 panelHeight = interfacePanel.Position(4); 
 vertpos = panelHeight - 30;
@@ -40,8 +37,21 @@ end
 startIndex = endIndex+1;
 forestPages{num+1} = FullForestStatsTable(startIndex:end, :);
 
-%pageNumTxt = ['1/',num2str(num+1)];
+% ---------------------- Plot Page ---------------------------
 
+% numRows = height(forestPages{1});
+% numFeaturesperPage = 80;
+% px_per_unit = 9;
+% ax_height_max = px_per_unit * numFeaturesperPage;
+% ax_height = px_per_unit * numRows;
+% %ax1.Position = [10, ax_height_max-ax_height, 480, ax_height];
+% %ax1.Position = [10, 0, 480, ax_height];
+% %ax1.Position = [10, 0, 480, ax_height];
+% 
+% ax1 = uiaxes(plotPanel,'Units','points','Position', [10, 0, 480, ax_height]);
+% disableDefaultInteractivity(ax1);
+
+plotPanel.UserData = 1;
 
 countLabel = uilabel(interfacePanel, ...
     'Position', [595 vertpos-25 100 22], ...
@@ -49,9 +59,8 @@ countLabel = uilabel(interfacePanel, ...
     'FontSize',12, ...
     'FontColor','r');
 
-% ---------------------- Plot Page ---------------------------
 
-plotPage(forestPages,ax1,countLabel,QCorREF);
+plotPage(forestPages,plotPanel,countLabel,QCorREF,0);
 
 % ---------------------- User Interface Page ---------------------------
 
@@ -74,18 +83,18 @@ ef2 = uieditfield(interfacePanel, 'numeric', ...
 
 uibutton(interfacePanel, ...
     'Text', 'Export Figure', ...
-    'Position', [5, vertpos, 80, 22],'ButtonPushedFcn',@(src,event) ButtonPushed(src,event,ef.Value,dpi.Value,fig,ax1));
+    'Position', [5, vertpos, 80, 22],'ButtonPushedFcn',@(src,event) ExportButtonPushed(src,event,ef.Value,fig,forestPages,plotPanel,countLabel,QCorREF));
 uibutton(interfacePanel, ...
     'Text', 'Export Data', ...
     'Position', [5, vertpos-25, 80, 22],'ButtonPushedFcn',@(src,event) ButtonPushed2(src,event,TT,QCorREF,uieditfield,fig));
 
 uibutton(interfacePanel, ...
     'Text', 'PgUp', ...
-    'Position', [505, vertpos-25, 40, 22],'ButtonPushedFcn',@(src,event) PgUpButtonPushed(src,event,ax1,forestPages,countLabel,QCorREF));
+    'Position', [505, vertpos-25, 40, 22],'ButtonPushedFcn',@(src,event) PgUpButtonPushed(src,event,plotPanel,forestPages,countLabel,QCorREF));
 
 uibutton(interfacePanel, ...
     'Text', 'PgDn', ...
-    'Position', [550, vertpos-25, 40, 22],'ButtonPushedFcn',@(src,event) PgDnButtonPushed(src,event,ax1,forestPages,countLabel,QCorREF));
+    'Position', [550, vertpos-25, 40, 22],'ButtonPushedFcn',@(src,event) PgDnButtonPushed(src,event,plotPanel,forestPages,countLabel,QCorREF));
 
 
 
@@ -93,11 +102,10 @@ uibutton(interfacePanel, ...
 
 end
 
-function plotPage(forestPages,ax1,countLabel,QCorREF)
+function plotPage(forestPages,plotPanel,countLabel,QCorREF,exportPage)
 
-    
-    cla(ax1);
-    currentPage = ax1.UserData;
+    currentPage = plotPanel.UserData;
+    delete(plotPanel.Children);
     lastPage = numel(forestPages);
     countLabel.Text = [num2str(currentPage),'/',num2str(lastPage)];
 
@@ -105,13 +113,18 @@ function plotPage(forestPages,ax1,countLabel,QCorREF)
 
     numRows = height(TT);
 
-    numFeaturesperPage = 80;
+    numFeaturesperPage = 100;
     px_per_unit = 11;
     ax_height_max = px_per_unit * numFeaturesperPage;
     ax_height = px_per_unit * numRows;
-    ax1.Position = [10, ax_height_max-ax_height, 590, ax_height];
-    
+    %ax1.Position = [10, ax_height_max-ax_height, 480, ax_height];
+    %ax1.Position = [10, 0, 480, ax_height];
+    %ax1.Position = [10, 0, 480, ax_height];
 
+    ax1 = uiaxes(plotPanel,'Units','pixels','Position', [10, ax_height_max-ax_height, 600, ax_height]);
+    %ax1.Position = [10, 0, 480, ax_height];
+    
+    disableDefaultInteractivity(ax1);
     
    switch QCorREF
         case 'QC'       
@@ -231,7 +244,7 @@ function plotPage(forestPages,ax1,countLabel,QCorREF)
     % else
     %    yticklabels(ax1,[{'Pooled Effect';''};ForestTable.ShortName(1:end)]);
     %end
-    ax1.FontUnits = 'points';
+    %ax1.FontUnits = 'points';
     ax1.YAxis.FontSize = 6;
     ax1.YAxis.FontName = 'Monaco';
     ax1.TickLength = [0.005, 0.025]; 
@@ -268,7 +281,19 @@ function plotPage(forestPages,ax1,countLabel,QCorREF)
     
     txt5 = sprintf('Unweighted %cRSD Forest Plot: (%s)',916,tt);
     
-    title(ax1,txt5,FontSize=12,FontUnits="points");
+    title(ax1,txt5);
+
+    ax1.FontSize = 7;
+    ax1.TitleFontSizeMultiplier = 2;
+    ax1.LabelFontSizeMultiplier = 1.5;
+    
+    if exportPage
+        if currentPage == 1
+            exportgraphics(ax1,"scaledchart.pdf",Units="centimeters",Resolution=300,Height=29.7,PreserveAspectRatio="on",Padding="figure",ContentType="vector");
+        else
+            exportgraphics(ax1,"scaledchart.pdf",Units="centimeters",Resolution=300,Height=29.7,PreserveAspectRatio="on",Padding="figure",ContentType="vector",Append=true);
+        end
+    end
     
     
 end
@@ -282,7 +307,7 @@ function filenameChanged(src,~,fig)
     end
 end
 
-function ButtonPushed(~,~,filename,dpi,fig,ax)
+function ExportButtonPushed(~,~,filename,fig,forestPages,plotPanel,countLabel,QCorREF)
 
     if isfile(filename)
         selection = uiconfirm(fig,['Overwrite file ',filename,'?'],'Confirm DataTable Action','Icon','question');
@@ -291,15 +316,16 @@ function ButtonPushed(~,~,filename,dpi,fig,ax)
         end
     end
     try
-        exportgraphics(ax,"scaledchart.pdf",Units="centimeters",Resolution=dpi,Height=29.7,PreserveAspectRatio="on",Padding="figure");
-        exportgraphics(ax,"scaledchart.pdf",Units="centimeters",Resolution=dpi,Height=29.7,PreserveAspectRatio="on",Padding="figure",Append=true);
-        %exportgraphics(fig,filename,'Resolution',dpi);
+        for i = 1:numel(forestPages)
+            plotPanel.UserData = i;
+            plotPage(forestPages,plotPanel,countLabel,QCorREF,1);           
+        end
         uialert(fig,'Forest plot saved!','Success','Icon','success');
     catch
-        uialert(fig,"Unable to save the figure",'Warning','Icon','Warning');
+        uialert(fig,"Unable to save the figure",'Warning','Icon','Warning');        
     end
-    
-    
+    plotPanel.UserData = 1;
+    plotPage(forestPages,plotPanel,countLabel,QCorREF,0);    
 end
 
 function ButtonPushed2(~,~,TT,QCorREF,uieditfield,fig)
@@ -323,20 +349,20 @@ function ButtonPushed2(~,~,TT,QCorREF,uieditfield,fig)
     end
 end
 
-function PgDnButtonPushed(~,~,ax1,forestPages,countLabel,QCorREF)
-    if ax1.UserData == numel(forestPages)
+function PgDnButtonPushed(~,~,plotPanel,forestPages,countLabel,QCorREF)
+    if plotPanel.UserData == numel(forestPages)
         return;
     end
-    ax1.UserData = ax1.UserData + 1;
-    plotPage(forestPages,ax1,countLabel,QCorREF);
+    plotPanel.UserData = plotPanel.UserData + 1;
+    plotPage(forestPages,plotPanel,countLabel,QCorREF,1);
 end
 
-function PgUpButtonPushed(~,~,ax1,forestPages,countLabel,QCorREF)
-    if ax1.UserData == 1
+function PgUpButtonPushed(~,~,plotPanel,forestPages,countLabel,QCorREF)
+    if plotPanel.UserData == 1
         return;
     end
-    ax1.UserData = ax1.UserData - 1;
-    plotPage(forestPages,ax1,countLabel,QCorREF);
+    plotPanel.UserData = plotPanel.UserData - 1;
+    plotPage(forestPages,plotPanel,countLabel,QCorREF,0);
 end
 
 

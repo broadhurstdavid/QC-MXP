@@ -1,6 +1,6 @@
 function fig = plotStaticForest2(FullForestStatsTable,useFullName,QCorREF)
 
-FullForestStatsTable = FullForestStatsTable(1:120,:);
+FullForestStatsTable = FullForestStatsTable(1:220,:);
 
 
 % ---------------------- Create Figure ---------------------------
@@ -20,10 +20,8 @@ ax_height = px_per_unit * numFeaturesperPage;
 
 
 plotPanel = uipanel(fig,'Units','points','Position', [10, 30, 500, ax_height+30], 'BorderType', 'line');
+plotPanel.Position = [10, 30, 500, ax_height+30];
 interfacePanel = uipanel(fig,'Units','points' ,'Position', [10, 920, 500, 60], 'BorderType', 'line');
-ax1 = uiaxes(plotPanel,'Units','points','Position', [10, 0, 480, ax_height]);
-disableDefaultInteractivity(ax1);
-ax1.UserData = 1;
 
 panelHeight = interfacePanel.Position(4); 
 vertpos = panelHeight - 30;
@@ -40,8 +38,21 @@ end
 startIndex = endIndex+1;
 forestPages{num+1} = FullForestStatsTable(startIndex:end, :);
 
-%pageNumTxt = ['1/',num2str(num+1)];
+% ---------------------- Plot Page ---------------------------
 
+% numRows = height(forestPages{1});
+% numFeaturesperPage = 80;
+% px_per_unit = 9;
+% ax_height_max = px_per_unit * numFeaturesperPage;
+% ax_height = px_per_unit * numRows;
+% %ax1.Position = [10, ax_height_max-ax_height, 480, ax_height];
+% %ax1.Position = [10, 0, 480, ax_height];
+% %ax1.Position = [10, 0, 480, ax_height];
+% 
+% ax1 = uiaxes(plotPanel,'Units','points','Position', [10, 0, 480, ax_height]);
+% disableDefaultInteractivity(ax1);
+
+plotPanel.UserData = 1;
 
 countLabel = uilabel(interfacePanel, ...
     'Position', [595 vertpos-25 100 22], ...
@@ -49,9 +60,8 @@ countLabel = uilabel(interfacePanel, ...
     'FontSize',12, ...
     'FontColor','r');
 
-% ---------------------- Plot Page ---------------------------
 
-plotPage(forestPages,ax1,countLabel,QCorREF);
+plotPage(forestPages,plotPanel,countLabel,QCorREF);
 
 % ---------------------- User Interface Page ---------------------------
 
@@ -81,11 +91,11 @@ uibutton(interfacePanel, ...
 
 uibutton(interfacePanel, ...
     'Text', 'PgUp', ...
-    'Position', [505, vertpos-25, 40, 22],'ButtonPushedFcn',@(src,event) PgUpButtonPushed(src,event,ax1,forestPages,countLabel,QCorREF));
+    'Position', [505, vertpos-25, 40, 22],'ButtonPushedFcn',@(src,event) PgUpButtonPushed(src,event,plotPanel,forestPages,countLabel,QCorREF));
 
 uibutton(interfacePanel, ...
     'Text', 'PgDn', ...
-    'Position', [550, vertpos-25, 40, 22],'ButtonPushedFcn',@(src,event) PgDnButtonPushed(src,event,ax1,forestPages,countLabel,QCorREF));
+    'Position', [550, vertpos-25, 40, 22],'ButtonPushedFcn',@(src,event) PgDnButtonPushed(src,event,plotPanel,forestPages,countLabel,QCorREF));
 
 
 
@@ -93,11 +103,10 @@ uibutton(interfacePanel, ...
 
 end
 
-function plotPage(forestPages,ax1,countLabel,QCorREF)
+function plotPage(forestPages,plotPanel,countLabel,QCorREF)
 
-    
-    cla(ax1);
-    currentPage = ax1.UserData;
+    currentPage = plotPanel.UserData;
+    delete(plotPanel.Children);
     lastPage = numel(forestPages);
     countLabel.Text = [num2str(currentPage),'/',num2str(lastPage)];
 
@@ -110,9 +119,13 @@ function plotPage(forestPages,ax1,countLabel,QCorREF)
     ax_height_max = px_per_unit * numFeaturesperPage;
     ax_height = px_per_unit * numRows;
     %ax1.Position = [10, ax_height_max-ax_height, 480, ax_height];
-    ax1.Position = [10, 0, 480, ax_height];
-    
+    %ax1.Position = [10, 0, 480, ax_height];
+    %ax1.Position = [10, 0, 480, ax_height];
 
+    ax1 = uiaxes(plotPanel,'Units','points','Position', [10, 0, 480, ax_height]);
+    ax1.Position = [10, 0, 480, ax_height];
+    ax1.Position = [10, 0, 480, ax_height];
+    disableDefaultInteractivity(ax1);
     
    switch QCorREF
         case 'QC'       
@@ -324,20 +337,20 @@ function ButtonPushed2(~,~,TT,QCorREF,uieditfield,fig)
     end
 end
 
-function PgDnButtonPushed(~,~,ax1,forestPages,countLabel,QCorREF)
-    if ax1.UserData == numel(forestPages)
+function PgDnButtonPushed(~,~,plotPanel,forestPages,countLabel,QCorREF)
+    if plotPanel.UserData == numel(forestPages)
         return;
     end
-    ax1.UserData = ax1.UserData + 1;
-    plotPage(forestPages,ax1,countLabel,QCorREF);
+    plotPanel.UserData = plotPanel.UserData + 1;
+    plotPage(forestPages,plotPanel,countLabel,QCorREF);
 end
 
-function PgUpButtonPushed(~,~,ax1,forestPages,countLabel,QCorREF)
-    if ax1.UserData == 1
+function PgUpButtonPushed(~,~,plotPanel,forestPages,countLabel,QCorREF)
+    if plotPanel.UserData == 1
         return;
     end
-    ax1.UserData = ax1.UserData - 1;
-    plotPage(forestPages,ax1,countLabel,QCorREF);
+    plotPanel.UserData = plotPanel.UserData - 1;
+    plotPage(forestPages,plotPanel,countLabel,QCorREF);
 end
 
 
